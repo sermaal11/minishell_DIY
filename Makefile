@@ -168,6 +168,10 @@ git: fclean
 		echo "$(BOLD_RED)(҂◡_◡) ¡¡¡Git push no realizado (҂◡_◡)!!!$(RESET)"; \
 	fi
 
+# La regla norm comprueba la norminette en las SRCS y en el .h
+norm:
+	@norminette $(SRCS) minishell.h | grep -v Norme -B1 || true
+
 # La regla help muestra las reglas del make
 help:
 	@echo "\n"
@@ -180,6 +184,7 @@ help:
 	@echo "  $(CYAN)init$(RESET)	-> Inicializa el proyecto"
 	@echo "  $(CYAN)test$(RESET)	-> Compila y ejecuta el promgrama con los argumentos que le pases"
 	@echo "  $(CYAN)git$(RESET)	-> Agrega, hace commit y hace push"
+	@echo "  $(CYAN)norm$(RESET)	-> Ejecuta Norminette"
 	@echo "  $(CYAN)help$(RESET)	-> Muestra las reglas del make"
 	@echo "\n"
 

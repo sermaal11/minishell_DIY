@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/13 18:13:12 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:09:00 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,22 @@ int main(int argc, char **argv, char **env)
 	// Printeo de cabecera
 	ft_mini_header();
 	
-	printf("%s\n", env[1]);
+	//Gestion de señales de la terminal
+	// ! Revisar el wait signal de GITHUB de gemartin:
+	ft_wait_signal(1);
+	
+	// 1. Lectura de comandos: La shell lee los comandos ingresados por el usuario 
+	// desde la línea de comandos o desde un script.
+	char *input_line;
+	
+	while(1)
+	{
+		input_line = readline("🐚"GREEN" MiniShell"RESET" --> ");
+		add_history(input_line);
+		free(input_line);
+	}
+	
+	printf(PURPLE"%s\n"RESET, env[1]);
 	atexit(leaks);
 	return (0);
 }
