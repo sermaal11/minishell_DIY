@@ -27,6 +27,8 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 
 # Archivos fuente (agregar los que se necesiten)
 SRCS =	main.c \
+		ft_utils.c \
+		ft_signals.c\
 		ft_error_management.c \
 
 #------------------------------------------------------------------------------#
@@ -111,7 +113,7 @@ libft_fclean:
 clean: libft_clean
 	@echo "$(RED)Eliminando archivos objeto...$(RESET)"
 	rm -rf $(addprefix $(OBJDIR)/, $(OBJS))
-	@echo "$(RED)¡Todos los archivos objeto han sido eliminados!$(RESET)"
+	@echo "$(BOLD_RED)¡Todos los archivos objeto han sido eliminados!$(RESET)"
 	@echo "$(RED)Eliminando directorio de objetos...$(RESET)"
 	rm -rf $(OBJDIR)
 	@echo "$(BOLD_RED)¡Directorio de objetos eliminado!$(RESET)"
@@ -153,7 +155,6 @@ test: re
 	done; \
 	./$(NAME)$$args
 
-
 # La regla git agrega, hace commit y hace push
 git: fclean
 	git add .
@@ -189,6 +190,6 @@ help:
 	@echo "\n"
 
 # La regla .PHONY indica que no hay un archivo llamado all, clean, fclean, 
-# git, re o libft
-.PHONY: all clean fclean git re libft
+# git, re, norm, help o libft
+.PHONY: all clean fclean git re libft norm help
 #------------------------------------------------------------------------------#

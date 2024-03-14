@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/13 17:50:59 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:28:55 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_put_error(char *bash, char *file, char *error_msg)
 	ft_putstr_fd(bash, 2);
 	ft_putstr_fd(": ", 2);
 	if (file)
-	{	
+	{
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(": ", 2);
 	}
