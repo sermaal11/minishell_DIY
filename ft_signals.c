@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:34:11 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 14:30:01 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:16:30 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_signal_handler(int signal)
 		//Vuelve a mostrar el prompt y cualquier contenido en la línea de 
 		//entrada.
 		rl_redisplay();
-		exit_status = 1;
+		g_exit_status = 1;
 	}
 	//Manejo de SIGQUIT (Ctrl+)
 	else if (signal == SIGQUIT)
@@ -45,7 +45,7 @@ static void	ft_child_signal_handler(int signal)
 	//salida de 128 más el número de la señal, que en el caso de SIGINT es 2. 
 	//Por lo tanto, 128 + 2 = 130.
 	if (signal == SIGINT)
-		exit_status = 130;
+		g_exit_status = 130;
 	//Si la señal recibida es SIGQUIT, la función imprime el mensaje "Quit: 3\n"
 	//en la salida estándar utilizando la función write(1, "Quit: 3\n", 10);. 
 	//Esto es una convención común en sistemas Unix, donde un proceso que
@@ -57,13 +57,15 @@ static void	ft_child_signal_handler(int signal)
 	else if (signal == SIGQUIT)
 	{
 		write(1, "Quit: 3\n", 10);
-		exit_status = 131;
+		g_exit_status = 131;
 	}
 	return ;
 }
 
 void	ft_signal_management(int i)
 {
+	struct sigaction sig_act;
+	
 	/*
 	struct sigaction 
 	{
@@ -73,8 +75,6 @@ void	ft_signal_management(int i)
     void (*sa_sigaction)(int, siginfo_t *, void *); // Puntero a una función de manejo de señales alternativa
 	};
 	*/
-
-	struct sigaction	sig_act;
 
 	if (i)
 		sig_act.sa_handler = &ft_signal_handler;

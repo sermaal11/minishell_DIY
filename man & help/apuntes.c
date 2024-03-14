@@ -39,3 +39,6 @@
 // 8. Ciclo de comando: Una vez que se completa la ejecución del comando, 
 // la shell vuelve al estado de lectura de comandos, esperando el siguiente 
 // comando del usuario.
+
+// ! GNU Bash Manual
+// https://www.gnu.org/savannah-checkouts/gnu/bash/manual/

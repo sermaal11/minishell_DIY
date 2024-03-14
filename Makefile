@@ -28,7 +28,9 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 # Archivos fuente (agregar los que se necesiten)
 SRCS =	main.c \
 		ft_utils.c \
-		ft_signals.c\
+		ft_lexer.c \
+		ft_parser.c \
+		ft_signals.c \
 		ft_error_management.c \
 
 #------------------------------------------------------------------------------#
@@ -74,7 +76,7 @@ BOLD_PURPLE = \033[1;35m
 all:libft $(NAME)
 	@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡$(NAME) compilado con exito!!! (⌐■_■)$(RESET)"
 	clear
-	./$(NAME)
+# ./$(NAME)
 
 # La regla $(NAME) compila el ejecutable con los archivos objeto creados
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))

@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 11:28:55 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:13:29 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,14 @@ void	ft_many_args_error(char **argv)
 	if (ft_strlen(argv[0]) < ft_strlen(argv[1]))
 		len = ft_strlen(argv[1]);
 	if (ft_strncmp(argv[0], argv[1], len) == 0)
-		ft_put_error(argv[0], argv[1], "cannot execute binary file");
+		ft_put_error(argv[0], argv[1], "Cannot execute binary file");
 	else
 		ft_put_error(argv[0], argv[1], "No such file or directory");
 	exit(127);
+}
+
+void	ft_exit_error(char *error_msg, int exit_status)
+{
+	printf("%s\n", error_msg);
+	exit(exit_status);
 }

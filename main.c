@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 14:27:06 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:14:27 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,27 @@ void	leaks(void)
 
 int main(int argc, char **argv, char **env)
 {
-	//Control de argumentos
+	// ! t_mini	mini;
+	
+	// ? Control de argumentos (DONE)
 	if (argc != 1)
 		ft_many_args_error(argv);
 	
-	//Establecer variable global "exit_status = 0"
-	exit_status = 0;
-		
-	// Printeo de cabecera
+	// ? Establece variable global "exit_status = 0" (DONE)
+	g_exit_status = 0;
+	
+	// ? Printeo de cabecera (DONE)
 	ft_mini_header();
 	
-	// ! Inicializador de variables y estructuras para evitar errores
+	// ! Inicializador de variables y estructuras para evitar errores (ft_utils.c)
+	// ! mini = ft_initialize( * no se lo que va a qui de momento * );
 	
 	
-	// ! Gestion de señales de la terminal
-	// ft_signal_management(1);
-	
-	
-	// 1. Lectura de comandos: La shell lee los comandos ingresados por el usuario 
-	// desde la línea de comandos.
-	char *input_line;
-	
-	while(1)
-	{
-		input_line = readline("🐚"GREEN" MiniShell"RESET" --> ");
-		add_history(input_line);
-		// if (ft_strncmp(input_line, "exit", ft_strlen("exit")) == 0)
-		// {
-		// 	printf("exit\n");
-		// 	free(input_line);
-		// }
-		// free(input_line);
-	}
+	// ? Gestion de señales de la terminal (DONE)
+	ft_signal_management(1);
+	// 1. Lectura de comandos: La shell lee los comandos ingresados por el 
+	// ususario desde la línea de comandos. (ft_lexer.c)
+	ft_recive_input();	// ! (&mini)
 	
 	printf(PURPLE"%s\n"RESET, env[1]);
 	atexit(leaks);

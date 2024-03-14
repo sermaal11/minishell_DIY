@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 12:07:38 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:14:14 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define R 0
 # define W 1
 
-int exit_status;
+int	g_exit_status;
 
 //ft_utils.c
 void	ft_mini_header(void);
@@ -62,8 +62,15 @@ void	ft_mini_header(void);
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
 void	ft_put_error(char *bash, char *file, char *error_msg);
+void	ft_exit_error(char *error_msg, int exit_status);
 
 //ft_signals.c
 void	ft_signal_management(int n);
+
+//ft_lexer.c
+void	ft_recive_input(void);
+
+//ft_parser.c
+int		ft_check_void_input(char *input);
 
 #endif
