@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:24:41 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:33:17 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:32:35 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,20 @@ void	ft_mini_header(void)
 	printf("|__/     |__/|______/|__/  \\__/|______/ \\___");
 	printf("___/ |__/  |__/|________/|________/|________/\n\n\n"RESET);
 	printf("                              By Descamil & Smarin-a\n");
+	printf("\n\n\n");
+}
+
+void	ft_mini_header_two(void)
+{
+	printf("\n\n");
+	printf(RED "   *    (        )  (        )       (     (     \n"RESET);
+    printf(OR2"(  `   )\\ )  ( /(  )\\ )  ( /(       )\\ )  )\\ )  \n"RESET);
+    printf(YE3")\\))( (()/(  )\\())(()/(  )\\()) (   (()/( (()/(  \n"RESET);
+    printf(OR3"((_)()\\ /(_))((_)\\  /(_))((_)\\  )\\   /(_)) /(_)) \n"RESET);
+    printf(OR2"(_()((_)(_))  _((_)(_))   _((_)((_) (_))  (_))   \n"RESET);
+    printf("|  \\/  ||_ _|| \\| ||_ _| | || || __|| |   | |    \n");
+    printf("| |\\/| | | | | .` | | |  | __ || _| | |__ | |__  \n");
+    printf("|_|  |_||___||_|\\_||___| |_||_||___||____||____| \n\n");
+	printf(RED"            By Descamil & Smarin-a\n"RESET);
 	printf("\n\n\n");
 }

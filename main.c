@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:34:38 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:14:46 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		ft_many_args_error(argv);
 	g_exit_status = 0;
-	ft_mini_header();
+	ft_mini_header_two();
 	mini = ft_initialize(env);
 	ft_signal_management(1);
 	

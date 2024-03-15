@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:30:59 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:23:45 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 # define RESET "\033[0m"
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
-# define YELLOW "\033[0;33m"
+# define OR1 "\033[38;5;208m" // Naranja claro
+# define OR2 "\033[38;5;214m" // Naranja medio
+# define OR3 "\033[38;5;220m" // Naranja oscuro
+# define YE1 "\033[38;5;226m" // Amarillo claro
+# define YE2 "\033[38;5;229m" // Amarillo medio
+# define YE3 "\033[38;5;227m" // Amarillo oscuro
 # define BLUE "\033[0;34m"
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
@@ -77,6 +82,7 @@ typedef struct s_mini
 
 //ft_utils.c
 void	ft_mini_header(void);
+void	ft_mini_header_two(void);
 void	ft_matrix_free(char **matrix);
 
 //ft_initialize.c

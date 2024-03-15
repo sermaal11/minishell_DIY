@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:29 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:32:39 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:23:56 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check_void_input(char *input)
 // ! Prototipo de funcion para tokenizar
 int	ft_strtokenize(char *input, t_mini *mini)
 {
-	printf(YELLOW"input --> %s, env --> %s\n"RESET, input, mini->env->env[0]);
+	printf(YE3"input --> %s, env --> %s\n"RESET, input, mini->env->env[0]);
 	// Si la tokenizcion va bien, nos devuelve un 1.
 	return (1);
 }
