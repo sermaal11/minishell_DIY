@@ -31,6 +31,7 @@ SRCS =	main.c \
 		ft_lexer.c \
 		ft_parser.c \
 		ft_signals.c \
+		ft_initialize.c \
 		ft_error_management.c \
 
 #------------------------------------------------------------------------------#

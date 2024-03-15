@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 18:14:14 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:30:59 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,45 @@
 
 int	g_exit_status;
 
+typedef struct s_flags
+{
+}				t_flags;
+
+typedef struct s_env
+{
+	int		env_amount;
+	char	*path;
+	char	**env;
+}				t_env;
+
+typedef struct s_mini
+{
+	int		shell_level;
+
+	t_env	*env;
+	t_flags	*flags;
+}				t_mini;
+
 //ft_utils.c
 void	ft_mini_header(void);
+void	ft_matrix_free(char **matrix);
 
-// ft_error_management.c
-void	ft_many_args_error(char **argv);
-void	ft_put_error(char *bash, char *file, char *error_msg);
-void	ft_exit_error(char *error_msg, int exit_status);
+//ft_initialize.c
+t_mini	*ft_initialize(char **env);
 
 //ft_signals.c
 void	ft_signal_management(int n);
 
 //ft_lexer.c
-void	ft_recive_input(void);
+void	ft_recive_input(t_mini *mini);
 
 //ft_parser.c
 int		ft_check_void_input(char *input);
+int		ft_strtokenize(char *input, t_mini *mini);
+
+// ft_error_management.c
+void	ft_many_args_error(char **argv);
+void	ft_put_error(char *bash, char *file, char *error_msg);
+void	ft_exit_error(char *error_msg, int exit_status);
 
 #endif

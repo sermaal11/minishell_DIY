@@ -6,39 +6,46 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 18:14:39 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:25:54 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_recive_input(void) //(t_mini *mini)
+void ft_recive_input(t_mini *mini)
 {
 	char *input;
 	
 	while(1)
 	{
+		// ? Entrada de input desde readline (DONE)
 		input = readline("🐚"GREEN" MiniShell"RESET" --> ");
-		printf(YELLOW"input --> %s\n"RESET, input);
+		// ? Control en caso de input == NULL (Gestion de señales) (DONE)
 		if (!input)
 			ft_exit_error("Exit", g_exit_status);
-		
-		// ! ft_parser.c
+		// * ft_parser.c
+		// ? Parseo para input == " " || input[0] == '\0' (DONE)
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
 			printf("");	
 		else
 		{
 			add_history(input);
+			ft_strtokenize(input, mini);
 		}
 		
-		// ! Proto built-ins: exit (Irá en ft_built_ins.c y sera llamada desde 
-		// ! el ejecutor) Si te pasan un (int)num despues exit_status = (int)num
+		// todo: Proto built-ins: exit (Irá en ft_built_ins.c y sera llamada 
+		// todo: desde el ejecutor).
+		// ! Si te pasan un (int)num despues, exit_status = (int)num
+		// * Ejemplo: exit 43
+		// * echo $? = 43
+		
 		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
 		{
-			g_exit_status = 0;
+			//g_exit_status = 0;
+			//ft_exit_error("Exit", g_exit_status);
+			// ! Las dos lineas de arriba son las que valen, estas son para debuguear.
 			free(input);
 			break ;
-			// ft_exit_error("Exit", exit_status);
 		}
 		
 		if (input != NULL)
