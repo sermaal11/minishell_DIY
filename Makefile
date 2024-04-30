@@ -21,7 +21,7 @@ NAME =	minishell
 # Compilador a utilizar (gcc, clang, etc)
 CC = gcc
 # Flags de compilacion (agregar los que se necesiten)
-CFLAGS = #-g3 -Wall -Wextra -Werror
+CFLAGS = -g3 -Wall -Wextra -Werror
 
 #------------------------------------------------------------------------------#
 
@@ -46,8 +46,8 @@ LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # ! Estas dos lineas son para usar en 42
-COMFLAGS	= -I/Users/$(USER)/.brew/opt/readline/include
-LINKFLAGS	= -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+# COMFLAGS	= -I/User/$(USER)/readline/include
+# LINKFLAGS	= -L/User/$(USER)/readline -lreadline
 
 #------------------------------------------------------------------------------#
 
@@ -84,11 +84,11 @@ all:libft $(NAME)
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
 	@echo "$(BOLD_GREEN)¡Objetos creados!$(RESET)"
 	@echo "$(CYAN)Compilando $(NAME)...$(RESET)"
-	$(CC) $(CFLAGS) $(LINKFLAGS) -o $@ $^ $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 # La regla %.o compila los archivos objeto
 $(OBJDIR)/%.o : %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(COMFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # La regla $(OBJDIR) crea el directorio de los archivos objeto
 $(OBJDIR):

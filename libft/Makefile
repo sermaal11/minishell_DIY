@@ -74,7 +74,6 @@ SRCS =	ft_isalpha.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
 		ft_intlen.c \
-		ft_printf.c \
 		ft_gnl.c
 
 #------------------------------------------------------------------------------#

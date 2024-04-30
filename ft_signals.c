@@ -56,7 +56,7 @@ static void	ft_child_signal_handler(int signal)
 	//Por lo tanto, 128 + 3 = 131.
 	else if (signal == SIGQUIT)
 	{
-		write(1, "Quit: 3\n", 10);
+		write(1, "Quit: 3\n", 9);
 		g_exit_status = 131;
 	}
 	return ;

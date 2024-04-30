@@ -125,8 +125,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 // ft_lstmap - Itera sobre los nodos aplicando una funcion. Crea una nueva lista
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-// ft_printf - Imprime en la salida estandar segun el formato especificado.
-int		ft_printf(char const *str, ...);
 // ft_gnl - Lee una linea de un archivo hasta encontrar un salto de linea o EOF.
 char	*ft_gnl(int fd);
 

@@ -16,6 +16,7 @@ void ft_recive_input(t_mini *mini)
 {
 	char *input;
 	
+	(void) mini;
 	while(1)
 	{
 		// ? Entrada de input desde readline (DONE)
@@ -26,7 +27,7 @@ void ft_recive_input(t_mini *mini)
 		// * ft_parser.c
 		// ? Parseo para input == " " || input[0] == '\0' (DONE)
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
-			printf("");	
+			printf("\n");	
 		else
 		{
 			add_history(input);
