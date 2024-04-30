@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:25:54 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:36:51 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void ft_recive_input(t_mini *mini)
 		else
 		{
 			add_history(input);
-			ft_strtokenize(input, mini);
+
+			// ! Nucleo del parseo
 		}
 		
 		// todo: Proto built-ins: exit (Irá en ft_built_ins.c y sera llamada 

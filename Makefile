@@ -21,7 +21,7 @@ NAME =	minishell
 # Compilador a utilizar (gcc, clang, etc)
 CC = gcc
 # Flags de compilacion (agregar los que se necesiten)
-CFLAGS = -g3 -Wall -Wextra -Werror
+CFLAGS = #-g3 -Wall -Wextra -Werror
 
 #------------------------------------------------------------------------------#
 
@@ -45,6 +45,7 @@ LIBFT_DIR = ./libft
 # Libreria a utilizar. Si se usa, descomentar la linea
 LIBFT = $(LIBFT_DIR)/libft.a
 
+# ! Estas dos lineas son para usar en 42
 COMFLAGS	= -I/Users/$(USER)/.brew/opt/readline/include
 LINKFLAGS	= -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 

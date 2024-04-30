@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 18:14:46 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:18:50 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		ft_many_args_error(argv);
 	g_exit_status = 0;
-	ft_mini_header_two();
+	ft_mini_header();
 	mini = ft_initialize(env);
 	ft_signal_management(1);
 	

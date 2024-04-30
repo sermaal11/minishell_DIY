@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initialize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:21:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 17:29:30 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:50:10 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,14 @@ t_mini	*ft_initialize(char **env)
 		ft_exit_error("Malloc error", 2);
 	// Seteamos el env con la informacion deseada.
 	ft_set_env(mini->env, env);
+
 	// ! Asignamos memoria a la estructuta t_flags y lo inicializamos a 0.
+	// todo: añadir las flags necesarias en la struct t_flags.
 	mini->flags = ft_calloc(sizeof(t_flags), 1);
 	// ! Comrobamos si la asignacion de memoria fue exitosa.
 	if (!mini->flags)
 		ft_exit_error("Malloc error", 4);
+	
 	return (mini);
 	
 }

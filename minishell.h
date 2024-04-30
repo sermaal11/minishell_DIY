@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/15 18:23:45 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:37:24 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,15 @@
 
 int	g_exit_status;
 
+typedef struct s_token
+{
+	char	*input;
+	char	**tokens;
+}				t_token;
+
 typedef struct s_flags
 {
+	
 }				t_flags;
 
 typedef struct s_env
@@ -78,12 +85,11 @@ typedef struct s_mini
 
 	t_env	*env;
 	t_flags	*flags;
+	t_token	*token;
 }				t_mini;
 
 //ft_utils.c
 void	ft_mini_header(void);
-void	ft_mini_header_two(void);
-void	ft_matrix_free(char **matrix);
 
 //ft_initialize.c
 t_mini	*ft_initialize(char **env);
@@ -96,7 +102,6 @@ void	ft_recive_input(t_mini *mini);
 
 //ft_parser.c
 int		ft_check_void_input(char *input);
-int		ft_strtokenize(char *input, t_mini *mini);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
