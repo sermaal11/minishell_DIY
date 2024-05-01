@@ -33,6 +33,9 @@ SRCS =	main.c \
 		ft_signals.c \
 		ft_initialize.c \
 		ft_error_management.c \
+		ft_check_input.c \
+		ft_check_quotes.c \
+		ft_check_pipes.c \
 
 #------------------------------------------------------------------------------#
 

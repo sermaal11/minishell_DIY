@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 13:30:15 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:55:30 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef struct s_token
 
 typedef struct s_flags
 {
-	
+	int		quote;
+	int		pipe;
 }				t_flags;
 
 typedef struct s_env
@@ -79,13 +80,24 @@ typedef struct s_env
 	char	**env;
 }				t_env;
 
+typedef struct s_cmd
+{
+	struct s_cmd	*next;
+	t_env			*env;
+	t_flags			*flags;
+	char			*cmd;
+	char			**args;
+	int				args_amount;
+}				t_cmd;
+
 typedef struct s_mini
 {
 	int		shell_level;
-
+	int 	char_amount;
 	t_env	*env;
 	t_flags	*flags;
 	t_token	*token;
+	t_cmd	*cmd;
 }				t_mini;
 
 //ft_utils.c
@@ -101,6 +113,20 @@ void	ft_signal_management(int n);
 void	ft_recive_input(t_mini *mini);
 
 //ft_parser.c
+int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
+
+//ft_check_input.c
+int		ft_check_input(t_mini **mini, char *input, char ***lines);
+
+//ft_check_quotes.c
+int		ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini);
+int		ft_check_quote_pairs(char *input, int *i, char quote);
+int		ft_locate_next_quote(int i, char *input, char quote)
+
+//ft_check_pipes.c
+int		ft_count_pipes(char *input);
+char	**ft_split_pipes(char *input):
+char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);

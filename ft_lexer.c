@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 13:30:20 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:20:15 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void ft_recive_input(t_mini *mini)
 	while(1)
 	{
 		//Entrada de input desde readline (DONE)
-		input = readline("🐚"GREEN" MiniShell"RESET" --> ");
+		input = readline("🐚"GREEN" MINI(S)HELL"RESET" 🔥 -> ");
 		//Control en caso de input == NULL (Gestion de señales) (DONE)
 		if (!input)
 			ft_exit_error("Exit", g_exit_status);
@@ -46,6 +46,10 @@ void ft_recive_input(t_mini *mini)
 		{
 			add_history(input);
 			// ! Nucleo del parseo
+			if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
+			{
+				
+			}
 			
 		}
 		
