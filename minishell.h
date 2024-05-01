@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/04/30 12:37:24 by sergio           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:30:15 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	ft_signal_management(int n);
 void	ft_recive_input(t_mini *mini);
 
 //ft_parser.c
-int		ft_check_void_input(char *input);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
