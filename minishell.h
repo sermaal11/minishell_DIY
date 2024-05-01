@@ -59,7 +59,7 @@
 # define R 0
 # define W 1
 
-int	g_exit_status;
+extern int g_exit_status;
 
 typedef struct s_token
 {

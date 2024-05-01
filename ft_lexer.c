@@ -27,7 +27,7 @@ void ft_recive_input(t_mini *mini)
 		// * ft_parser.c
 		// ? Parseo para input == " " || input[0] == '\0' (DONE)
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
-			printf("\n");	
+			(void)input;
 		else
 		{
 			add_history(input);
@@ -44,7 +44,7 @@ void ft_recive_input(t_mini *mini)
 		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
 		{
 			//g_exit_status = 0;
-			//ft_exit_error("Exit", g_exit_status);
+			//ft_exit_error("Exit", mini->exit_status);
 			// ! Las dos lineas de arriba son las que valen, estas son para debuguear.
 			free(input);
 			break ;
