@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 19:39:25 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:33:28 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,12 @@ char	**ft_split_pipes(char *input)
 		if (ft_check_pipes_arg(splited_pipes_matrix[i]) == -1
 			|| ft_check_redir_arg(splited_pipes_matrix, i) == -1)
 		{
-			// Seguir desde https://github.com/gemartin99/Minishell/blob/master/src/utils_pipes.c#L113
-			// ft_check_redir_arg(splited_pipes_matrix, i); = check_redir_arg en GEmartin		
+			g_exit_status = 258;
+			while (i >= 0)
+				free(splited_pipes_matrix[i--]);
+			free(splited_pipes_matrix);
+			return (NULL);
 		}
 	}
+	return (splited_pipes_matrix);
 }

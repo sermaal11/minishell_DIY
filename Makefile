@@ -36,6 +36,8 @@ SRCS =	main.c \
 		ft_check_input.c \
 		ft_check_quotes.c \
 		ft_check_pipes.c \
+		ft_check_redir.c \
+		ft_check_operators.c \
 
 #------------------------------------------------------------------------------#
 

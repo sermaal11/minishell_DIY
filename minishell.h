@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 18:55:30 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:25:31 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,20 @@ int		ft_check_input(t_mini **mini, char *input, char ***lines);
 //ft_check_quotes.c
 int		ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini);
 int		ft_check_quote_pairs(char *input, int *i, char quote);
-int		ft_locate_next_quote(int i, char *input, char quote)
+int		ft_locate_next_quote(int i, char *input, char quote);
 
 //ft_check_pipes.c
 int		ft_count_pipes(char *input);
-char	**ft_split_pipes(char *input):
+char	**ft_split_pipes(char *input);
 char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix);
+
+//ft_check_redir.c
+int		ft_check_redir_arg(char **splited_pipes_matrix, int i);
+int		ft_redir_type(char *splited_arg);
+
+//ft_check_operators.c
+int		ft_is_not_mayor_n_minor_char(char c);
+char	ft_type_of_operator_char(int n);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
