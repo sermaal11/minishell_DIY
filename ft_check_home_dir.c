@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parser.c                                        :+:      :+:    :+:   */
+/*   ft_check_home_dir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 15:14:29 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 15:45:43 by smarin-a         ###   ########.fr       */
+/*   Created: 2024/05/02 17:23:43 by smarin-a          #+#    #+#             */
+/*   Updated: 2024/05/02 17:30:08 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input)
+int	ft_check_relative_home(char *command)
 {
-	int		i;
-	char	**lines;
-	t_cmd	*tmp;
+	int	i;
 
-	i = 0;
-	lines = NULL;
-	mini->char_amount = 0;
-	if(ft_check_input(&mini, input, &lines))
-		return (0);
-	*cmd = ft_add_command(mini, lines[0]);
-	ft_expander(cmd);
-	
+	i = -1;
+	if (command && command[0] == '~' && (!command[1] || command[1] == '/'))
+		return (1);
+	return (0);
 }

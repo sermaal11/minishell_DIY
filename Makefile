@@ -30,14 +30,19 @@ SRCS =	main.c \
 		ft_utils.c \
 		ft_lexer.c \
 		ft_parser.c \
+		ft_expander.c \
 		ft_signals.c \
+		ft_commands.c \
 		ft_initialize.c \
-		ft_error_management.c \
-		ft_check_input.c \
-		ft_check_quotes.c \
 		ft_check_pipes.c \
+		ft_check_input.c \
 		ft_check_redir.c \
+		ft_check_dollar.c \
+		ft_check_quotes.c \
+		ft_expander_utils.c \
+		ft_check_home_dir.c \
 		ft_check_operators.c \
+		ft_error_management.c \
 
 #------------------------------------------------------------------------------#
 

@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 12:25:31 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:03:21 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_flags
 {
 	int		quote;
 	int		pipe;
+	int		dollar;
 }				t_flags;
 
 typedef struct s_env
@@ -115,6 +116,14 @@ void	ft_recive_input(t_mini *mini);
 //ft_parser.c
 int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
 
+//ft_expander.c
+void	ft_expander(t_cmd **cmd);
+char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder);
+char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder);
+
+//ft_expander_utils.c
+
+
 //ft_check_input.c
 int		ft_check_input(t_mini **mini, char *input, char ***lines);
 
@@ -136,9 +145,23 @@ int		ft_redir_type(char *splited_arg);
 int		ft_is_not_mayor_n_minor_char(char c);
 char	ft_type_of_operator_char(int n);
 
+//ft_commands.c
+t_cmd	*ft_add_command(t_mini *mini, char *input);
+char	*ft_get_command(t_mini *mini, char *input);
+int		ft_count_args(char *input);
+
+//ft_check_dollar.c
+int		ft_check_dollar_n_digits(char *command);
+int		ft_isdigit_n_special_char(int n);
+char	*ft_remove_dollar_n_digits(char *command, int i, int j);
+
+//ft_check_relative_home.c
+int	ft_check_relative_home(char *command);
+
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
 void	ft_put_error(char *bash, char *file, char *error_msg);
 void	ft_exit_error(char *error_msg, int exit_status);
+
 
 #endif
