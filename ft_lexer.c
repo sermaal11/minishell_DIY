@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 17:30:25 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:47:56 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void ft_recive_input(t_mini *mini)
 			// este proyecto es una mierda
 			// No se que mas hacer
 			// ! AYUDA:
-			if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
-			{
-				printf("Llega al final! 🚀\n");
-			}
+			//if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
+			//{
+				//printf("Llega al final! 🚀\n");
+			//}
 			
 		}
 		

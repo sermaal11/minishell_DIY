@@ -29,11 +29,12 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 SRCS =	main.c \
 		ft_utils.c \
 		ft_lexer.c \
-		ft_parser.c \
-		ft_expander.c \
+		ft_error_management.c \
 		ft_signals.c \
-		ft_commands.c \
 		ft_initialize.c \
+		# ft_expander.c \
+		ft_parser.c \
+		ft_commands.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
 		ft_check_redir.c \
@@ -42,7 +43,6 @@ SRCS =	main.c \
 		ft_expander_utils.c \
 		ft_check_home_dir.c \
 		ft_check_operators.c \
-		ft_error_management.c \
 
 #------------------------------------------------------------------------------#
 
