@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 19:20:15 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:20:02 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void ft_recive_input(t_mini *mini)
 			// ! Nucleo del parseo
 			if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
 			{
-				
+				printf("Llega al final! 🚀\n");
 			}
 			
 		}

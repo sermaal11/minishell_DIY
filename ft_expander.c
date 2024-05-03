@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 18:00:05 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:08:47 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,23 @@ char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
 	if (ft_locate_dollar(command) == 0)
 		return (command);
 	cmd->flags->dollar = 0;
-	command = ft_change_var(cmd, command, var_reminder);
-		
-		
+	command = ft_change_var(cmd, command, &var_reminder);
+	if (ft_locate_dollar(command) == 1)
+		command = ft_change_dollar_x_var(cmd, command, NULL);
+	if (cmd->flags->dollar == 1)
+	{
+		temp = ft_strjoin_custom(command, var_reminder, 0, 0);
+		free(command);
+		command = temp;
+		free(var_reminder);
+		var_reminder = NULL;
+		cmd->flags->dollar = 0;
+	}
+	if (ft_locate_dollar(command) == 1)
+		return (ft_change_dollar_x_var(cmd, command, NULL));
+	if (var_reminder)
+		free(var_reminder);
+	return (command);	
 }
 
 void	ft_expander(t_cmd **cmd)
@@ -62,11 +76,15 @@ void	ft_expander(t_cmd **cmd)
 	i = -1;
 	if (ft_locate_dollar((*cmd)->cmd) == 1)
 		(*cmd)->cmd = ft_change_dollar_x_var((*cmd), (*cmd)->cmd, NULL);
-
-
-
-
-		
 	if (ft_check_relative_home((*cmd)->cmd) == 1)
-		
+		(*cmd)->cmd = ft_replace_home((*cmd)->cmd);
+	if (!(*cmd)->args)
+		return ;
+	while((*cmd)->args[++i])
+	{
+		if (ft_locate_dollar((*cmd)->args[i]) == 1)
+			(*cmd)->args[i] = ft_change_dollar_x_var((*cmd), (*cmd)->args[i], NULL);
+		if (ft_check_relative_home((*cmd)->args[i]) == 1)
+			(*cmd)->args[i] = ft_replace_home((*cmd)->args[i]);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 18:03:21 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:18:02 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder);
 char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder);
 
 //ft_expander_utils.c
-
+char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
 
 //ft_check_input.c
 int		ft_check_input(t_mini **mini, char *input, char ***lines);
@@ -149,14 +149,16 @@ char	ft_type_of_operator_char(int n);
 t_cmd	*ft_add_command(t_mini *mini, char *input);
 char	*ft_get_command(t_mini *mini, char *input);
 int		ft_count_args(char *input);
+t_cmd	*ft_last_command(t_cmd **cmd);
 
 //ft_check_dollar.c
 int		ft_check_dollar_n_digits(char *command);
 int		ft_isdigit_n_special_char(int n);
 char	*ft_remove_dollar_n_digits(char *command, int i, int j);
 
-//ft_check_relative_home.c
-int	ft_check_relative_home(char *command);
+//ft_check_home_direc.c
+int		ft_check_relative_home(char *command);
+char	*ft_replace_home(char *str);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
