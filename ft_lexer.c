@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 13:20:02 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:30:25 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,22 @@ void ft_recive_input(t_mini *mini)
 	(void) mini;
 	while(1)
 	{
-		//Entrada de input desde readline (DONE)
 		input = readline("🐚"GREEN" MINI(S)HELL"RESET" 🔥 -> ");
-		//Control en caso de input == NULL (Gestion de señales) (DONE)
 		if (!input)
 			ft_exit_error("Exit", g_exit_status);
-		// * ft_parser.c
-		//Parseo para input == " " || input[0] == '\0' (DONE)
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
 			(void)input;
 		else
 		{
 			add_history(input);
+			// TODO: HECHO HASTA AQUI y funcional COn señales incluidas
+			// ? HASTA AQUI FUNCIONA TODO (CREO)
+			
 			// ! Nucleo del parseo
+			// El parseo no funciona
+			// este proyecto es una mierda
+			// No se que mas hacer
+			// ! AYUDA:
 			if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
 			{
 				printf("Llega al final! 🚀\n");

@@ -6,11 +6,35 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 13:08:47 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:37:53 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_craft_result(char *final_line, char *line, char *var, int c)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	j = -1;
+	k = ft_search_next_char(line, '$', -1);
+	if ((size_t)k == ft_strlen(line))
+		return (line);
+	while(++i < k)
+		final_line[i] = line[i];
+	while (var[++j])
+		final_line[i + j] = var[j];
+	while (line[i + c])
+	{
+		final_line[i + j] = line[i + c];
+		i++;
+	}
+	final_line[i + j] = '\0';
+	return (final_line);
+}
 
 int	ft_locate_dollar(char *cmd)
 {
@@ -32,6 +56,28 @@ int	ft_locate_dollar(char *cmd)
 	return (0);
 }
 
+char	*ft_change_name_var(char *line)
+{
+	int		i;
+	int		j;
+	char	*var_name;
+
+	i = ft_locate_next_quote(0, line, '$') + 1;
+	j = 0;
+	while (line[i + j] && line[i + j] == ' '&& line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j] == 0))
+		j++;
+	var_name = ft_calloc(sizeof(char), j + 1);
+	if (!var_name)
+		ft_exit_error("Malloc error", 16);
+	j = 0;
+	while (line[i + j] && line[i + j] != ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j]) == 0)
+	{
+		var_name[j] = line[i + j];
+		j++;
+	}
+	return (var_name);
+}
+
 char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder)
 {
 	char	*var_name;
@@ -39,13 +85,29 @@ char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder)
 
 	if (ft_strnstr(line, "$?", ft_strlen(line)) != 0)
 		return (ft_replace_value_of_var(line));
+	var_name = ft_change_name_var(line);
+	i = ft_search_next_char(line, '$', -1);
+	while (line[++i] && line[i] != ' ')
+	{
+		if ((ft_check_special_char(line[i]) == -1 && line[i] != '$')
+			|| (line[i] == '$' && i == ft_search_next_char(line, '$', ft_search_next_char(line, '$', -1) + 1)))
+		{
+			*var_reminder = ft_split_var(line, i, cmd);
+			break ;
+		}
+	}
+	if (!var_name)
+		return (NULL);
+	if (var_name[0])
+		return (ft_strchr(line, '$') + 1);
+	return (ft_compare_var_name(cmd, line, var_name));
 }
 
 char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
 {
 	char	*temp;
 
-	if (ft_check_dollar_n_ditis(command) == 0)
+	if (ft_check_dollar_n_digits(command) == 0)
 		command = ft_remove_dollar_n_digits(command, -1, -1);
 	if (ft_locate_dollar(command) == 0)
 		return (command);

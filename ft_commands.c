@@ -6,7 +6,7 @@
 /*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 13:17:47 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:20:04 by smarin-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ t_cmd	*ft_add_command(t_mini *mini, char *input)
 	if (!new_cmd)
 		ft_exit_error("Malloc error", 9);
 	new_cmd->cmd = ft_get_command(mini, input + mini->char_amount);
-	new_cmd->args = ft_count_args(input + mini->char_amount);
+	new_cmd->args_amount = ft_count_args(input + mini->char_amount);
 	new_cmd->next = NULL;
 	new_cmd->flags = mini->flags;
 	new_cmd->env = mini->env;
 	if (new_cmd->args_amount == 0)
 		return (new_cmd);
-	new_cmd->args = ft_get_args(mini, input + mini->char_amount, new_cmd);
+	new_cmd->args = ft_get_command(mini, input + mini->char_amount, new_cmd);
 	return (new_cmd); 
 }
 
@@ -86,3 +86,25 @@ t_cmd	*ft_last_command(t_cmd **cmd)
 	return (temp);
 }
 
+char	*ft_split_var(char *line, int i, t_cmd *cmd)
+{
+	char	*res;
+	int		j;
+
+	cmd->flags->dollar = 1;
+	j = 1;
+	while (line[i])
+		i++;
+	res = malloc(sizeof(char) * i - j + 1);
+	if (!res)
+		ft_exit_error("Malloc error", 17);
+	i = 0;
+	while (line[j])
+	{
+		res[i] = line[j];
+		i++;
+		j++;
+	}
+	res[i] = '\0';
+	return (res);
+}
