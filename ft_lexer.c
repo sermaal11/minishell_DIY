@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 17:47:56 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:23:28 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ static int	ft_check_void_input(char *input)
 
 void ft_recive_input(t_mini *mini)
 {
-	char *input;
-	
+	char	*input;
+	int		i;
+
 	(void) mini;
 	while(1)
 	{
@@ -49,6 +50,22 @@ void ft_recive_input(t_mini *mini)
 			// este proyecto es una mierda
 			// No se que mas hacer
 			// ! AYUDA:
+			i = 42;
+			printf("%s\n", input);
+			printf("%d\n", i);
+			// while (mini->cmd->args[++i] != NULL)
+			// 	printf("mini -> cmd -> args[%d] %s\n", i, mini->cmd->args[i]);
+
+			// printf("mini -> cmd -> args_amount %d\n", mini->cmd->args_amount);
+			
+			// printf("mini -> cmd -> cmd %s\n", mini->cmd->cmd);
+
+			// printf("mini ->cmd -> flags -> dollar %d\n", mini->cmd->flags->dollar);
+
+			// printf("mini ->cmd -> flags -> pipe %d\n", mini->cmd->flags->pipe);
+
+			// printf("mini ->cmd -> flags -> quote %d\n", mini->cmd->flags->quote);
+			
 			//if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
 			//{
 				//printf("Llega al final! 🚀\n");

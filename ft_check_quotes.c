@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:55:56 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 18:14:44 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:12:46 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@ int	ft_locate_next_quote(int i, char *input, char quote)
 		i++;
 	return (i);
 }
+
+// int ft_locate_next_quote(int i, char *input, char quote)
+// {
+// 	char 	next_char;
+	
+// 	while (input[i] != '\0') 
+// 	{
+// 		while (input[i] != quote)
+// 			i++;
+// 		next_char = input[i + 1];
+// 		if (next_char == '\'' || next_char == '"')
+// 		{
+// 			quote = next_char;
+// 			i++;
+// 			i++;
+// 		}
+// 		else
+// 			break;
+// 	}
+// 	return (i);
+// }
 
 int	ft_check_quote_pairs(char *input, int *i, char quote)
 {
@@ -32,23 +53,23 @@ int	ft_check_quote_pairs(char *input, int *i, char quote)
 	return (count);
 }
 
-int	ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini)
-{
-	int	i;
+// int	ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini)
+// {
+// 	int	i;
 
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == 39)
-			simp_quote += ft_check_quote_pairs(input, &i, input[i]);
-		if (input[i] == 34)
-			doub_quote += ft_check_quote_pairs(input, &i, input[i]);
-		if (simp_quote % 2 == 0 || doub_quote % 2 == 0)
-		{
-			mini->flags->quote = 1;
-			printf("dquote>\n");
-			return (0);
-		}
-	}
-	return (1);
-}
+// 	i = -1;
+// 	while (input[++i])
+// 	{
+// 		if (input[i] == 39)
+// 			simp_quote += ft_check_quote_pairs(input, &i, input[i]);
+// 		if (input[i] == 34)
+// 			doub_quote += ft_check_quote_pairs(input, &i, input[i]);
+// 		if (simp_quote % 2 == 0 || doub_quote % 2 == 0)
+// 		{
+// 			mini->flags->quote = 1;
+// 			printf("dquote>\n");
+// 			return (0);
+// 		}
+// 	}
+// 	return (1);
+// }
