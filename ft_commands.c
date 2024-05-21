@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/21 10:09:33 by user             ###   ########.fr       */
+/*   Updated: 2024/05/21 11:04:37 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ t_cmd	*ft_add_command(t_mini *mini, char *input)
 	if (new_cmd->args_amount == 0)
 		return (new_cmd);
 	new_cmd->args = ft_get_args(input, new_cmd->args_amount);
-	for (int i = 0; i < new_cmd->args_amount + 1; i++)
-		printf("%s\n", new_cmd->args[i]);
+	int i = 0;
+	while (i < new_cmd->args_amount + 1)
+		printf("%s\n", new_cmd->args[i++]);
 	return (new_cmd);
 }
 
