@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_management.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 18:13:29 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:43:18 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_many_args_error(char **argv)
 		ft_put_error(argv[0], argv[1], "Cannot execute binary file");
 	else
 		ft_put_error(argv[0], argv[1], "No such file or directory");
-	exit(127);
+	exit (127);
 }
 
 void	ft_exit_error(char *error_msg, int exit_status)

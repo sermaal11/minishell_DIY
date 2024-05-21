@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:55:56 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 18:14:44 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:01:19 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_locate_next_quote(int i, char *input, char quote)
 int	ft_check_quote_pairs(char *input, int *i, char quote)
 {
 	int	count;
-	
+
 	count = 1;
 	while (input[*i + 1] && input[*i + 1] != quote)
 		(*i)++;
@@ -43,12 +43,14 @@ int	ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini)
 			simp_quote += ft_check_quote_pairs(input, &i, input[i]);
 		if (input[i] == 34)
 			doub_quote += ft_check_quote_pairs(input, &i, input[i]);
-		if (simp_quote % 2 == 0 || doub_quote % 2 == 0)
+		if (simp_quote % 2 == 1 || doub_quote % 2 == 1)
 		{
 			mini->flags->quote = 1;
 			printf("dquote>\n");
 			return (0);
 		}
+		if (input[i] == '\0')
+			break ;
 	}
 	return (1);
 }

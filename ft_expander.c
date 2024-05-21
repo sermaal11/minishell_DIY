@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 16:37:53 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:57:29 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_craft_result(char *final_line, char *line, char *var, int c)
 	k = ft_search_next_char(line, '$', -1);
 	if ((size_t)k == ft_strlen(line))
 		return (line);
-	while(++i < k)
+	while (++i < k)
 		final_line[i] = line[i];
 	while (var[++j])
 		final_line[i + j] = var[j];
@@ -64,7 +64,7 @@ char	*ft_change_name_var(char *line)
 
 	i = ft_locate_next_quote(0, line, '$') + 1;
 	j = 0;
-	while (line[i + j] && line[i + j] == ' '&& line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j] == 0))
+	while (line[i + j] && line[i + j] == ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j] == 0))
 		j++;
 	var_name = ft_calloc(sizeof(char), j + 1);
 	if (!var_name)
@@ -107,7 +107,7 @@ char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
 {
 	char	*temp;
 
-	if (ft_check_dollar_n_digits(command) == 0)
+	if (ft_check_dollar_n_digits(command, -1) == 0)
 		command = ft_remove_dollar_n_digits(command, -1, -1);
 	if (ft_locate_dollar(command) == 0)
 		return (command);
@@ -117,7 +117,7 @@ char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
 		command = ft_change_dollar_x_var(cmd, command, NULL);
 	if (cmd->flags->dollar == 1)
 	{
-		temp = ft_strjoin_custom(command, var_reminder, 0, 0);
+		temp = ft_strjoin_custom(command, var_reminder, -1, -1);
 		free(command);
 		command = temp;
 		free(var_reminder);
@@ -131,22 +131,22 @@ char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
 	return (command);	
 }
 
-void	ft_expander(t_cmd **cmd)
+void	ft_expander(t_cmd *cmd)
 {
 	int	i;
-	
+
 	i = -1;
-	if (ft_locate_dollar((*cmd)->cmd) == 1)
-		(*cmd)->cmd = ft_change_dollar_x_var((*cmd), (*cmd)->cmd, NULL);
-	if (ft_check_relative_home((*cmd)->cmd) == 1)
-		(*cmd)->cmd = ft_replace_home((*cmd)->cmd);
-	if (!(*cmd)->args)
+	if (ft_locate_dollar(cmd->cmd) == 1)
+		cmd->cmd = ft_change_dollar_x_var(cmd, cmd->cmd, NULL);
+	if (ft_check_relative_home(cmd->cmd) == 1)
+		cmd->cmd = ft_replace_home(cmd->cmd);
+	if (!cmd->args)
 		return ;
-	while((*cmd)->args[++i])
+	while (cmd->args[++i])
 	{
-		if (ft_locate_dollar((*cmd)->args[i]) == 1)
-			(*cmd)->args[i] = ft_change_dollar_x_var((*cmd), (*cmd)->args[i], NULL);
-		if (ft_check_relative_home((*cmd)->args[i]) == 1)
-			(*cmd)->args[i] = ft_replace_home((*cmd)->args[i]);
+		if (ft_locate_dollar(cmd->args[i]) == 1)
+			cmd->args[i] = ft_change_dollar_x_var(cmd, cmd->args[i], NULL);
+		if (ft_check_relative_home(cmd->args[i]) == 1)
+			cmd->args[i] = ft_replace_home(cmd->args[i]);
 	}
 }

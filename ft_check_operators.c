@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_operators.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:48:53 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 14:27:35 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:16:36 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	ft_search_next_char(char *str, char c, int j)
 		if (str[i] == 34)
 		{
 			while (str[++i] != 34)
+			{
 				if (str[i] =='$' && i >= j)
 					return (i);
+			}
 		}
 		if (str[i] == 39)
 		{

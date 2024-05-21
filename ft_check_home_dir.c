@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_home_dir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:23:43 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 17:09:32 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:08:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_check_relative_home(char *command)
 {
-	int	i;
-
-	i = -1;
 	if (command && command[0] == '~' && (!command[1] || command[1] == '/'))
 		return (1);
 	return (0);
@@ -25,11 +22,9 @@ int	ft_check_relative_home(char *command)
 char	*ft_replace_home(char *str)
 {
 	char	*res;
-	int		i;
 	char	*temp;
 	char	*temp2;
 
-	i = 0;
 	temp = ft_strdup(str + 1);
 	res = ft_strdup(getenv("HOME"));
 	if (!res)
@@ -49,7 +44,7 @@ char	*ft_replace_value_of_var_bis(char *str, int i, int j)
 	tmp[0] = ft_itoa(g_exit_status);
 	res = malloc(sizeof(char) * ((ft_strlen(str) - 1) + ft_strlen(tmp[0])));
 	if (!res)
-		exit_error("Error malloc", 55);
+		ft_exit_error("Error malloc", 55);
 	tmp[1] = ft_substr(str, 0, i);
 	tmp[2] = ft_strdup(tmp[1]);
 	free(tmp[1]);
@@ -71,8 +66,8 @@ char	*ft_replace_value_of_var_bis(char *str, int i, int j)
 
 char	*ft_replace_value_of_var(char *str)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = ft_locate_next_quote(0, str, '?') - 1;
 	while (str[i])

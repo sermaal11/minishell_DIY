@@ -3,38 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:29 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 13:19:34 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:26:00 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input)
+int	ft_strtok(t_mini *mini, t_cmd *cmd, char *input)
 {
-	int		i;
+	// int		i;
 	char	**lines;
-	t_cmd	*tmp;
-
-	i = 0;
+	// t_cmd	*tmp;
+	// i = 0;
 	lines = NULL;
 	mini->char_amount = 0;
-	if(ft_check_input(&mini, input, &lines))
+	if (ft_check_input(mini, input, lines) != 0)
 		return (0);
-	*cmd = ft_add_command(mini, lines[0]);
-	ft_expander(cmd);
-	while (++i <= mini->flags->pipe)
-	{
-		mini->char_amount = 0;
-		tmp = ft_add_command(mini, lines[i]);
-		ft_expander(&tmp);
-		(ft_last_command(cmd)->next = tmp);
-	}
-	while (i--)
-		free(lines[i]);
-	free(lines);
-	free(input);
+	printf("AAA\n");
+	printf("S = %s\n", input);
+	if (mini->flags->pipe == 0) //Anadir mini->flags->red == -1
+		cmd = ft_add_command(mini, input);
+	else
+		cmd = ft_add_command(mini, lines[0]);
+	return (1);
+	printf("a%s\n", cmd->args[0]);
+	// printCmd(cmd);
+	// ft_expander(cmd);
+	// while (++i <= mini->flags->pipe)
+	// {
+	// 	mini->char_amount = 0;
+	// 	tmp = ft_add_command(mini, lines[i]);
+	// 	ft_expander(&tmp);
+	// 	(ft_last_command(cmd)->next = tmp);
+	// }
+	// while (i--)
+	// 	free(lines[i]);
+	// free(lines);
+	// free(input);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:34:11 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/03/14 18:16:30 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:11:08 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static void	ft_child_signal_handler(int signal)
 
 void	ft_signal_management(int i)
 {
-	struct sigaction sig_act;
-	
+	struct sigaction	sig_act;
 	/*
 	struct sigaction 
 	{
@@ -75,7 +74,6 @@ void	ft_signal_management(int i)
     void (*sa_sigaction)(int, siginfo_t *, void *); // Puntero a una función de manejo de señales alternativa
 	};
 	*/
-
 	if (i)
 		sig_act.sa_handler = &ft_signal_handler;
 	else

@@ -32,9 +32,10 @@ SRCS =	main.c \
 		ft_error_management.c \
 		ft_signals.c \
 		ft_initialize.c \
-		# ft_expander.c \
+		ft_expander.c \
 		ft_parser.c \
 		ft_commands.c \
+		ft_commands-2.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
 		ft_check_redir.c \
@@ -64,17 +65,17 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Recuerda siempre usar $(RESET) al final de tu mensaje para restablecer los
 # colores a los valores predeterminados de la terminal.
-RESET = \033[0m
+RESET = \033[0m]
 
 # Regular
-RED = \033[0;31m
-GREEN = \033[0;32m
-CYAN = \033[0;36m
+RED = \033[0;31m]
+GREEN = \033[0;32m]
+CYAN = \033[0;36m]
 
 # Bold
-BOLD_RED = \033[1;31m
-BOLD_GREEN = \033[1;32m
-BOLD_PURPLE = \033[1;35m
+BOLD_RED = \033[1;31m]
+BOLD_GREEN = \033[1;32m]
+BOLD_PURPLE = \033[1;35m]
 
 #------------------------------------------------------------------------------#
 

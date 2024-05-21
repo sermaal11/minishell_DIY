@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:04:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/03 16:36:03 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:51:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,10 @@ char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c)
 	str = (char *)malloc(sizeof(char) * (size1 + ft_strlen(str2) + 1));
 	if (!str)
 		return (NULL);
-	while (str1[i] && i < size1)
-	{
+	while (str1[++i] && i < size1)
 		str[i] = str1[i];
-		i++;
-	}
-	while (str2[c])
-	{
+	while (str2[++c])
 		str[i + c] = str2[c];
-		c++;
-	}
 	str[i + c] = '\0';
 	return (str);
 }
@@ -48,12 +42,11 @@ int	ft_var_strcmp(char *str1, char *str2)
 		i++;
 	if (ft_strlen(str1) != i)
 		return (1);
-	i = 0;
-	while (str1[i] && str2[i] != '=')
+	i = -1;
+	while (str1[++i] && str2[i] != '=')
 	{
 		if (str1[i] != str2[i])
 			return (1);
-		i++;
 	}
 	return (0);
 }
@@ -82,12 +75,10 @@ char	*ft_change_line_value(char *line, char *var)
 	int		i;
 	int		j;
 	char	*final_line;
-	int		c;
 
 	j = 0;
 	i = ft_search_next_char(line, '$', -1);
-	c = i;
-	while (line[i + j] && line[i + j] != ' ' && line[i +  j] != 34 && line[i + j] != 39)
+	while (line[i + j] && line[i + j] != ' ' && line[i + j] != 34 && line[i + j] != 39)
 		j++;
 	while (line[i + j])
 		i++;
@@ -115,4 +106,5 @@ char	*ft_compare_var_name(t_cmd *cmd, char *line, char *name_var)
 			return (ft_change_line_value(line, result));
 		}
 	}
+	return (NULL);
 }

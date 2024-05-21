@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 13:33:28 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:53:38 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix)
 		splited_pipes_matrix[position] = NULL;
 		return (splited_pipes_matrix);
 	}
+	return (NULL);
 }
 
 int	ft_count_pipes(char *input)
@@ -53,7 +54,7 @@ int	ft_count_pipes(char *input)
 		if ((input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0'))
 			|| input[0] == '|')
 		{
-			ft_put_error("bash", NULL, "syntax error near unexpected token `|'");
+			ft_put_error("bash", NULL, "syntax error near unexpected token `||'");
 			g_exit_status = 258;
 			return (-1);
 		}
@@ -70,11 +71,13 @@ int	ft_check_pipes_arg(char *input)
 
 	i = -1;
 	result = -1;
+	printf("A%s\n", input);
 	while (input[++i])
 	{
 		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
 			result = 0;
 	}
+	printf("%d\n", result);
 	if (result == -1)
 		ft_put_error("bash", NULL, "syntax error near unexpected token `|'");
 	return (result);
@@ -86,14 +89,14 @@ char	**ft_split_pipes(char *input)
 	int		i;
 
 	i = -1;
-	splited_pipes_matrix = ft_calloc(sizeof(char *), (ft_count_pipes(input) + 2));
+	splited_pipes_matrix = ft_calloc(sizeof(char **), (ft_count_pipes(input) + 2));
+	// splited_pipes_matrix = malloc((ft_count_pipes(input) + 2) * sizeof (char *));
 	if (!splited_pipes_matrix)
 		ft_exit_error("Malloc error", 54);
 	splited_pipes_matrix = ft_fill_matrix_pipes(input, splited_pipes_matrix);
 	while (splited_pipes_matrix[++i])
 	{
-		if (ft_check_pipes_arg(splited_pipes_matrix[i]) == -1
-			|| ft_check_redir_arg(splited_pipes_matrix, i) == -1)
+		if (ft_check_pipes_arg(splited_pipes_matrix[i]) == -1)
 		{
 			g_exit_status = 258;
 			while (i >= 0)
