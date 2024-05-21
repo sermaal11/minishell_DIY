@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:55:56 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 11:01:19 by user             ###   ########.fr       */
+/*   Updated: 2024/05/21 10:33:28 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_check_quote_pairs(char *input, int *i, char quote)
 int	ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini)
 {
 	int	i;
-
+	
 	i = -1;
 	while (input[++i])
 	{

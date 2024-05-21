@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 15:14:09 by user             ###   ########.fr       */
+/*   Updated: 2024/05/21 10:35:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int	ft_check_void_input(char *input)
 
 void	ft_recive_input(t_mini *mini)
 {
-	char	*input;
-
+	char *input;
+	
 	(void) mini;
 	while (1)
 	{
@@ -48,19 +48,13 @@ void	ft_recive_input(t_mini *mini)
 			// este proyecto es una mierda
 			// No se que mas hacer
 			// ! AYUDA:
-			// int i = -1;
-			// while (mini->cmd->args[++i] != NULL)
-			// 	printf("mini -> cmd -> args[%d] %s\n", i, mini->cmd->args[i]);
-			// printf("mini -> cmd -> args_amount %d\n", mini->cmd->args_amount);
-			// printf("mini -> cmd -> cmd %s\n", mini->cmd->cmd);
-			// printf("mini ->cmd -> flags -> dollar %d\n", mini->cmd->flags->dollar);
-			// printf("mini ->cmd -> flags -> pipe %d\n", mini->cmd->flags->pipe);
-			// printf("mini ->cmd -> flags -> quote %d\n", mini->cmd->flags->quote);
-			if (ft_strtok(mini, mini->cmd, input) && mini->flags->quote != 0)
+			if (ft_strtok(mini, &mini->cmd, input) && mini->flags->quote != 0)
 			{
 				printf("Llega al final! 🚀\n");
 			}
+			
 		}
+		
 		// todo: Proto built-ins: exit (Irá en ft_builtins.c y sera llamada desde el ejecutor)
 		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
 		{
