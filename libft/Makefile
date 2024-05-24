@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sergio <sergio@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/21 18:06:40 by sergio            #+#    #+#              #
-#    Updated: 2024/02/07 16:29:28 by sergio           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #------------------------------------------------------------------------------#
 #******************************************************************************#
 #********************************* C MAKEFILE *********************************#
@@ -29,52 +17,52 @@ CFLAGS = -Wall -Wextra -Werror
 #------------------------------------------------------------------------------#
 
 # Archivos fuente (agregar los que se necesiten)
-SRCS =	ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
+SRCS =	ft_gnl.c \
+		ft_atoi.c \
+		ft_itoa.c \
+		ft_bzero.c \
+		ft_split.c \
 		ft_strlen.c \
 		ft_memset.c \
-		ft_bzero.c \
+		ft_memchr.c \
+		ft_strchr.c \
+		ft_memcmp.c \
+		ft_calloc.c \
+		ft_strdup.c \
+		ft_lstnew.c \
+		ft_lstmap.c \
+		ft_intlen.c \
 		ft_memcpy.c \
+		ft_substr.c \
 		ft_memmove.c \
 		ft_strlcpy.c \
 		ft_strlcat.c \
 		ft_toupper.c \
 		ft_tolower.c \
-		ft_strchr.c \
 		ft_strrchr.c \
-		ft_strncmp.c \
-		ft_memchr.c \
-		ft_memcmp.c \
+		ft_isalpha.c \
+		ft_isdigit.c \
+		ft_isalnum.c \
+		ft_isascii.c \
+		ft_isprint.c \
 		ft_strnstr.c \
-		ft_atoi.c \
 		ft_isspace.c \
-		ft_calloc.c \
-		ft_strdup.c \
-		ft_substr.c \
+		ft_strncmp.c \
 		ft_strjoin.c \
 		ft_strtrim.c \
-		ft_split.c \
-		ft_itoa.c \
 		ft_strmapi.c \
-		ft_striteri.c \
-		ft_putchar_fd.c \
-		ft_putstr_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_lstnew.c \
-		ft_lstadd_front.c \
 		ft_lstsize.c \
 		ft_lstlast.c \
-		ft_lstadd_back.c \
-		ft_lstdelone.c \
-		ft_lstclear.c \
 		ft_lstiter.c \
-		ft_lstmap.c \
-		ft_intlen.c \
-		ft_gnl.c
+		ft_lstclear.c \
+		ft_striteri.c \
+		ft_putnbr_fd.c \
+		ft_putstr_fd.c \
+		ft_lstdelone.c \
+		ft_putchar_fd.c \
+		ft_putendl_fd.c \
+		ft_lstadd_back.c \
+		ft_lstadd_front.c \
 
 #------------------------------------------------------------------------------#
  
@@ -85,21 +73,44 @@ OBJDIR = obj_dir
 
 #------------------------------------------------------------------------------#
 
-# Colores para el make
+# Recuerda siempre usar $(RESET) al final de tu mensaje para restablecer los
+# colores a los valores predeterminados de la terminal.
 RESET = \033[0m
-GREEN = \033[92m
-CYAN = \033[96m
-RED = \033[91m
-BOLD_GREEN = \033[1;32m
-BOLD_RED = \033[1;31m
 
+# Regular
+RED = \033[0;31m
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+
+# Bold
+BOLD_RED = \033[1;31m
+BOLD_GREEN = \033[1;32m
+BOLD_PURPLE = \033[1;35m
+
+# More colors
+B_C = \033[1;36m
+YELLOW = \033[0;33m
+BOLD_YELLOW = \033[1;33m
+BLUE = \033[0;34m
+BOLD_BLUE = \033[1;34m
+MAGENTA = \033[0;35m
+BOLD_MAGENTA = \033[1;35m
+WHITE = \033[0;37m
+BOLD_WHITE = \033[1;37m
 #------------------------------------------------------------------------------#
 
 # Reglas del make (no tocar)
 
 all: $(NAME)
-	@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡$(NAME) compilado con exito!!! (⌐■_■)$(RESET)"
-
+	@if [ "$(MAKE_COMPILATION)" = "1" ]; then \
+		clear; \
+	else \
+		echo "╔══════════════════════════════════════════════════════════════╗"; \
+		echo "║ $(B_C)(┌ಠ_ಠ)\t¡¡¡$(NAME) compilado con éxito!!!\t(ಠ_ಠ┐)$(RESET) ║"; \
+		echo "╚══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╝"; \
+	fi
+	@$(eval MAKE_COMPILATION := 0)
+	
 # La regla $(NAME) compila el ejecutable con los archivos objeto creados 
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
 	@echo "$(GREEN)¡Objetos de $(NAME) creados!$(RESET)"
@@ -109,6 +120,7 @@ $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
 # La regla %.o compila los archivos objeto
 $(OBJDIR)/%.o : %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+	@$(eval MAKE_COMPILATION := 1)
 
 # La regla $(OBJDIR) crea el directorio de los archivos objeto
 $(OBJDIR):
@@ -144,9 +156,9 @@ git:
 		read -p "Mensaje para el commit: " message; \
 		git commit -m "$$message"; \
 		git push; \
-		@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡Git push realizado!!! (⌐■_■)$(RESET)"; \
+		@echo "$(BOLD_GREEN)(┌⊙_⊙)\t\t ¡¡¡Git push realizado!!! \t(⊙_⊙┐)$(RESET)"; \
 	else \
-		echo "$(BOLD_RED)(҂◡_◡) ¡¡¡Git push no realizado (҂◡_◡)!!!$(RESET)"; \
+		echo "$(BOLD_RED)(҂◕︵◕) \t\t¡¡¡Git push no realizado \t(҂◕︵◕)!!!$(RESET)"; \
 	fi
 
 # La regla .PHONY indica que no hay un archivo llamado all, clean, fclean o re

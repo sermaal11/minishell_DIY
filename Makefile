@@ -26,16 +26,16 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 #------------------------------------------------------------------------------#
 
 # Archivos fuente (agregar los que se necesiten)
-SRCS =	main.c \
-		ft_utils.c \
+SRCS =	ft_main.c \
 		ft_lexer.c \
-		ft_error_management.c \
-		ft_signals.c \
-		ft_initialize.c \
-		ft_expander.c \
+		ft_utils.c \
 		ft_parser.c \
+		ft_signals.c \
+		ft_expander.c \
 		ft_commands.c \
 		ft_commands-2.c \
+		ft_commands-3.c \
+		ft_initialize.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
 		ft_check_redir.c \
@@ -44,6 +44,7 @@ SRCS =	main.c \
 		ft_expander_utils.c \
 		ft_check_home_dir.c \
 		ft_check_operators.c \
+		ft_error_management.c \
 
 #------------------------------------------------------------------------------#
 
@@ -65,37 +66,56 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Recuerda siempre usar $(RESET) al final de tu mensaje para restablecer los
 # colores a los valores predeterminados de la terminal.
-RESET = \033[0m]
+RESET = \033[0m
 
 # Regular
-RED = \033[0;31m]
-GREEN = \033[0;32m]
-CYAN = \033[0;36m]
+RED = \033[0;31m
+GREEN = \033[0;32m
+CYAN = \033[0;36m
 
 # Bold
-BOLD_RED = \033[1;31m]
-BOLD_GREEN = \033[1;32m]
-BOLD_PURPLE = \033[1;35m]
+BOLD_RED = \033[1;31m
+BOLD_GREEN = \033[1;32m
+BOLD_PURPLE = \033[1;35m
+
+# More colors
+B_C = \033[1;36m
+YELLOW = \033[0;33m
+BOLD_YELLOW = \033[1;33m
+BLUE = \033[0;34m
+BOLD_BLUE = \033[1;34m
+MAGENTA = \033[0;35m
+BOLD_MAGENTA = \033[1;35m
+WHITE = \033[0;37m
+BOLD_WHITE = \033[1;37m
 
 #------------------------------------------------------------------------------#
+
+LAST_MAKE_HAD_COMPILATION := 0
 
 # Reglas del make (no tocar)
 
 # La regla all compila el ejecutable
-all:libft $(NAME)
-	@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡$(NAME) compilado con exito!!! (⌐■_■)$(RESET)"
-	clear
-# ./$(NAME)
+all: libft $(NAME)
+	@if [ "$(LAST_MAKE_HAD_COMPILATION)" = "1" ]; then \
+		clear; \
+	else \
+		echo "╔══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╗"; \
+		echo "║ $(B_C)(┌ಠ_ಠ)       ¡¡¡$(NAME) compilado con éxito!!!\t(ಠ_ಠ┐)$(RESET) ║"; \
+		echo "╚══════════════════════════════════════════════════════════════╝"; \
+	fi
+	@$(eval LAST_MAKE_HAD_COMPILATION := 1)
 
 # La regla $(NAME) compila el ejecutable con los archivos objeto creados
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
 	@echo "$(BOLD_GREEN)¡Objetos creados!$(RESET)"
 	@echo "$(CYAN)Compilando $(NAME)...$(RESET)"
 	$(CC) $(CFLAGS) -o $@ $^ -lreadline $(LIBFT)
-
+	
 # La regla %.o compila los archivos objeto
 $(OBJDIR)/%.o : %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
+	@$(eval LAST_MAKE_HAD_COMPILATION := 1)
 
 # La regla $(OBJDIR) crea el directorio de los archivos objeto
 $(OBJDIR):
@@ -107,7 +127,7 @@ $(OBJDIR):
 # La regla libft compila la libft. Si se usa, descomentar las siguientes
 # dos lineas
 libft:
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) --no-print-directory
 
 # La regla libft_clean elimina los archivos objeto de la libft. Si se usa,
 # descomentar las siguientes dos lineas
@@ -155,7 +175,7 @@ init:
 	else \
 		echo "Puedes ver los comandos con 'make help' en cualquier momento"; \
 	fi
-	@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡Proyecto inicializado, ya puedes empezar a completar el Makefile!!! (⌐■_■)$(RESET)"
+	@echo "$(BOLD_GREEN)(┌ಠ_ಠ)\t¡¡¡Proyecto inicializado, ya puedes empezar a completar el Makefile!!! \t(ಠ_ಠ┐)$(RESET)"
 
 # La regla test compila y ejecuta el programa con los argumentos que le pases
 test: re
@@ -175,9 +195,9 @@ git: fclean
 		read -p "Mensaje para el commit: " message; \
 		git commit -m "$$message"; \
 		git push; \
-		echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡Git push realizado!!! (⌐■_■)$(RESET)"; \
+		echo "$(BOLD_GREEN)(┌ಠ_ಠ)\t ¡¡¡Git push realizado!!! \t(ಠ_ಠ┐)$(RESET)"; \
 	else \
-		echo "$(BOLD_RED)(҂◡_◡) ¡¡¡Git push no realizado (҂◡_◡)!!!$(RESET)"; \
+		echo "$(BOLD_RED)(҂◕︵◕) ¡¡¡Git push no realizado (҂◕︵◕)!!!$(RESET)"; \
 	fi
 
 # La regla norm comprueba la norminette en las SRCS y en el .h

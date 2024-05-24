@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/21 10:41:50 by user             ###   ########.fr       */
+/*   Updated: 2024/05/24 10:09:25 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	ft_strtok(t_mini *mini, t_cmd *cmd, char *input)
 	mini->char_amount = 0;
 	if(ft_check_input(mini, input, lines))
 		return (0);
-	printf("AAA\n");
-	printf("S = %s\n", input);
 	if (mini->flags->pipe == 0) //Anadir mini->flags->red == -1
 		cmd = ft_add_command(mini, input);
 	else
