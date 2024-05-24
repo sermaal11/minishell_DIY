@@ -195,7 +195,9 @@ git: fclean
 		read -p "Mensaje para el commit: " message; \
 		git commit -m "$$message"; \
 		git push; \
-		echo "$(BOLD_GREEN)(┌ಠ_ಠ)\t ¡¡¡Git push realizado!!! \t(ಠ_ಠ┐)$(RESET)"; \
+		echo "╔══════════════════════════════════════════════════════════════╗"; \
+		echo "║ $(BOLD_GREEN)(┌ಠ_ಠ)\t\t ¡¡¡Git push realizado!!! \t(ಠ_ಠ┐)$(RESET) ║"; \
+		echo "╚══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╝"; \
 	else \
 		echo "$(BOLD_RED)(҂◕︵◕) ¡¡¡Git push no realizado (҂◕︵◕)!!!$(RESET)"; \
 	fi
