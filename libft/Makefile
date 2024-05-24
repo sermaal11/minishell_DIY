@@ -156,7 +156,9 @@ git:
 		read -p "Mensaje para el commit: " message; \
 		git commit -m "$$message"; \
 		git push; \
-		@echo "$(BOLD_GREEN)(┌⊙_⊙)\t\t ¡¡¡Git push realizado!!! \t(⊙_⊙┐)$(RESET)"; \
+		echo "╔══════════════════════════════════════════════════════════════╗"; \
+		echo "║ $(BOLD_GREEN)(┌⊙_⊙)\t\t ¡¡¡Git push realizado!!! \t(⊙_⊙┐)$(RESET) ║"; \
+		echo "╚══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╝"; \
 	else \
 		echo "$(BOLD_RED)(҂◕︵◕) \t\t¡¡¡Git push no realizado \t(҂◕︵◕)!!!$(RESET)"; \
 	fi
