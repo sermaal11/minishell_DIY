@@ -106,7 +106,7 @@ all: $(NAME)
 		clear; \
 	else \
 		echo "╔══════════════════════════════════════════════════════════════╗"; \
-		echo "║ $(B_C)(┌ಠ_ಠ)\t¡¡¡$(NAME) compilado con éxito!!!\t(ಠ_ಠ┐)$(RESET) ║"; \
+		echo "║ $(B_C)(┌ಠ_ಠ)\t ¡$(NAME) compilado con éxito!!\t\t(ಠ_ಠ┐)$(RESET) ║"; \
 		echo "╚══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╗ ╔══════════╝"; \
 	fi
 	@$(eval MAKE_COMPILATION := 0)

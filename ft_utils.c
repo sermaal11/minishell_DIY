@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:24:41 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 13:05:03 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:14:29 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	ft_mini_header(void)
 	printf("|  \\/  ||_ _|| \\| ||_ _|| || || __|| |   | |    \n");
 	printf("| |\\/| | | | | .` | | | | __ || _| | |__ | |__  \n");
 	printf("|_|  |_||___||_|\\_||___||_||_||___||____||____| \n\n");
-	printf(RED"            By Descamil & Smarin-a\n"RESET);
+	printf(RED"            By Descamil && Smarin-a\n"RESET);
 	printf("\n\n");
 }

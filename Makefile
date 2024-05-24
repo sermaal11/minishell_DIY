@@ -101,7 +101,7 @@ all: libft $(NAME)
 		clear; \
 	else \
 		echo "╔══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╗"; \
-		echo "║ $(B_C)(┌ಠ_ಠ)       ¡¡¡$(NAME) compilado con éxito!!!\t(ಠ_ಠ┐)$(RESET) ║"; \
+		echo "║ $(B_C)(┌ಠ_ಠ)\t¡$(NAME) compilado con éxito!!\t(ಠ_ಠ┐)$(RESET) ║"; \
 		echo "╚══════════════════════════════════════════════════════════════╝"; \
 	fi
 	@$(eval LAST_MAKE_HAD_COMPILATION := 1)

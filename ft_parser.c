@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/24 10:09:25 by user             ###   ########.fr       */
+/*   Updated: 2024/05/24 15:26:36 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_strtok(t_mini *mini, t_cmd *cmd, char *input)
 	// i = 0;
 	lines = NULL;
 	mini->char_amount = 0;
-	if(ft_check_input(mini, input, lines))
+	if(ft_check_input(mini, input, &lines))
 		return (0);
 	if (mini->flags->pipe == 0) //Anadir mini->flags->red == -1
 		cmd = ft_add_command(mini, input);
@@ -29,7 +29,6 @@ int	ft_strtok(t_mini *mini, t_cmd *cmd, char *input)
 		cmd = ft_add_command(mini, lines[0]);
 	return (1);
 	printf("a%s\n", cmd->args[0]);
-	// printCmd(cmd);
 	// ft_expander(cmd);
 	// while (++i <= mini->flags->pipe)
 	// {

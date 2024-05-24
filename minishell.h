@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/23 16:15:21 by user             ###   ########.fr       */
+/*   Updated: 2024/05/24 16:33:35 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,34 @@ extern int g_exit_status;
 
 typedef struct s_red
 {
-	int		si_ri;
-	int		si_le;
-	int		do_ri;
-	int		do_le;
+	int			si_ri;
+	int			si_le;
+	int			do_ri;
+	int			do_le;
+	int			red_error;
+	char		*error;
 }				t_red;
 
 typedef struct s_token
 {
-	char	*input;
-	char	**tokens;
+	char		*input;
+	char		**tokens;
 }				t_token;
 
 typedef struct s_flags
 {
-	int		quote;
-	int		pipe;
-	int		dollar;
-	t_red	redirect;
-	int		red;
+	int			red;
+	int			pipe;
+	int			quote;
+	int			dollar;
+	t_red		*redirect;
 }				t_flags;
 
 typedef struct s_env
 {
-	int		env_amount;
-	char	*path;
-	char	**env;
+	int			env_amount;
+	char		*path;
+	char		**env;
 }				t_env;
 
 typedef struct s_cmd
@@ -99,16 +101,16 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**args;
 	int				args_amount;
-}				t_cmd;
+}					t_cmd;
 
 typedef struct s_mini
 {
-	int		shell_level;
-	int 	char_amount;
-	t_env	*env;
-	t_flags	*flags;
-	t_token	*token;
-	t_cmd	*cmd;
+	int			shell_level;
+	int 		char_amount;
+	t_env		*env;
+	t_flags		*flags;
+	t_token		*token;
+	t_cmd		*cmd;
 }				t_mini;
 
 // ft_utils.c
@@ -141,7 +143,7 @@ char	*ft_compare_var_name(t_cmd *cmd, char *line, char *name_var);
 char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
 
 // ft_check_input.c
-int		ft_check_input(t_mini *mini, char *input, char **lines);
+int		ft_check_input(t_mini *mini, char *input, char ***lines);
 
 // ft_check_quotes.c
 int		ft_locate_next_quote(int i, char *input, char quote);
