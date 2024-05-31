@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 09:58:13 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 16:18:38 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # include <sys/param.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
+# include <math.h>
 # define R 0
 # define W 1
 
