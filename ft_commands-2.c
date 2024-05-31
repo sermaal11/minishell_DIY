@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:35:49 by user              #+#    #+#             */
-/*   Updated: 2024/05/23 16:17:11 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 09:56:03 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	*ft_sizes_input(char *input, int argc)
 	return (sizes);
 }
 
-char	**ft_get_args(char *input, int argc)
+void	ft_get_args(char *input, int argc, char ***args)
 {
 	char	**argv;
 	int		*size;
@@ -98,10 +98,18 @@ char	**ft_get_args(char *input, int argc)
 	i = -1;
 	argv = (char **)malloc((argc + 2) * sizeof(char *));
 	if (argv == NULL)
-		return (NULL);
-	argv[argc + 1] = NULL;
+    {
+        *args = NULL;
+        return ;
+    }
 	size = ft_sizes_input(input, argc + 1);
-	while (++i <= argc)
+	if (size == NULL)
+	{
+		free(argv);
+		*args = NULL;
+		return ;
+	}
+	while (++i < argc)
 	{
 		argv[i] = (char *)malloc(size[i] * sizeof(char *));
 		if (argv[i] == NULL)
@@ -110,9 +118,12 @@ char	**ft_get_args(char *input, int argc)
 				free(argv[i]);
 			free(argv);
 			free(size);
-			return (NULL);
+			*args = NULL;
+			return ;
 		}
 		argv[i] = ft_inside_argv(input, size, i);
 	}
-	return (argv);
+	argv[argc + 1] = NULL;
+	free(size);
+	*args = argv;
 }

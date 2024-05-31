@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:24:41 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/24 15:14:29 by user             ###   ########.fr       */
+/*   Updated: 2024/05/29 10:41:52 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,4 @@ void	ft_mini_header(void)
 	printf(RED"            By Descamil && Smarin-a\n"RESET);
 	printf("\n\n");
 }
+

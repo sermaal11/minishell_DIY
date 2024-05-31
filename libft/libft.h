@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 18:07:18 by sergio            #+#    #+#             */
-/*   Updated: 2024/03/05 19:11:14 by descamil         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:54:55 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_strdup(const char *str);
 // ft_substr - Crea una subcadena a partir de otra.
 char	*ft_substr(char const *str, unsigned int start, size_t len);
 // ft_strjoin - Concatena dos cadenas alocando memoria para la nueva cadena.
-char	*ft_strjoin(char *str1, char *str2);
+char	*ft_strjoin(char const *s1, char const *s2);
 // ft_strtrim - Elimina los caracteres indicados en set de los extremos de str.
 char	*ft_strtrim(char const *str, char const *set);
 // ft_split - Divide un string en multiples strings y los guarda en un array.

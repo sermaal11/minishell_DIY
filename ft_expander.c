@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 10:57:29 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 10:52:38 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_change_name_var(char *line)
 	j = 0;
 	while (line[i + j] && line[i + j] == ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j] == 0))
 		j++;
-	var_name = ft_calloc(sizeof(char), j + 1);
+	var_name = (char *)malloc(sizeof(char *) * j + 1);
 	if (!var_name)
 		ft_exit_error("Malloc error", 16);
 	j = 0;
@@ -150,3 +150,4 @@ void	ft_expander(t_cmd *cmd)
 			cmd->args[i] = ft_replace_home(cmd->args[i]);
 	}
 }
+

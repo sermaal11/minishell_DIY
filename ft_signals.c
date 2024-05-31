@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:34:11 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 10:11:08 by user             ###   ########.fr       */
+/*   Updated: 2024/05/29 09:47:54 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static void	ft_child_signal_handler(int signal)
 void	ft_signal_management(int i)
 {
 	struct sigaction	sig_act;
+
+	sigemptyset(&sig_act.sa_mask);
 	/*
 	struct sigaction 
 	{

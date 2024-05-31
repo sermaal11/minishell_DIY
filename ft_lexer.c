@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/21 10:41:22 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 10:51:42 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	ft_recive_input(t_mini *mini)
 	{
 		input = readline("🐚"GREEN" MINI(S)HELL"RESET" 🔥 -> ");
 		if (!input)
+		{
+			free(input);
+			input = NULL;
 			ft_exit_error("Exit", g_exit_status);
+		}
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
 			(void)input;
 		else
@@ -48,13 +52,13 @@ void	ft_recive_input(t_mini *mini)
 			// este proyecto es una mierda
 			// No se que mas hacer
 			// ! AYUDA:
-			if (ft_strtok(mini, mini->cmd, input) && mini->flags->quote != 0)
+			if (ft_strtok(mini, &(mini->cmd), input) && mini->flags->quote != 0)
 			{
 				printf("Llega al final! 🚀\n");
-			}
-			
+						}
+			if (mini->flags->redirect->red_error != 0)
+				printf("mini: parse error near `%s'\n", mini->flags->redirect->error);
 		}
-		
 		// todo: Proto built-ins: exit (Irá en ft_builtins.c y sera llamada desde el ejecutor)
 		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
 		{
@@ -62,9 +66,13 @@ void	ft_recive_input(t_mini *mini)
 			//ft_exit_error("Exit", g_exit_status);
 			// ! Las dos lineas de arriba son las que valen, estas son para debuguear.
 			free(input);
+			input = NULL;
 			break ;
 		}
 		if (input != NULL)
+		{
 			free(input);
+			input = NULL;
+		}
 	}
 }

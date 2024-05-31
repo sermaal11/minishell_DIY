@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/24 16:33:35 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 09:58:13 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	int			shell_level;
-	int 		char_amount;
 	t_env		*env;
 	t_flags		*flags;
 	t_token		*token;
@@ -126,7 +125,7 @@ void	ft_signal_management(int n);
 void	ft_recive_input(t_mini *mini);
 
 // ft_parser.c
-int		ft_strtok(t_mini *mini, t_cmd *cmd, char *input);
+int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
 
 // ft_expander.c
 void	ft_expander(t_cmd *cmd);
@@ -174,7 +173,7 @@ char	*ft_split_var(char *line, int i, t_cmd *cmd);
 
 // ft_commands-2.c
 int		ft_size_argv(char *input, int stop);
-char	**ft_get_args(char *input, int argc);
+void	ft_get_args(char *input, int argc, char ***args);
 int		*ft_sizes_input(char *input, int argc);
 int		ft_position(char *input, int *size, int stop);
 char	*ft_inside_argv(char *input, int *size, int stop);
@@ -200,6 +199,13 @@ char	*ft_replace_value_bis(char *str, int i, int j);
 void	ft_many_args_error(char **argv);
 void	ft_exit_error(char *error_msg, int exit_status);
 void	ft_put_error(char *bash, char *file, char *error_msg);
+
+// ft_free.c
+void	free_t_cmd(t_cmd **cmd);
+void	free_t_env(t_env **env);
+void	free_t_mini(t_mini **mini);
+void	free_t_token(t_token **token);
+void	free_t_flags_red(t_flags **flags);
 
 
 #endif

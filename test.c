@@ -6,104 +6,83 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:10:47 by user              #+#    #+#             */
-/*   Updated: 2024/05/21 10:39:46 by user             ###   ########.fr       */
+/*   Updated: 2024/05/31 15:57:09 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_inside_argv(char *input, int *size, int stop)
+int	ft_count_dolar(char *str, int i, int j)
 {
-	char	*exit;
-	int		i;
-	int		pos;
-	int		actual;
-
-	actual = 0;
-	pos = 0;
-	exit = (char *)malloc((size[stop] + 1) * sizeof(char *));
-	if (exit == NULL)
-		return (NULL);
-	while (stop-- != 0)
+	while (str[i] != '\0')
 	{
-		pos += size[actual++];
-		while (input[pos] == ' ')
-			pos++;
+		if (str[i++] == '$')
+			j++;
 	}
-	i = -1;
-	while (++i < size[actual])
-		exit[i] = input[pos + i];
-	exit[i] = '\0';
-	return (exit);
+	return (j);
 }
 
-int	ft_size_argv(char *input, int stop)
+int	*ft_size_total(char **env, char *str)
 {
+	int	*sizes;
 	int	i;
 	int	j;
-	int	first;
+	int	l;
 
-	i = -1;
-	first = 0;
-	while (input[++i])
+	i = 0;
+	j = 0;
+	sizes = (int *)malloc(sizeof(int *) * ft_count_dolar(str, 0, 0) + 1);
+	while (str[i] != '\0')
 	{
-		if (input[i] != 34 && input[i] != 39 && input[i] != ' ')
-			first++;
-		if (input[i] == 34 || input[i] == 39)
-		{
-			j = i;
-			while (input[i] == 34 || input[i] == 39)
-				i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
-			while (j++ < i)
-				first++;
-			if (input[i] == '\0' || (input[i] == ' ' && stop-- == 0))
-				return (first);
-			else
-				first = 0;
+		while (str[i] != '\0' && str[i] != '$')
+			printf("%c\n", str[i++]);
+		if (str[i] == '\0' || str[i + 1] == '\0' || ft_isdigit(str[i + 1]) == 1)
+		{	
+			free(sizes);
+			return (0);
 		}
+		if (str[i++] == '$')
+		{
+			while (ft_isalnum(str[i++]) == 1)
+			{
+				printf("%c\n", str[i]);
+				j++;
+			}
+		}
+		sizes[l++] = j;
+		i++;
 	}
-	return (first);
-}
-
-int *ft_sizes_input(char *input, int argc)
-{
-	int *sizes;
-	int i;
-
-	i = -1;
-	sizes = (int *)malloc(argc * sizeof(int *));
-	if (sizes == NULL)
-		return (0);
-	while (++i < argc)
-		sizes[i] = ft_size_argv(input, i);
+	sizes[l] = -1;
 	return (sizes);
 }
 
-char **ft_get_args(char *input, int argc)
+char	*ft_expand(char **env, char *str) // Pasar cadena ya limpia y partida por redirecciones y pipes;
 {
-	char	**argv;
-	int		*size;
-	int		i;
-
-	i = -1;
-	argv = (char **)malloc((argc + 1) * sizeof(char *));
-	if (argv == NULL)
+	int	i;
+	int	*sizes;
+	
+	i = 0;
+	// while (env[i] != NULL)
+	// 	// printf("\n    ---------------------------------------------------\n\n"OR1"\t%s\n"RESET, env[i++]);
+	// 	i++;
+	printf(CYAN"\n\t%s\n"RESET, str);
+	sizes = ft_size_total(env, str);
+	if (sizes[0] == 0)
 		return (NULL);
-	argv[argc] = NULL;
-	size = ft_sizes_input(input, argc);
-	while (++i < argc)
-	{
-		argv[i] = (char *)malloc(size[i] * sizeof(char *));
-		if (argv[i] == NULL)
-		{
-			while (--i >= 0)
-				free(argv[i]);
-			free(argv);
-			free(size);
-			return (NULL);
-		}
-		argv[i] = ft_inside_argv(input, size, i);
-	}
-	argv[i] = NULL;
-	return (argv);
+	while (sizes[i] != -1)
+		printf(CYAN"%d\n"RESET, sizes[i++]);
+	return (str);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	char	*str = "ls -a $asd $ddd";
+	char	*final;
+
+	if (argc != 1)
+		return (printf(BOLD_RED"ERROR --> %s\n"RESET, argv[1]), 0);
+	final = ft_expand(env, str);
+	printf(GREEN"\n\t%s\n"RESET, final);
+
+	return (0);
 }

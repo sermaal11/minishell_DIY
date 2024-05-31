@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initialize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:21:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/01 15:48:56 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:49:03 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_set_env(t_env *env, char **enviroment)
 	// Inicializamos una matriz auxiliar donde guardaremos las variables de 
 	// entorno asegurandonos mediante calloc que tenemos suficiente memoria 
 	// para ellas.
-	matrix = ft_calloc(i, sizeof(char *));
+	matrix = ft_calloc(sizeof(char **), i);
 	// Comprobamos si la asignacion de memoria fue exitosa
 	if (!matrix)
 		ft_exit_error("Malloc error", 1);
@@ -90,12 +90,14 @@ static void	ft_set_env(t_env *env, char **enviroment)
 			// asigna al elemento i del array matrix. Esto significa que la
 			// variable de entorno "SHLVL" se actualiza en matrix con su nuevo
 			// valor incrementado en 1.
-			matrix[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(ft_strchr(enviroment[i], '=') + 1) + 1));
+			// matrix[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(ft_strchr(enviroment[i], '=') + 1) + 1));
 		}
 		// Si después de iterar no se encuentra ninguna variable de entorno
 		// "PATH", establece env->path en "./" (el directorio actual).
 		if (!env->path)
+		{
 			env->path = ft_strdup("./");
+		}
 		// Finalmente, asigna el array matrix, que contiene las variables de
 		// entorno modificadas o copiadas, al campo env de la estructura env.
 		env->env = matrix;
@@ -108,26 +110,51 @@ t_mini	*ft_initialize(char **env)
 {
 	t_mini	*mini;
 	
-	// Asignamos memoria a la estructura t_mini y lo inicializamos con 0
-	mini = ft_calloc(sizeof(mini), 1);
-	// Comprobamos si la asignacion de memoria fue exitosa
-	if (!mini)
+	mini = malloc(sizeof(t_mini));
+	if (mini == NULL)
 		ft_exit_error("Malloc error", 1);
-	// Establecemos el nivel de shell en shell_level = 2. Esto es porque estamos
-	// iniciando la minishell dentro de la shell ya.
+		
 	mini->shell_level = 2;
-	// Asignamos memoria a la estructuta t_env y lo inicializamos a 0.
-	mini->env = ft_calloc(sizeof(t_env), 1);
-	// Comrobamos si la asignacion de memoria fue exitosa.
+	
+	mini->env = malloc(sizeof(t_env));
 	if (!mini->env)
 		ft_exit_error("Malloc error", 2);
-	// Seteamos el env con la informacion deseada.
-	ft_set_env(mini->env, env);
-	//Asignamos memoria a la estructuta t_flags y lo inicializamos a 0.
-	// todo: añadir las flags necesarias en la struct t_flags.
-	mini->flags = ft_calloc(sizeof(t_flags), 1);
-	// Comrobamos si la asignacion de memoria fue exitosa.
+
+	
+	mini->flags = malloc(sizeof(t_flags));
 	if (!mini->flags)
 		ft_exit_error("Malloc error", 4);
+		
 	return (mini);
+	ft_set_env(mini->env, env);
 }
+
+
+// // Inicializar estructura general;
+// t_mini	*ft_initialize(char **env)
+// {
+// 	t_mini	*mini;
+	
+// 	// Asignamos memoria a la estructura t_mini y lo inicializamos con 0
+// 	mini = ft_calloc(sizeof(t_mini *), 1);
+// 	// Comprobamos si la asignacion de memoria fue exitosa
+// 	if (mini == NULL)
+// 		ft_exit_error("Malloc error", 1);
+// 	// Establecemos el nivel de shell en shell_level = 2. Esto es porque estamos
+// 	// iniciando la minishell dentro de la shell ya.
+// 	mini->shell_level = 2;
+// 	// Asignamos memoria a la estructuta t_env y lo inicializamos a 0.
+// 	mini->env = ft_calloc(sizeof(t_env *), 1);
+// 	// Comrobamos si la asignacion de memoria fue exitosa.
+// 	if (!mini->env)
+// 		ft_exit_error("Malloc error", 2);
+// 	// Seteamos el env con la informacion deseada.
+// 	ft_set_env(mini->env, env);
+// 	//Asignamos memoria a la estructuta t_flags y lo inicializamos a 0.
+// 	// todo: añadir las flags necesarias en la struct t_flags.
+// 	mini->flags = ft_calloc(sizeof(t_flags *), 1);
+// 	// Comrobamos si la asignacion de memoria fue exitosa.
+// 	if (!mini->flags)
+// 		ft_exit_error("Malloc error", 4);
+// 	return (mini);
+// }

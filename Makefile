@@ -27,6 +27,7 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 
 # Archivos fuente (agregar los que se necesiten)
 SRCS =	ft_main.c \
+		ft_free.c \
 		ft_lexer.c \
 		ft_utils.c \
 		ft_parser.c \
