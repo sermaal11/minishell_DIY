@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_commands-3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:07:14 by user              #+#    #+#             */
-/*   Updated: 2024/05/23 16:07:48 by user             ###   ########.fr       */
+/*   Updated: 2024/06/07 13:02:28 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_nothing(char *input, int i)
 {
-	while (i > 0 && input[i] != ' ' && input[i])
+	while (input[i] && i > 0 && input[i] != ' ')
 		i--;
 	if (i == 0)
 		return (0);

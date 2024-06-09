@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:04:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 10:51:41 by user             ###   ########.fr       */
+/*   Updated: 2024/06/05 16:03:09 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*ft_add_var_value(char *str1)
 		i++;
 	result = malloc(sizeof(char) * ft_strlen(str1) - i + 1);
 	if (!result)
-		ft_exit_error("Malloc error", 17);
+		ft_exit_error(NULL, "Malloc error", 17);
 	while (str1[++j])
 		result[j - 1] = str1[i + j];
 	result[j] = '\0';
@@ -84,7 +84,7 @@ char	*ft_change_line_value(char *line, char *var)
 		i++;
 	final_line = malloc(sizeof(char) * i + ft_strlen(var));
 	if (!final_line)
-		ft_exit_error("Malloc error", 18);
+		ft_exit_error(NULL, "Malloc error", 18);
 	final_line = ft_craft_result(final_line, line, var, j);
 	free(line);
 	free(var);

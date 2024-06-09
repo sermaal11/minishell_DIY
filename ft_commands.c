@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_commands.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 10:03:41 by user             ###   ########.fr       */
+/*   Updated: 2024/06/07 12:43:21 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,17 @@ char	*ft_get_command(t_mini *mini, char *input)
 	// printf("%d\n", ft_is_not_mayor_n_minor_char(input[i]));
 	// printf(BLUE"%d\n"RESET, i);
 	if (i && !ft_is_not_mayor_n_minor_char(input[i]))
+	{
 		command = ft_substr(input, init, i);
+		if (command == NULL)
+			ft_exit_error(NULL, "Malloc error", 50);
+	}
 	else
 	{
 		// printf("COGE CD\n");
 		command = ft_strdup("CD");
 		if (!command)
-			ft_exit_error("Malloc error", 50);
+			ft_exit_error(NULL, "Malloc error", 50);
 	}
 	// mini->char_amount += i;
 	// printf("COMMAND %s\n", command);
@@ -74,9 +78,9 @@ t_cmd	*ft_add_command(t_mini *mini, char *input)
 	t_cmd	*new_cmd;
 
 	// printf("INPUT = %s\n", input);
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		ft_exit_error("Malloc error", 9);
+		ft_exit_error(NULL, "Malloc error", 9);
 	new_cmd->cmd = ft_get_command(mini, input);
 	// printf("COMMAND2 %s\n", new_cmd->cmd);
 	new_cmd->args_amount = ft_count_args(input);
@@ -114,7 +118,7 @@ char	*ft_split_var(char *line, int i, t_cmd *cmd)
 		i++;
 	res = malloc(sizeof(char) * i - j + 1);
 	if (!res)
-		ft_exit_error("Malloc error", 17);
+		ft_exit_error(NULL, "Malloc error", 17);
 	i = 0;
 	while (line[j])
 		res[i++] = line[j++];

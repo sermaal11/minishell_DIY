@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_management.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 16:16:17 by user             ###   ########.fr       */
+/*   Updated: 2024/06/06 17:08:43 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	ft_many_args_error(char **argv)
 		ft_put_error(argv[0], argv[1], "Cannot execute binary file");
 	else
 		ft_put_error(argv[0], argv[1], "No such file or directory");
+	printf("\nSALIDA 3\n\n");
 	exit (127);
 }
 
-void	ft_exit_error(char *error_msg, int exit_status)
+void	ft_exit_error(t_mini *mini, char *error_msg, int exit_status)
 {
 	printf("%s\n", error_msg);
-	// free_t_mini()
+	printf("\nSALIDA 2\n\n");
 	exit(exit_status);
+	free_t_mini(mini);
 }

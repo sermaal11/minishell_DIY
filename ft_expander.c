@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 10:52:38 by user             ###   ########.fr       */
+/*   Updated: 2024/06/05 16:01:55 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_change_name_var(char *line)
 		j++;
 	var_name = (char *)malloc(sizeof(char *) * j + 1);
 	if (!var_name)
-		ft_exit_error("Malloc error", 16);
+		ft_exit_error(NULL, "Malloc error", 16);
 	j = 0;
 	while (line[i + j] && line[i + j] != ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j]) == 0)
 	{

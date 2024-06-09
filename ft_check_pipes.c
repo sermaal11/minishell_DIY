@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/28 16:42:37 by user             ###   ########.fr       */
+/*   Updated: 2024/06/05 16:01:31 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix)
 		{
 			splited_pipes_matrix[position] = ft_substr(input, init, i - init + 1);
 			if (splited_pipes_matrix[position] == NULL)
-				ft_exit_error("Malloc error", 54);
+				ft_exit_error(NULL, "Malloc error", 54);
 			position++;
 		}
 		if (input[i] == '|' && (input[i + 1] != '|' || input[i + 1] != '\0'))
@@ -91,7 +91,7 @@ char	**ft_split_pipes(char *input)
 	i = -1;
 	splited_pipes_matrix = (char **)malloc(sizeof(char **) * (ft_count_pipes(input) + 2));
 	if (!splited_pipes_matrix)
-		ft_exit_error("Malloc error", 54);
+		ft_exit_error(NULL, "Malloc error", 54);
 	splited_pipes_matrix = ft_fill_matrix_pipes(input, splited_pipes_matrix);
 	while (splited_pipes_matrix[++i])
 	{

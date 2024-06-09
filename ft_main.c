@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/29 15:21:24 by user             ###   ########.fr       */
+/*   Updated: 2024/06/06 17:01:45 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 		ft_many_args_error(argv);
-	mini = ft_initialize(env);
+	mini = ft_initialize();
 	g_exit_status = 0;
 	ft_mini_header();
 	ft_signal_management(1);
 	ft_recive_input(mini);
 	// atexit(leaks);
-	free_t_mini(&mini);
+
+	// printf("SALIDA = %s\n", mini->cmd->args[0]);
+	printf("\nSALIDA 1\n\n");
+	free_t_mini(mini);
 	return (0);
+	env[0] = NULL;
 }

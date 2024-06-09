@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:10:53 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/20 10:12:32 by user             ###   ########.fr       */
+/*   Updated: 2024/06/05 16:00:59 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_remove_dollar_n_digits(char *command, int i, int j)
 			j = -1;
 			temp = malloc(sizeof(char) * ft_strlen(command) - 1);
 			if (!temp)
-				ft_exit_error("Malloc error", 15);
+				ft_exit_error(NULL ,"Malloc error", 15);
 			while (++j < i)
 				temp[j] = command[j];
 			i++;

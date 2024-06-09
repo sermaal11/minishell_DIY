@@ -34,6 +34,7 @@ SRCS =	ft_main.c \
 		ft_signals.c \
 		ft_expander.c \
 		ft_commands.c \
+		ft_redirects.c \
 		ft_commands-2.c \
 		ft_commands-3.c \
 		ft_initialize.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 10:51:42 by user             ###   ########.fr       */
+/*   Updated: 2024/06/09 10:51:54 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,33 @@ static int	ft_check_void_input(char *input)
 	return (0);
 }
 
+char	*ft_free_input(t_mini *mini, char *input)
+{
+	int	j;
+
+	j = 0;
+	while (input && input[j] == ' ')
+		j++;
+	if (input[j] != '\0')
+	{
+		if (mini->cmd)
+		{
+			if (mini->cmd->cmd)
+				free(mini->cmd->cmd);
+			if (mini->cmd->args)
+			{
+				j = 0;
+				while (mini->cmd->args[j] && mini->cmd->args[j] != NULL)
+					free(mini->cmd->args[j++]);
+				free(mini->cmd->args);
+			}
+			free(mini->cmd);
+		}
+	}
+	free(input);
+	return (NULL);
+}
+
 void	ft_recive_input(t_mini *mini)
 {
 	char *input;
@@ -38,7 +65,7 @@ void	ft_recive_input(t_mini *mini)
 		{
 			free(input);
 			input = NULL;
-			ft_exit_error("Exit", g_exit_status);
+			ft_exit_error(mini, "Exit", g_exit_status);
 		}
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
 			(void)input;
@@ -55,9 +82,7 @@ void	ft_recive_input(t_mini *mini)
 			if (ft_strtok(mini, &(mini->cmd), input) && mini->flags->quote != 0)
 			{
 				printf("Llega al final! 🚀\n");
-						}
-			if (mini->flags->redirect->red_error != 0)
-				printf("mini: parse error near `%s'\n", mini->flags->redirect->error);
+			}
 		}
 		// todo: Proto built-ins: exit (Irá en ft_builtins.c y sera llamada desde el ejecutor)
 		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
@@ -70,9 +95,6 @@ void	ft_recive_input(t_mini *mini)
 			break ;
 		}
 		if (input != NULL)
-		{
-			free(input);
-			input = NULL;
-		}
+			input = ft_free_input(mini, input);
 	}
 }

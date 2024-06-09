@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/31 16:18:38 by user             ###   ########.fr       */
+/*   Updated: 2024/06/09 11:19:39 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_red
 	int			si_le;
 	int			do_ri;
 	int			do_le;
+	int			locate;
 	int			red_error;
 	char		*error;
 }				t_red;
@@ -79,10 +80,10 @@ typedef struct s_token
 
 typedef struct s_flags
 {
-	int			red;
 	int			pipe;
 	int			quote;
 	int			dollar;
+	int			locate_red;
 	t_red		*redirect;
 }				t_flags;
 
@@ -101,7 +102,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**args;
 	int				args_amount;
-}					t_cmd;
+}					 t_cmd;
 
 typedef struct s_mini
 {
@@ -116,7 +117,7 @@ typedef struct s_mini
 void	ft_mini_header(void);
 
 // ft_initialize.c
-t_mini	*ft_initialize(char **env);
+t_mini	*ft_initialize(void);
 
 // ft_signals.c
 void	ft_signal_management(int n);
@@ -143,6 +144,9 @@ char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
 
 // ft_check_input.c
 int		ft_check_input(t_mini *mini, char *input, char ***lines);
+
+// ft_redirects.c
+int		ft_count_redirect(t_mini *mini, char *input);
 
 // ft_check_quotes.c
 int		ft_locate_next_quote(int i, char *input, char quote);
@@ -197,15 +201,11 @@ char	*ft_replace_value_bis(char *str, int i, int j);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
-void	ft_exit_error(char *error_msg, int exit_status);
+void	ft_exit_error(t_mini *mini, char *error_msg, int exit_status);
 void	ft_put_error(char *bash, char *file, char *error_msg);
 
 // ft_free.c
-void	free_t_cmd(t_cmd **cmd);
-void	free_t_env(t_env **env);
-void	free_t_mini(t_mini **mini);
-void	free_t_token(t_token **token);
-void	free_t_flags_red(t_flags **flags);
+void	free_t_mini(t_mini *mini);
 
 
 #endif
