@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/09 11:19:39 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:25:47 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_flags
 	int			pipe;
 	int			quote;
 	int			dollar;
+	int			expander;
 	int			locate_red;
 	t_red		*redirect;
 }				t_flags;
@@ -128,19 +129,21 @@ void	ft_recive_input(t_mini *mini);
 // ft_parser.c
 int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
 
-// ft_expander.c
-void	ft_expander(t_cmd *cmd);
-char	*ft_change_name_var(char *line);
-char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder);
-char	*ft_craft_result(char *final_line, char *line, char *var, int c);
-char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder);
+
+
+// // ft_expander.c
+// void	ft_expander(t_cmd *cmd);
+// char	*ft_change_name_var(char *line);
+// char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder);
+// char	*ft_craft_result(char *final_line, char *line, char *var, int c);
+// char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder);
 
 // ft_expander_utils.c
-char	*ft_add_var_value(char *str1);
-int		ft_var_strcmp(char *str1, char *str2);
-char	*ft_change_line_value(char *line, char *value);
-char	*ft_compare_var_name(t_cmd *cmd, char *line, char *name_var);
-char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
+// char	*ft_add_var_value(char *str1);
+// int		ft_var_strcmp(char *str1, char *str2);
+// char	*ft_change_line_value(char *line, char *value);
+// char	*ft_compare_var_name(t_cmd *cmd, char *line, char *name_var);
+// char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
 
 // ft_check_input.c
 int		ft_check_input(t_mini *mini, char *input, char ***lines);

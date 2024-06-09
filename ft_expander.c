@@ -5,149 +5,199 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/05 16:01:55 by descamil         ###   ########.fr       */
+/*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
+/*   Updated: 2024/06/09 18:54:54 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_craft_result(char *final_line, char *line, char *var, int c)
+int	ft_strnstr_mini(const char *s1, const char *s2, size_t len)
 {
-	int	i;
-	int	j;
-	int	k;
-
-	i = -1;
-	j = -1;
-	k = ft_search_next_char(line, '$', -1);
-	if ((size_t)k == ft_strlen(line))
-		return (line);
-	while (++i < k)
-		final_line[i] = line[i];
-	while (var[++j])
-		final_line[i + j] = var[j];
-	while (line[i + c])
-	{
-		final_line[i + j] = line[i + c];
-		i++;
-	}
-	final_line[i + j] = '\0';
-	return (final_line);
-}
-
-int	ft_locate_dollar(char *cmd)
-{
-	int	i;
-	int	double_quote;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
 	i = 0;
-	double_quote = 1;
-	while (cmd[i])
+	j = 0;
+	if (*s2 == '\0')
+		return (0);
+	while (s1[i] != '\0' && i < len)
 	{
-		if (cmd[i] == 39 && double_quote == 1)
-			i = ft_locate_next_quote(i + 1, cmd, cmd[i]);
-		if (cmd[i] == 34)
-			double_quote *= -1;
-		if (cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != ' ')
-			return (1);
+		if (s1[i] == s2[j])
+		{
+			k = i;
+			while (s1[k] == s2[j] && s2[j] != '\0' && (k < len))
+			{
+				k++;
+				j++;
+				if (s2[j] == '\0')
+					return (1);
+			}
+			j = 0;
+		}
 		i++;
 	}
 	return (0);
 }
 
-char	*ft_change_name_var(char *line)
+int	ft_final_var(/*t_mini *mini,*/int *k, char *input, int i)
 {
+	printf("Aquí\n");
+	(*k)++;
+	while (input[i] != '\0' && input[i] != ' ')
+	{
+		i++;
+		(*k)++;
+		/*mini->flags->expander++;*/
+	}
+	return (i);
+}
+
+char	**ft_var(char *input)
+{
+	char	**names;
 	int		i;
 	int		j;
-	char	*var_name;
-
-	i = ft_locate_next_quote(0, line, '$') + 1;
+	
+	i = 0;
 	j = 0;
-	while (line[i + j] && line[i + j] == ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j] == 0))
-		j++;
-	var_name = (char *)malloc(sizeof(char *) * j + 1);
-	if (!var_name)
-		ft_exit_error(NULL, "Malloc error", 16);
-	j = 0;
-	while (line[i + j] && line[i + j] != ' ' && line[i + j] != '"' && line[i + j] != 39 && ft_check_special_char(line[i + j]) == 0)
+	while (input[i] != '\0')
 	{
-		var_name[j] = line[i + j];
-		j++;
+		if (input[i] == '$')
+			j++;
+		i++;
 	}
-	return (var_name);
-}
-
-char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder)
-{
-	char	*var_name;
-	int		i;
-
-	if (ft_strnstr(line, "$?", ft_strlen(line)) != 0)
-		return (ft_replace_value_of_var(line));
-	var_name = ft_change_name_var(line);
-	i = ft_search_next_char(line, '$', -1);
-	while (line[++i] && line[i] != ' ')
-	{
-		if ((ft_check_special_char(line[i]) == -1 && line[i] != '$')
-			|| (line[i] == '$' && i == ft_search_next_char(line, '$', ft_search_next_char(line, '$', -1) + 1)))
-		{
-			*var_reminder = ft_split_var(line, i, cmd);
-			break ;
-		}
-	}
-	if (!var_name)
+	if (j == 0)
 		return (NULL);
-	if (var_name[0])
-		return (ft_strchr(line, '$') + 1);
-	return (ft_compare_var_name(cmd, line, var_name));
+	names = malloc(sizeof(char **) * j);
+	if (names == NULL)
+		return (NULL);
+	return (names);
 }
 
-char	*ft_change_dollar_x_var(t_cmd *cmd, char *command, char *var_reminder)
-{
-	char	*temp;
 
-	if (ft_check_dollar_n_digits(command, -1) == 0)
-		command = ft_remove_dollar_n_digits(command, -1, -1);
-	if (ft_locate_dollar(command) == 0)
-		return (command);
-	cmd->flags->dollar = 0;
-	command = ft_change_var(cmd, command, &var_reminder);
-	if (ft_locate_dollar(command) == 1)
-		command = ft_change_dollar_x_var(cmd, command, NULL);
-	if (cmd->flags->dollar == 1)
-	{
-		temp = ft_strjoin_custom(command, var_reminder, -1, -1);
-		free(command);
-		command = temp;
-		free(var_reminder);
-		var_reminder = NULL;
-		cmd->flags->dollar = 0;
-	}
-	if (ft_locate_dollar(command) == 1)
-		return (ft_change_dollar_x_var(cmd, command, NULL));
-	if (var_reminder)
-		free(var_reminder);
-	return (command);	
+char	*ft_remove_var(char *dst, const char *src, int num, int i)
+{
+	while (src[num] != '\0')
+		dst[i++] = src[num++];
+	while (dst[i] != '\0')
+		dst[i++] = '\0';
+	return (dst);
 }
 
-void	ft_expander(t_cmd *cmd)
+int	ft_size_var(char **env, char *input)
 {
-	int	i;
+	int		i;
+	char	*str;
+	char	*join;
 
 	i = -1;
-	if (ft_locate_dollar(cmd->cmd) == 1)
-		cmd->cmd = ft_change_dollar_x_var(cmd, cmd->cmd, NULL);
-	if (ft_check_relative_home(cmd->cmd) == 1)
-		cmd->cmd = ft_replace_home(cmd->cmd);
-	if (!cmd->args)
-		return ;
-	while (cmd->args[++i])
+	join = ft_strjoin(input, "=");
+	printf("%s\n", join);
+	while (env[++i] != NULL)
 	{
-		if (ft_locate_dollar(cmd->args[i]) == 1)
-			cmd->args[i] = ft_change_dollar_x_var(cmd, cmd->args[i], NULL);
-		if (ft_check_relative_home(cmd->args[i]) == 1)
-			cmd->args[i] = ft_replace_home(cmd->args[i]);
+		if (ft_strnstr_mini(env[i], join, ft_strlen(join)) == 1)
+		{
+			printf("%s\n", env[i]);
+			ft_strlcpy(str, env[i] + ft_strlen(join), ft_strlen(env[i] - ft_strlen(join)));
+			// ft_remove_var(str, str, ft_strlen(join), 0);
+			printf("\n----------------\n%s\n----------------\n\n", str);
+		}
+		
 	}
+	return (0);
 }
 
+// Cadena entera sin '$' y con los nuevos valores.
+char	*ft_expander(/*t_mini *mini, */char *input, char **env)
+{
+	int		i;
+	int		k1;
+	int		k2;
+	int		len;
+	int		index;
+	int		start;
+	char	**names;
+
+	i = 0;
+	k1 = 0;
+	index = 0;
+	names = ft_var(input);
+	while (input[i] != '\0')
+	{
+		if (input[i] == '$')
+		{
+			start = i;
+			i = ft_final_var(/*mini,*/&k1, input, i + 1);
+			len = i - start;
+			names[index++] = ft_substr(input, start + 1, len - 1);
+			// printf("%dq\n", len);
+		}
+		i++;
+	}
+	names[index] = NULL;
+	i = 0;
+	index = -1;
+	k2 = 0;
+	while (names[++index] != NULL)
+	{
+		k2 += ft_size_var(env, names[index]);
+	}
+	// i = 0;
+	// while (index-- != 0)
+	// 	printf("\t%sq\n", names[i++]);
+	// printf("\n%s\n", env[0]);
+	// printf(" 🚀 %d 🚀 \n", /*mini->flags->expander*/k1);
+	return (NULL);
+}
+// Valor para sumar al int de sizes variables
+
+
+// Char ** con todos los valores de las variables, en orden
+// char	**ft_var_values(t_mini *mini)
+// {
+	
+// }
+
+//
+int main(int argc, char **argv, char **env)
+{
+	t_mini *mini;
+	char *str = "ls $a $GJS_DEBUG_TOPICS $ss aaf";
+
+	ft_expander(/*mini,*/ str, env);
+
+	printf("Llega! 🚀\n");
+
+	return (0);
+}
+
+/*
+
+Leer la linea que nos dan sin | ni >.
+Guardar en un int* las posiciones de los dolares y en otro int* los tamaños de las variables, con dolar incluido.
+Calcular longitudes de todas las variables e ir sumandolas.
+Calcular longitudes de todas los valores e ir sumando.
+En el caso de encontar una variable que no existe, el tamaño es 0 y se salta a la siguiente sin error.
+Despues cuando ya se tenga todo, ir copiando caracter por caracter, cuando te encuentres un dolar, acceder a los ints*, para ver la longitud y en vez de copiar los caracteres de la cadena principal.
+Char **, para guardar todos los valores de las variabbles 
+
+	  MALLOC		  COPIAR		  MALLOC
+_________________________________________________________________
+|		S_T		|		POS		|		S_V		|	CHAR_VAR	|
+|				|				|				|				|
+|	size +=		|	2			|	size +=		|	[0] = asd	|
+|				|	7			|				|	[1] = das	|
+|				|	12			|				|	[2] = sad	|
+|				|				|				|	[3] = NULL	|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+|				|				|				|				|
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+*/

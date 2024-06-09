@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:21:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/09 11:21:39 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:21:30 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ t_mini	*ft_initialize()
 		return NULL;
 	}
 	mini->flags->locate_red = 0;
+	mini->flags->expander = 0;
 	mini->flags->redirect = NULL;
 	mini->token = malloc(sizeof(t_token));
 	if (mini->token == NULL)
