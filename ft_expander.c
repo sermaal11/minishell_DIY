@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/09 18:54:54 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:11:34 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ int	ft_strnstr_mini(const char *s1, const char *s2, size_t len)
 	return (0);
 }
 
-int	ft_final_var(/*t_mini *mini,*/int *k, char *input, int i)
+int	ft_final_var(int *k, char *input, int i)
 {
-	printf("Aquí\n");
 	(*k)++;
 	while (input[i] != '\0' && input[i] != ' ')
 	{
 		i++;
 		(*k)++;
-		/*mini->flags->expander++;*/
+		if (input[i] == '$')
+			return (i);
+		
 	}
 	return (i);
 }
@@ -70,7 +71,7 @@ char	**ft_var(char *input)
 	}
 	if (j == 0)
 		return (NULL);
-	names = malloc(sizeof(char **) * j);
+	names = malloc(sizeof(char **) * (j + 1));
 	if (names == NULL)
 		return (NULL);
 	return (names);
@@ -86,92 +87,156 @@ char	*ft_remove_var(char *dst, const char *src, int num, int i)
 	return (dst);
 }
 
-int	ft_size_var(char **env, char *input)
+char	*ft_size_var(char **env, int *k2, char *input)
 {
 	int		i;
 	char	*str;
-	char	*join;
 
 	i = -1;
-	join = ft_strjoin(input, "=");
-	printf("%s\n", join);
 	while (env[++i] != NULL)
 	{
-		if (ft_strnstr_mini(env[i], join, ft_strlen(join)) == 1)
+		// printf("%s\n", env[i]);
+		if (ft_strnstr_mini(env[i], input, ft_strlen(input)) == 1)
 		{
-			printf("%s\n", env[i]);
-			ft_strlcpy(str, env[i] + ft_strlen(join), ft_strlen(env[i] - ft_strlen(join)));
-			// ft_remove_var(str, str, ft_strlen(join), 0);
-			printf("\n----------------\n%s\n----------------\n\n", str);
+			str = ft_strdup(env[i] + ft_strlen(input));
+			printf("%s\n", str);
+			(*k2) += ft_strlen(str);
+			free(input);
+			return (str);
 		}
-		
 	}
-	return (0);
+	free(input);
+	return (NULL);
 }
 
-// Cadena entera sin '$' y con los nuevos valores.
-char	*ft_expander(/*t_mini *mini, */char *input, char **env)
+int	ft_var_mod(char **env, char **names)
+{
+	int 	i;
+	int		j;
+	int		size;
+	
+	i = 0;
+	size = 0;
+	while (names[i] != NULL)
+	{
+		j = 0;
+		while (env[j] != NULL)
+		{
+			if (ft_strnstr_mini(env[j], names[i], ft_strlen(names[i])) == 1)
+				size++;
+			j++;
+		}
+		i++;
+	}
+	return (size);
+}
+
+char	**ft_names_var(char *input, int *k1)
 {
 	int		i;
-	int		k1;
-	int		k2;
 	int		len;
-	int		index;
 	int		start;
+	int		index;
 	char	**names;
 
 	i = 0;
-	k1 = 0;
 	index = 0;
 	names = ft_var(input);
+	if (names == NULL)
+		return (NULL);
 	while (input[i] != '\0')
 	{
 		if (input[i] == '$')
 		{
 			start = i;
-			i = ft_final_var(/*mini,*/&k1, input, i + 1);
+			i = ft_final_var(*(&k1), input, i + 1);
 			len = i - start;
-			names[index++] = ft_substr(input, start + 1, len - 1);
-			// printf("%dq\n", len);
+			names[index] = ft_substr(input, start + 1, len - 1);
+			index++;
 		}
+		if (input[i] == '$')
+			i--;
 		i++;
 	}
 	names[index] = NULL;
+	return (names);
+}
+
+char	**ft_value_var(char **env, char **names, int *k2)
+{
+	char	**str;
+	char	*join;
+	int		index;
+	int		i;
+	
 	i = 0;
 	index = -1;
-	k2 = 0;
+	str = malloc(sizeof(char **) * ft_var_mod(env, names) + 1);
+	if (str == NULL)
+		return (NULL);
+	
 	while (names[++index] != NULL)
 	{
-		k2 += ft_size_var(env, names[index]);
+		join = ft_strjoin(names[index], "=");
+		printf("%s\n", join);
+		str[i++] = ft_size_var(env, *(&k2), join);
+		if (str[i - 1] == NULL)
+			free(str[--i]);
 	}
-	// i = 0;
-	// while (index-- != 0)
-	// 	printf("\t%sq\n", names[i++]);
-	// printf("\n%s\n", env[0]);
-	// printf(" 🚀 %d 🚀 \n", /*mini->flags->expander*/k1);
+	return (str);
+}
+
+// Cadena entera sin '$' y con los nuevos valores.
+char	*ft_expander(char *input, char **env)
+{
+	char	**names;
+	char	**str;
+	int		k0;
+	int		k1;
+	int		k2;
+	int		i;
+
+	i = 0;
+	k2 = 0;
+	k1 = 0;
+	names = ft_names_var(input, &k1);
+	
+	str = ft_value_var(env, names, &k2);
+	
+
+	k0 = ft_strlen(input) + (k1 - k2);
+	printf("Size_old = %zu\n", ft_strlen(input));
+	printf("K0 = %d\n", k0);
+	printf("K1 = %d\n", k1);
+	printf("K2 = %d\n", k2);
+	if (names)
+		free(names);
+	if (str)
+	{
+		if (str[i])
+		{
+			while (str[i])
+				free(str[i++]);
+		}
+		free(str);
+	}
 	return (NULL);
 }
-// Valor para sumar al int de sizes variables
 
-
-// Char ** con todos los valores de las variables, en orden
-// char	**ft_var_values(t_mini *mini)
+// int main(int argc, char **argv, char **env)
 // {
+// 	t_mini	*mini;
+// 	char	*str = "ls $$AAA$LANGUAGE $LANG aaf";
+// 	char	*ptr;
 	
+// 	ptr = ft_expander(str, env);
+	
+// 	// free(ptr);
+// 	// printf("PTR = %s\n", ptr);
+// 	// printf("Llega! 🚀\n");
+
+// 	return (0);
 // }
-
-//
-int main(int argc, char **argv, char **env)
-{
-	t_mini *mini;
-	char *str = "ls $a $GJS_DEBUG_TOPICS $ss aaf";
-
-	ft_expander(/*mini,*/ str, env);
-
-	printf("Llega! 🚀\n");
-
-	return (0);
-}
 
 /*
 
