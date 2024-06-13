@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/09 15:25:47 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:28:07 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,16 @@ void	ft_recive_input(t_mini *mini);
 // ft_parser.c
 int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
 
+// ft_expander.c
+int		ft_var(char *input);
+int		ft_size(char **names);
+int		ft_size_int(int *test);
+int		ft_var_mod(char **env, char **names);
+int		ft_final_var(int *k, char *input, int i);
+int		ft_strnstr_mini(const char *s1, const char *s2, size_t len);
+char	*ft_remove_var(char *dst, const char *src, int num, int i);
+char	*ft_remove_wrong_var(char *str, int *wrong_value);
+char	**ft_names_var(char *input, int *k1, int **position);
 
 
 // // ft_expander.c
