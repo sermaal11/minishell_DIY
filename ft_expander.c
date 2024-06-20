@@ -6,279 +6,175 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/13 15:40:50 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:37:19 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_size_var(char **env, int *k2, char *input)
+char    **ft_tript(char *str, int size, int start)
 {
-	int		i;
-	char	*str;
+	int     i = -1;
+	int     j = 0;
+	char    **div;
 
-	i = -1;
-	while (env[++i] != NULL)
+	div = (char **)ft_calloc(sizeof(char *),  4);
+	if (start != 0)
 	{
-		if (ft_strnstr_mini(env[i], input, ft_strlen(input)) == 1)
-		{
-			str = ft_strdup(env[i] + ft_strlen(input));
-			(*k2) += ft_strlen(str);
-			free(input);
-			return (str);
-		}
+		div[0] = ft_calloc(sizeof(char), start + 1);
+		while (++i < start)
+			div[0][i] = str[i];
 	}
-	free(input);
-	return (NULL);
+	else
+		div[++i] = NULL;
+	div[1] = ft_calloc(sizeof(char),  size + 1);
+	while (j < size)
+		div[1][j++] = str[i++];
+	if ((int)ft_strlen(str) > size + start)
+	{
+		div[2] = ft_calloc(sizeof(char), (ft_strlen(str) - start + size + 1));
+		j = 0;
+		while (str[i] != '\0')
+			div[2][j++] = str[i++];
+	}
+	else
+		div[2] = NULL;
+	return (div);
 }
 
-char	**ft_names_var(char *input, int *k1, int **position)
+char *ft_change_var(char *div, char **env)
 {
-	int		i;
-	int		len;
-	int		start;
-	int		index;
-	char	**names;
-
-	i = 0;
-	index = 0;
-	names = malloc(sizeof(char *) * (ft_var(input) + 1));
-	if (names == NULL)
-		return (NULL);
-	while (input[i] != '\0')
-	{
-		if (input[i] == '$' && input[i + 1] == '$')
-			i++;
-		else if (input[i] == '$' && input[i + 1] != '$')
-		{
-			(*position)[index] = i;
-			start = i;
-			i = ft_final_var(*(&k1), input, i + 1);
-			len = i - start;
-			names[index] = ft_substr(input, start + 1, len - 1);
-			index++;
-			if (input[i] == '$')
-				i--;
-		}
-		i++;
-	}
-	names[index] = NULL;
-	return (names);
+    int     i = 0;
+    char    *str;
+    
+    while (env[i] != NULL)
+    {
+        if (ft_strnstr(env[i], div, ft_strlen(div)) != NULL)
+        {
+			str = malloc(sizeof(char) * ft_strlen(env[i]) - ft_strlen(div) + 1);
+            ft_memcpy(str, env[i] + ft_strlen(div),ft_strlen(env[i]) - ft_strlen(div) + 1);
+            if (str != NULL)
+                return (str);
+        }
+        i++;
+    }
+    return ("");
 }
 
-char	**ft_value_var(char **env, char **names, int *k2, int  **wrong_var)
+char	*ft_dolar_to_iqual(char *div)
 {
-	char	**str;
-	char	*join;
-	int		index;
 	int		i;
 	int		j;
-	
-	i = 0;
-	j = 0;
-	index = -1;
-	str = malloc(sizeof(char **) * (ft_var_mod(env, names) + 1));
-	if (str == NULL)
-		return (NULL);
-	while (names[++index] != NULL)
-	{
-		join = ft_strjoin(names[index], "=");
-		str[i++] = ft_size_var(env, *(&k2), join);
-		if (str[i - 1] == NULL)
-		{
-			(*wrong_var)[j++] = index + 1;
-			free(str[--i]);
-		}
-	}
-	str[i] = NULL;
-	return (str);
-}
-
-int	ft_fin_var(char *input, int i)
-{
-	while (input[i] != '\0' && input[i] != ' ')
-	{
-		i++;
-		if (input[i] == '$')
-			return (i);
-	}
-	return (i);
-}
-
-int	ft_size_int(int *test)
-{
-	int	i = 0;
-	
-	while (test[i])
-		i++;
-	return (i);
-}
-
-int	*ft_remove_dolar_pos(char **names, int *locate, int *wrong_var, int **wrong_value)
-{
-	int	*final;
-	int	i = 0;
-	int	j = 0;
-	int	k = 0;
-	int	final_i = 0;
-	int	wrong = ft_size_int(wrong_var);
-	int	total;
-
-	*wrong_value = (int *)malloc(sizeof(int *) * wrong);
-	total = (ft_size_int(locate) - wrong);
-	final = malloc(sizeof(int *) * total);
-	i = 0;
-	while (j != ft_size_int(locate))
-	{
-		if (i < wrong && (wrong_var[i] - 1) == j)
-		{
-			(*wrong_value)[k++] = ft_strlen(names[j++]) + 1;
-			i++;
-		}
-		else
-			final[final_i++] = locate[j++];
-	}
-	return (final);
-}
-
-// Cadena entera sin '$' y con los nuevos valores.
-char	*ft_expander(char *input, char **env)
-{
-	char	**names;
-	char	**str;
-	int		k0;
-	int		k2;
-	int		i;
-	int	*wrong_value = NULL;
-	int	*locate_2;
-	char	*final;
-	int	pos = 0;
-	int	final_i = 0;
-	int	str_i;
-	char *final_1;
-
 
 	i = 0;
-	k2 = 0;
+	j = 1;
+	while (div[j] != '\0')
+		div[i++] = div[j++];
+	if (div[j] == '\0')
+		div[i] = '=';
+	return (div);
+}
 
-// --------------------------------->
-	int		*wrong_var;
-	int		*locate;
-	char	*str_1;
-	char	*join;
-	int		number;
-	int		wrong;
-	int		k1;
-
-	k1 = 0;
-	wrong = 0;
-	number = ft_var(input);
-	locate = malloc(sizeof(int *) * ft_var(input));
-	if (locate == NULL)
-		return (NULL);
-	names = ft_names_var(input, &k1, &locate);
-	while (i < number)
-	{														// Necesita input, env, 
-		join = ft_strjoin(names[i++], "=");					// Devuelve los valores k1, k2, wrong, locate
-		str_1 = ft_size_var(env, &k2, join);
-		if (str_1 == NULL)
-			wrong++;
-		free(str_1);
-	}
-	wrong_var = malloc(sizeof(int *) * wrong);
-	if (wrong_var == NULL)
-		return (NULL);
+char	*ft_join(char **div, char *tmp)
+{
+	char	*ptr = NULL;
+	char	*final = NULL;
 	
-// --------------------------------->
-
-	str = ft_value_var(env, names, &k2, &wrong_var);
-	if (k1 > k2)
-		k0 = ft_strlen(input) + (k1 - k2);
+	if (div[0] == NULL && div[2] == NULL)
+	{
+		final = ft_calloc(sizeof(char), ft_strlen(tmp) + 1);
+		ft_strlcpy(final, tmp, ft_strlen(tmp) + 1);
+	}
+	else if (div[0] != NULL && div[2] == NULL)
+		final = ft_strjoin(div[0], tmp);
+	else if (div[2] != NULL && div[0] == NULL)
+		final = ft_strjoin(tmp, div[2]);
 	else
-		k0 = ft_strlen(input) + (k2 - k1);
-
-// --------------------------------->
-
-	final = malloc(sizeof(char) * (k0 + 1));
-	locate_2 = ft_remove_dolar_pos(names, locate, wrong_var, &wrong_value);
-	i = 0;
-	while (input[i] != '\0')
 	{
-		str_i = 0;
-		while (i < locate_2[pos])
-			final[final_i++] = input[i++];
-		while (str[pos][str_i] != '\0')
-			final[final_i++] = str[pos][str_i++];
-		i = ft_fin_var(input, i + 1);
-		pos++;
+		if (div != NULL)
+			ptr = ft_strjoin(div[0], tmp);
+		if (ptr != NULL)
+		{
+			final = ft_strjoin(ptr, div[2]);
+			free(ptr);
+		}
 	}
-	final[final_i] = '\0';
-	final_1 = ft_remove_wrong_var(final, wrong_value);
+	if (final)
+		return (final);
+	return (tmp);
+}
 
-// --------------------------------->
-
-	free(final);
-	free(locate);
-	free(locate_2);
-	free(wrong_var);
-	if (names)
-		free(names);
-	i = 0;
-	if (str)
+int	ft_size_var(char *str)
+{
+	int	i;
+	
+	i = 1;
+	if (str[i] == '$')
+		return(++i);
+	if (ft_isdigit(str[i]) == 1)
 	{
-		while (str[i])
-			free(str[i++]);
-		free(str);
+		printf(B_CY_2"%c\n"RESET, str[i]);
+		while (ft_isdigit(str[i]) == 1)
+			i++;
+		printf(B_YE_2"%d\n"RESET, i);
+		return (i);
 	}
-
-// --------------------------------->
-
-	return (final_1);
+	while (ft_isalnum(str[i]) == 1 && str[i] != '\0')
+		i++;
+	return(i);
 }
 
 int main(int argc, char **argv, char **env)
 {
-	char	*str = "ls $USR$LANG $U $AGE $LANG";	// SOLUCIONAR "$$VAR" SEG_FAULT
-	char	*ptr;
-	
+	char    *str = "$USER";
+	char    **div = NULL;
+	char	*tmp = NULL; 
+	char	*div_tmp = NULL;
+	int		point = 0;
+	int		iter = -1;
+
 	if (argc != 1)
-		printf("%s\n", argv[2]);
+		printf("%s\n", argv[1]);
 
-	ptr = ft_expander(str, env);
-	free(ptr);
-	
-	// free(ptr);
-	// printf("PTR = %s\n", ptr);
-	// printf("Llega! 🚀\n");
-
+	while (ft_strchr(str + point, '$') - str >= 0)
+	{
+		if (iter == -1)
+			iter = (iter * -1) - 1;
+		if (div_tmp && ft_strchr(div_tmp, '$') == NULL)
+			break ;
+		if (div_tmp != NULL)
+		{
+			if (str != NULL && iter != 1)
+			{
+				free(str);
+				str = NULL;
+			}
+			str = ft_calloc(sizeof(char), ft_strlen(div_tmp) + 1);
+			ft_strlcpy(str, div_tmp, ft_strlen(div_tmp) + 1);
+			free(div_tmp);
+		}
+		div = ft_tript(str, ft_size_var(ft_strchr(str + point, '$')), ft_strchr(str + point, '$') - str);
+		div[1] = ft_dolar_to_iqual(div[1]);
+		tmp = ft_change_var(div[1], env);
+		div_tmp = ft_join(div, tmp);
+		if (ft_strlen(tmp) != 0 || ft_strlen(div_tmp) == 0 || ft_strncmp(div[1], "$=", 2) == 0 || ft_isdigit(div[1][1]) == 1)
+			point = (ft_strchr(str + point, '$') - str + 1);
+		if (div)
+		{
+			free(div[0]);
+			if (div[1])
+				free(div[1]);
+			free(div[2]);
+			free(div);
+		}
+		if (tmp && ft_strlen(tmp) != 0)
+			free(tmp);
+		iter++;
+	}
+	if (str && iter != 1)
+		free(str);
+	// printf(B_WH_0"\nCADENA RESULTANTE -->\t\"%s\"\n\n"RESET, div_tmp);
+	if (div_tmp)
+		free(div_tmp);
 	return (0);
 }
-
-/*
-
-Leer la linea que nos dan sin | ni >.
-Guardar en un int* las posiciones de los dolares y en otro int* los tamaños de las variables, con dolar incluido.
-Calcular longitudes de todas las variables e ir sumandolas.
-Calcular longitudes de todas los valores e ir sumando.
-En el caso de encontar una variable que no existe, el tamaño es 0 y se salta a la siguiente sin error.
-Despues cuando ya se tenga todo, ir copiando caracter por caracter, cuando te encuentres un dolar, acceder a los ints*, para ver la longitud y en vez de copiar los caracteres de la cadena principal.
-Char **, para guardar todos los valores de las variabbles 
-
-	  MALLOC		  COPIAR		  MALLOC
-_________________________________________________________________
-|		S_T		|		POS		|		S_V		|	CHAR_VAR	|
-|				|				|				|				|
-|	size +=		|	2			|	size +=		|	[0] = asd	|
-|				|	7			|				|	[1] = das	|
-|				|	12			|				|	[2] = sad	|
-|				|				|				|	[3] = NULL	|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-|				|				|				|				|
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-*/

@@ -202,10 +202,12 @@ git: fclean
 		echo "║ $(BOLD_GREEN)(┌ಠ_ಠ)\t ¡¡¡Git push realizado!!! \t(ಠ_ಠ┐)$(RESET) ║"; \
 		echo "╚══════════════════════════════════════════════════════╝"; \
 	else \
-	clear; \
+		clear; \
 		echo "╔════════════════════════════════════════════════════════╗"; \
 		echo "║ $(BOLD_RED)(҂◕︵◕)\t¡¡¡Git push no realizado!!!\t (҂◕︵◕)$(RESET) ║"; \
 		echo "╚════════════════════════════════════════════════════════╝"; \
+		sleep 0.5; \
+		clear; \
 	fi
 
 # La regla norm comprueba la norminette en las SRCS y en el .h
