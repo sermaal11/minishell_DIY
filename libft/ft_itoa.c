@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:00:29 by sergio            #+#    #+#             */
-/*   Updated: 2024/05/29 11:52:48 by user             ###   ########.fr       */
+/*   Updated: 2024/06/22 09:32:51 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 char	*ft_min(void)
 {
@@ -76,6 +75,9 @@ char	*ft_itoa(int n)
 		return (ft_ifzero());
 	temp = n;
 	while (temp++ > 0)
+	{
 		temp /= 10;
+		len++;
+	}
 	return (ft_memory(len, sign, n));
 }

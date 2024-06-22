@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 14:26:03 by sergio            #+#    #+#             */
-/*   Updated: 2024/01/22 14:32:04 by sergio           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:24:33 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ char	*ft_strchr(const char *str, int value)
 	}
 	if (*str == (char)value)
 		return ((char *)str);
-	return (0);
+	return (NULL);
 }
