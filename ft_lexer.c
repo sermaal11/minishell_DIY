@@ -6,11 +6,41 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/09 10:51:54 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:18:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_error(char *str, int i)
+{
+	perror(str);
+	exit(i);
+}
+
+int	ft_history()
+{
+	char	*str;
+	char	*tmp;
+	int		fd;
+	
+	fd = open(".minishell_history", O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		ft_error("Error create file", 1);
+	while (1)
+	{
+		tmp = get_next_line(fd);
+		if (tmp == NULL)
+			break ;
+		str = ft_strtrim(tmp, "\n");
+		add_history(str);
+		free(tmp);
+		free(str);
+	}
+	if (tmp)
+		free(tmp);
+	return (fd);
+}
 
 static int	ft_check_void_input(char *input)
 {
@@ -55,12 +85,14 @@ char	*ft_free_input(t_mini *mini, char *input)
 
 void	ft_recive_input(t_mini *mini)
 {
-	char *input;
+	char	*input;
+	int		fd = 0;
 	
 	(void) mini;
+	fd = ft_history();
 	while (1)
 	{
-		input = readline("🐚"GREEN" MINI(S)HELL"RESET" 🔥 -> ");
+		input = readline("🐚"B_GR_0" MINI(S)HELL"RESET" 🔥 -> ");
 		if (!input)
 		{
 			free(input);
@@ -72,6 +104,11 @@ void	ft_recive_input(t_mini *mini)
 		else
 		{
 			add_history(input);
+			if (fd != -1)
+			{
+				write(fd, input, ft_strlen(input));
+				write(fd, "\n", 1);
+			}
 			// TODO: HECHO HASTA AQUI y funcional COn señales incluidas
 			// ? HASTA AQUI FUNCIONA TODO (CREO)
 			// ! Nucleo del parseo
@@ -97,4 +134,5 @@ void	ft_recive_input(t_mini *mini)
 		if (input != NULL)
 			input = ft_free_input(mini, input);
 	}
+	close(fd);
 }

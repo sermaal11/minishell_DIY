@@ -6,11 +6,37 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/09 11:19:56 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:15:43 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_red_error(t_mini *mini, char *input)
+{
+	if (mini->flags->redirect->red_error != 0)
+	{
+		if (mini->flags->redirect->red_error < 3)
+		{
+			if (mini->flags->redirect->red_error == 1)
+				mini->flags->redirect->error = ft_substr(input, 1 + mini->flags->locate_red, 1);
+			else if ((mini->flags->redirect->red_error == 2))
+				mini->flags->redirect->error = ft_substr(input, 2 + mini->flags->locate_red, 1);
+		}
+		else if (mini->flags->redirect->red_error > 2)
+		{
+			if (mini->flags->redirect->red_error == 3)
+				mini->flags->redirect->error = ft_substr(input, 1 + mini->flags->locate_red, 2);
+			else if ((mini->flags->redirect->red_error == 4))
+				mini->flags->redirect->error = ft_substr(input, 2 + mini->flags->locate_red, 2);
+		}
+		printf("mini: parse error near `%s'\n", mini->flags->redirect->error);
+		free(mini->flags->redirect->error);
+		mini->flags->redirect->error = NULL;
+		return ;
+	}
+	return ;
+}
 
 int	ft_locate_final_red(int i, char *input)
 {
@@ -118,6 +144,7 @@ int	ft_count_redirect(t_mini *mini, char *input)
 			break ;
 		i++;
 	}
+	ft_red_error(mini, input);
 	return (i - size);
 }
 

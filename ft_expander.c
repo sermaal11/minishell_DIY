@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/22 09:33:37 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/22 12:27:10 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,10 @@ char    **ft_tript(char *str, int size, int start)
 {
 	int     i = -1;
 	int     j = 0;
-	int 	exp = 0;
 	char    **div;
 
 	if (size == -1)
-	{
-		exp = 1;
 		size = 1;
-	}
 	div = (char **)ft_calloc(sizeof(char *),  4);
 	if (start != 0)
 	{
@@ -151,14 +147,16 @@ int	ft_size_var(char *str)
 		return(++i);
 	if (str[i] == ' ' || str[i] == '\0')
 		return (-1);
-	if (ft_isdigit(str[i]) == 1)
-	{
-		while (str[i] != ' ' && str[i] != '$' && str[i] != '\0')
-			i++;
-		return (i);
-	}
-	while (ft_isalnum(str[i]) == 1 && str[i] != '\0')
+	while (ft_isalnum(str[i]) == 1)
 		i++;
+	// if (ft_isdigit(str[i]) == 1)
+	// {
+	// 	while (str[i] != ' ' && str[i] != '$' && str[i] != '\0')
+	// 		i++;
+	// 	return (i);
+	// }
+	// while (ft_isalnum(str[i]) == 1 && str[i] != '\0')
+	// 	i++;
 	return(i);
 }
 
@@ -176,9 +174,8 @@ void	ft_ex_free(char **div, char *tmp)
 		free(tmp);
 }
 
-int main(int argc, char **argv, char **env)
+char	*ft_expander(char **env, char *str)
 {
-	char	*str = "$USER";
 	char	**div = NULL;
 	char	*tmp = NULL; 
 	char	*div_tmp = NULL;
@@ -186,8 +183,6 @@ int main(int argc, char **argv, char **env)
 	int		stop = 0;
 	char	*res;
 	
-	if (argc != 1)
-		printf("%s\n", argv[1]);
 	while (ft_strchr_mod(str, '$', stop) - str >= 0)
 	{
 		if (iter == -1)
@@ -217,8 +212,20 @@ int main(int argc, char **argv, char **env)
 	}
 	if (str && iter != 1)
 		free(str);
-	printf(B_WH_0"\nCADENA RESULTANTE -->\t\"%s\"\n\n"RESET, div_tmp);
-	if (div_tmp)
-		free(div_tmp);
-	return (0);
+	return (div_tmp);
 }
+
+// int main(int argc, char **argv, char **env)
+// {
+// 	char	*str = "$asd";
+// 	char	*result;
+
+// 	if (argc != 1)
+// 		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
+// 	result = ft_expander(env, str);
+// 	printf(B_WH_0"\nCADENA RESULTANTE -->\t\"%s\"\n\n"RESET, result);
+
+// 	free(result);
+
+// 	return (0);
+// }

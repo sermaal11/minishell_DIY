@@ -47,6 +47,8 @@ SRCS =	ft_main.c \
 		ft_check_home_dir.c \
 		ft_check_operators.c \
 		ft_error_management.c \
+		get_next_line.c\
+		get_next_line_utils.c \
 
 #------------------------------------------------------------------------------#
 

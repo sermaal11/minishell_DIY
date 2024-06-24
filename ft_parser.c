@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/09 12:48:41 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/24 08:59:47 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	ft_strtok(t_mini *mini, t_cmd **cmd, char *input)
 	*(cmd) = ft_add_command(mini, input);
 	// else
 	// 	*(cmd) = ft_add_command(mini, lines[0]);
+	printf(B_CY_0"ARGS[0] --> %s\n"RESET, (*cmd)->args[0]);
 	return (1);
-	// printf("%d\n", cmd->flags->dollar);
-	// ft_expander(cmd);
 	// while (++i <= mini->flags->pipe)
 	// {
 	// 	mini->char_amount = 0;

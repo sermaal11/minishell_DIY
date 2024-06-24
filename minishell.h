@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/20 14:35:35 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:18:17 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@
 # define B_WH_2 "\033[1;38;5;145m" 	// Blanco oscuro en negrita
 
 // Librerias
+# include "get_next_line.h"
+
 # include "libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>

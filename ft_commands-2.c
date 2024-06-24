@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:35:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/07 12:58:40 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/24 09:36:51 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,52 +89,40 @@ int	*ft_sizes_input(char *input, int argc)
 	return (sizes);
 }
 
+void	ft_free(char **argv, int *size, char ***args)
+{
+	int	i;
+	
+	i = 0;
+	if (argv)
+	{
+		while (i < (int)ft_strlen(*argv))
+			free(argv[i++]);
+		free(argv);
+	}
+	if (size)
+		free(size);
+	*args = NULL;
+}
+
 void	ft_get_args(char *input, int argc, char ***args)
 {
 	char	**argv;
-	char	*arg;
 	int		*size;
 	int		i;
 
 	i = -1;
 	argv = ft_calloc((argc + 2), sizeof(char *));
 	if (argv == NULL)
-    {
-        *args = NULL;
-        return ;
-    }
+        return (ft_free(NULL, NULL, args));
 	size = ft_sizes_input(input, argc + 1);
 	if (size == NULL)
-	{
-		free(argv);
-		*args = NULL;
-		return ;
-	}
+		return (ft_free(argv, NULL, args));
 	while (++i < argc)
 	{
-		argv[i] = (char *)malloc(size[i] * sizeof(char));
+		argv[i] = ft_inside_argv(input, size, i);
 		if (argv[i] == NULL)
-		{
-			while (--i >= 0)
-				free(argv[i]);
-			free(argv);
-			free(size);
-			*args = NULL;
-			return ;
-		}
-		arg = ft_inside_argv(input, size, i);
-		if (arg == NULL)
-		{
-			while (--i >= 0)
-				free(argv[i]);
-			free(argv);
-			free(size);
-			*args = NULL;
-			return ;
-		}
-		if (argv && argv[i])
-			ft_strlcpy(argv[i], arg, 5);
-		free(arg);
+			return (ft_free(argv, size, args));
 	}
 	argv[argc + 1] = NULL;
 	free(size);
