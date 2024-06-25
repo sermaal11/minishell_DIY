@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/22 16:15:43 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:18:06 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,27 @@ void	ft_red_error(t_mini *mini, char *input)
 	return ;
 }
 
-int	ft_locate_final_red(int i, char *input)
-{
-	while (input[i]== '<' || input[i] == '>')
-		i++;
-	return (i);
-}
-
 void	ft_start_red(t_mini *mini)
 {
-	if (mini->flags->redirect != NULL)
-		free(mini->flags->redirect);
 	mini->flags->redirect = malloc(sizeof(t_red));
 	if (mini->flags->redirect == NULL)
 		return ;
-	mini->flags->redirect->red_error = 0;
-	mini->flags->redirect->si_le = 0;
-	mini->flags->redirect->si_ri = 0;
-	mini->flags->redirect->do_le = 0;
-	mini->flags->redirect->do_ri = 0;
 }
 
-void	ft_red(char *input)
+int	ft_red(char *input)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	while (input[i] != '\0')
+	i = -1;
+	j = 0;
+	while (input[++i] != '\0')
 	{
-		i = ft_locate_final_red(i, input);
-		if (input[i] == '\0')
-			i--;
-		i++;
+		if (input[i] == '<' || input[i] == '>')
+		
+			j++;
 	}
+	return (j);
 }
 
 void	ft_one(t_mini *mini, char *input)
@@ -122,32 +110,33 @@ int	ft_count_redirect(t_mini *mini, char *input)
 	int	i;
 
 	i = 0;
-	ft_start_red(mini);
-	if (mini->flags->redirect == NULL)
-		return (0);
-	ft_red(input);
-	while (input[i] != '\0')
+	size = 0;
+	if (ft_red(input) != 0)
 	{
-		size = 0;
-		mini->flags->redirect->red_error = 0;
-		while ((input[i]== '<' || input[i] == '>') && i++ >= size)
-			size++;
-		if (size == 1)
-			ft_one(mini, &input[i - size]);
-		else if (size == 2)
-			ft_two(mini, &input[i - size]);
-		else if (size == 3)
-			ft_three(mini, &input[i - size]);
-		else if (size >= 4)
-			ft_four_plus(mini, &input[i - size]);	
-		if (input[i] == '\0' || mini->flags->redirect->red_error != 0)
-			break ;
-		i++;
+		ft_start_red(mini);
+		if (mini->flags->redirect == NULL)
+			return (0);
+		while (input[i] != '\0')
+		{
+			size = 0;
+			mini->flags->redirect->red_error = 0;
+			while ((input[i]== '<' || input[i] == '>') && i++ >= size)
+				size++;
+			if (size == 1)	
+				ft_one(mini, &input[i - size]);
+			else if (size == 2)
+				ft_two(mini, &input[i - size]);
+			else if (size == 3)
+				ft_three(mini, &input[i - size]);
+			else if (size >= 4)
+				ft_four_plus(mini, &input[i - size]);	
+			if (input[i] == '\0' || mini->flags->redirect->red_error != 0)
+				break ;
+			i++;
+		}
+		ft_red_error(mini, input);
+		if (mini->flags->redirect->red_error > 0)
+			return (-1);
 	}
-	ft_red_error(mini, input);
 	return (i - size);
 }
-
-//	↓ Free error ↓
-
-// free(mini->cmd->flags->redirect->error);

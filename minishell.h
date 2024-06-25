@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/22 16:18:17 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:37:02 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ typedef struct s_mini
 {
 	int			shell_level;
 	t_env		*env;
+	t_cmd		*cmd;
 	t_flags		*flags;
 	t_token		*token;
-	t_cmd		*cmd;
 }				t_mini;
 
 // ft_utils.c
@@ -173,8 +173,8 @@ int		ft_strnstr_mini(const char *s1, const char *s2, size_t len);
 char	*ft_remove_wrong_var(char *str, int *wrong_value, int wrong);
 
 
-// // ft_expander.c
-// void	ft_expander(t_cmd *cmd);
+// ft_expander.c
+char	*ft_expander(char **env, char *str);
 // char	*ft_change_name_var(char *line);
 // char	*ft_change_var(t_cmd *cmd, char *line, char **var_reminder);
 // char	*ft_craft_result(char *final_line, char *line, char *var, int c);
@@ -188,7 +188,7 @@ char	*ft_remove_wrong_var(char *str, int *wrong_value, int wrong);
 // char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
 
 // ft_check_input.c
-int		ft_check_input(t_mini *mini, char *input, char ***lines);
+char	**ft_check_input(t_mini *mini, char *input);
 
 // ft_redirects.c
 int		ft_count_redirect(t_mini *mini, char *input);
@@ -229,6 +229,7 @@ char	*ft_inside_argv(char *input, int *size, int stop);
 
 // ft_commands-3.c
 int		ft_nothing(char *input, int i);
+int		ft_nothing_r(char *input, int i);
 int		ft_find_char(char *input, int i);
 int		ft_process_quotes(char *input, int *i, int *first);
 void	ft_process_space(char *input, int *i, int *first, int *stop);
@@ -251,6 +252,6 @@ void	ft_put_error(char *bash, char *file, char *error_msg);
 
 // ft_free.c
 void	free_t_mini(t_mini *mini);
-
+void	free_t_cmd(t_cmd **cmd);
 
 #endif

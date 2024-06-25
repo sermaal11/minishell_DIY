@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/22 15:48:40 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:21:00 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_exit_error(t_mini *mini, char *error_msg, int exit_status)
 {
 	printf("%s\n", error_msg);
 	printf("\nSALIDA 2\n\n");
-	exit(exit_status);
+	// free_t_cmd(&(mini->cmd));
 	free_t_mini(mini);
+	exit(exit_status);
 }

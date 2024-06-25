@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:55:56 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/21 10:33:28 by user             ###   ########.fr       */
+/*   Updated: 2024/06/25 09:27:17 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_check_quote(char *input, int simp_quote, int doub_quote, t_mini *mini)
 		{
 			mini->flags->quote = 1;
 			printf("dquote>\n");
-			return (0);
+			return (-1);
 		}
 		if (input[i] == '\0')
 			break ;

@@ -6,86 +6,100 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:27:11 by sergio            #+#    #+#             */
-/*   Updated: 2024/03/08 16:05:15 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:59:14 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count_words(const char *str, char value)
+int	ft_strlen_mod(const char *s, int i, char c)
 {
-	size_t	i;
-	size_t	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] != value)
-		{
-			count++;
-			while (str[i] != value && str[i])
-				i++;
-		}
-		else if (str[i] == value)
-			i++;
-	}
-	return (count);
-}
-
-static size_t	get_inti_len(const char *str, char value)
-{
-	size_t	len;
+	int	len;
 
 	len = 0;
-	while (str[len] != value && str[len])
+	while (s[i] == c && s[i] != '\0')
+		i++;
+	while (s[i] != '\0' && s[i] != c)
+	{
 		len++;
+		i++;
+	}
 	return (len);
 }
 
-static void	free_memory(size_t row, char **array)
+char	*ft_strlcpy_mod(char *s, char c, int *new_start, int size)
 {
-	while (row--)
-		free(array[row]);
-	free(array);
+	char	*ptr;
+	int		j;
+	int		start;
+
+	j = 0;
+	start = *new_start;
+	ptr = (char *)malloc(size + 1);
+	if (ptr == NULL)
+		return (NULL);
+	while (s[start] == c && s[start] != '\0')
+		start++;
+	while (s[start] != '\0' && j < size)
+		ptr[j++] = s[start++];
+	ptr[j] = '\0';
+	*new_start = start;
+	return (ptr);
 }
 
-static char	**fill_array(const char *str, char value, char **array, size_t word)
+void	*free_memory(int a, char **arr)
 {
-	size_t	row;
-	size_t	col;
+	int	f;
 
-	row = 0;
-	col = 0;
-	while (row < word)
+	f = 0;
+	while (f < a)
+		free(arr[f++]);
+	free(arr);
+	return (NULL);
+}
+
+int	ft_words(const char *s, char c)
+{
+	int	word;
+	int	i;
+
+	word = 0;
+	i = 0;
+	while (s[i] != '\0')
 	{
-		while (*(str + col) == value && *(str + col))
-			col++;
-		array[row] = ft_substr(str, col, get_inti_len(&*(str + col), value));
-		if (!*(str + row))
-		{
-			free_memory(row, array);
-			return (NULL);
-		}
-		while (*(str + col) != value && *(str + col))
-			col++;
-		row++;
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i] != '\0')
+			word++;
+		while (s[i] != c && s[i] != '\0')
+			i++;
 	}
-	array[row] = NULL;
-	return (array);
+	return (word);
 }
 
-char	**ft_split(const char *str, char value)
+char	**ft_split(const char *s, char c)
 {
-	size_t	word;
-	char	**array;
+	int		i;
+	int		a;
+	int		len_mod;
+	char	**arr;
+	char	*cpy_mod;
 
-	if (!str)
+	i = 0;
+	a = 0;
+	len_mod = 0;
+	arr = (char **)malloc((ft_words(s, c) + 1) * sizeof(char *));
+	if (arr == NULL)
 		return (NULL);
-	word = count_words(str, value);
-	array = (char **)malloc(sizeof(char *) * (word + 1));
-	if (!array)
-		return (NULL);
-	array = fill_array(str, value, array, word);
-	return (array);
+	
+	while (a < ft_words(s, c))
+	{
+		len_mod = ft_strlen_mod(s, i, c);
+		cpy_mod = ft_strlcpy_mod((char *)s, c, &i, len_mod);
+		if (cpy_mod == NULL)
+			return (free_memory(a, arr));
+		arr[a++] = cpy_mod;
+	}
+	arr[a] = NULL;
+	return (arr);
 }

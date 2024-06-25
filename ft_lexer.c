@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/22 16:18:24 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:16:59 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ char	*ft_free_input(t_mini *mini, char *input)
 	{
 		if (mini->cmd)
 		{
-			if (mini->cmd->cmd)
-				free(mini->cmd->cmd);
 			if (mini->cmd->args)
 			{
 				j = 0;
@@ -76,7 +74,6 @@ char	*ft_free_input(t_mini *mini, char *input)
 					free(mini->cmd->args[j++]);
 				free(mini->cmd->args);
 			}
-			free(mini->cmd);
 		}
 	}
 	free(input);
@@ -96,7 +93,6 @@ void	ft_recive_input(t_mini *mini)
 		if (!input)
 		{
 			free(input);
-			input = NULL;
 			ft_exit_error(mini, "Exit", g_exit_status);
 		}
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
@@ -131,8 +127,10 @@ void	ft_recive_input(t_mini *mini)
 			input = NULL;
 			break ;
 		}
-		if (input != NULL)
-			input = ft_free_input(mini, input);
+		
+		if (input)
+			free(input);
+		free_t_cmd(&(mini->cmd));
 	}
 	close(fd);
 }

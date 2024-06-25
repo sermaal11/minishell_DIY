@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/06 17:01:45 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:17:25 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int argc, char **argv, char **env)
 	ft_recive_input(mini);
 	// atexit(leaks);
 
-	// printf("SALIDA = %s\n", mini->cmd->args[0]);
 	printf("\nSALIDA 1\n\n");
+	free_t_cmd(&(mini->cmd));
 	free_t_mini(mini);
 	return (0);
 	env[0] = NULL;

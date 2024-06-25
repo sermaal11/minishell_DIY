@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/22 15:07:36 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:20:59 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ char	*ft_get_command(t_mini *mini, char *input)
 	while (input[i] == 32 || (input[i] == 9 && input[i] <= 13))
 		i++;
 	init = i + 1;
-	while (input[++i] && input[i] != 32 && !(input[i] >= 9 && input[i] <= 13) && !ft_is_not_mayor_n_minor_char(input[i]))
+	while (input[i] && input[i] != 32 && !(input[i] >= 9 && input[i] <= 13) && !ft_is_not_mayor_n_minor_char(input[i]))
 	{
 		if (input[i] == 34 || input[i] == 39)
 			i = ft_locate_next_quote(i + 1, input, input[i]);
+		i++;
 	}
-	// printf("%d\n", ft_is_not_mayor_n_minor_char(input[i]));
-	// printf(BLUE"%d\n"RESET, i);
 	if (i && !ft_is_not_mayor_n_minor_char(input[i]))
 	{
 		command = ft_substr(input, init, i);
@@ -62,29 +61,23 @@ char	*ft_get_command(t_mini *mini, char *input)
 	}
 	else
 	{
-		// printf("COGE CD\n");
 		command = ft_strdup("CD");
 		if (!command)
 			ft_exit_error(NULL, "Malloc error", 50);
 	}
-	// mini->char_amount += i;
-	// printf("COMMAND %s\n", command);
 	return (command);
-	printf("%d\n", mini->flags->pipe);
+	printf("%d\n", mini->flags->dollar);
 }
 
 t_cmd	*ft_add_command(t_mini *mini, char *input)
 {
 	t_cmd	*new_cmd;
 
-	// printf("INPUT = %s\n", input);
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		ft_exit_error(NULL, "Malloc error", 9);
 	new_cmd->cmd = ft_get_command(mini, input);
-	// printf("COMMAND2 %s\n", new_cmd->cmd);
 	new_cmd->args_amount = ft_count_args(input);
-	// printf("AMOUNT %d\n", new_cmd->args_amount);
 	new_cmd->next = NULL;
 	new_cmd->flags = mini->flags;
 	new_cmd->env = mini->env;

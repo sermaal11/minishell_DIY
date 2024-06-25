@@ -6,56 +6,29 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:27:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/09 10:31:22 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:18:49 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	free_t_flags_red(t_flags **flags)
-// {
-// 	if (flags && *flags)
-// 	{
-// 		if ((*flags))
-// 		{
-// 			if ((*flags)->redirect)
-// 			{
-// 				if ((*flags)->redirect->error)
-// 				{
-// 					free((*flags)->redirect->error);
-// 					(*flags)->redirect->error = NULL;
-// 				}
-// 				free((*flags)->redirect);
-// 				(*flags)->redirect = NULL;
-// 			}
-// 		}
-// 		// free(*flags);
-// 		*flags = NULL;
-// 	}
-// }
-
-// void	free_t_env(t_env **env)
-// {
-// 	int i;
+void	free_t_env(t_env **env)
+{
+	int i;
 	
-// 	i = 0;
-// 	if (env && *env)
-// 	{
-// 		if ((*env)->path)
-// 		{
-// 			free((*env)->path);
-// 			(*env)->path = NULL;
-// 		}
-// 		if (&(*env)->env)
-// 		{
-// 			while (&(*env)->env[i])
-// 			{
-// 				free((*env)->env[i]);
-// 				(*env)->env[i++] = NULL;
-// 			}
-// 		}
-// 	}
-// }
+	i = 0;
+	if (env && *env)
+	{
+		if ((*env)->path)
+			free((*env)->path);
+		if (&(*env)->env)
+		{
+			while (&(*env)->env[i])
+				free((*env)->env[i++]);
+		}
+	}
+	free(*env);
+}
 
 // void	free_t_token(t_token **token)
 // {
@@ -81,38 +54,27 @@
 // 	}
 // }
 
-// void	free_t_cmd(t_cmd **cmd)
-// {
-// 	t_cmd	*temp;
-// 	int		i;
+void	free_t_cmd(t_cmd **cmd)
+{
+	t_cmd	*temp;
+	int		i;
 	
-// 	while (cmd && *cmd)
-// 	{
-// 		temp = (*cmd)->next;
-// 		if ((*cmd)->env)
-// 			free_t_env(&((*cmd)->env));
-// 		if ((*cmd)->flags)
-// 			free_t_flags_red(&((*cmd)->flags));
-// 		if ((*cmd)->cmd)
-// 		{
-// 			free((*cmd)->cmd);
-// 			(*cmd)->cmd = NULL;
-// 		}
-// 		if ((*cmd)->args)
-// 		{
-// 			i = 0;
-// 			while ((*cmd)->args[i])
-// 			{
-// 				free((*cmd)->args[i]);
-// 				(*cmd)->args[i++] = NULL;
-// 			}
-// 			free((*cmd)->args);
-// 			(*cmd)->args = NULL;
-// 		}
-// 		free(*cmd);
-// 		*cmd = temp;
-// 	}
-// }
+	while (cmd && *cmd)
+	{
+		i = 0;
+		temp = (*cmd)->next;
+		if ((*cmd)->cmd)
+			free((*cmd)->cmd);
+		if ((*cmd)->args)
+		{
+			while ((*cmd)->args[i])
+				free((*cmd)->args[i++]);
+			free((*cmd)->args);
+		}
+		free(*cmd);
+		*cmd = temp;
+	}
+}
 
 // void	free_t_mini(t_mini **mini)
 // {
@@ -134,45 +96,6 @@
 // }
 
 
-void	free_t_env(t_env *env)
-{
-	if (env == NULL)
-		return;
-	if (env->path != NULL)
-	{
-		free(env->path);
-		env->path = NULL;
-	}
-	if (env->env != NULL)
-	{
-		int i = 0;
-		while (env->env[i])
-		{
-			free(env->env[i]);
-			env->env[i++] = NULL;
-		}
-		free(env->env);
-		env->env = NULL;
-	}
-	free(env);
-}
-
-void	free_t_flags_red(t_flags *flags)
-{
-	if (flags == NULL)
-		return;
-	if (flags->redirect != NULL)
-	{
-		if (flags->redirect->error != NULL)
-		{
-			free(flags->redirect->error);
-			flags->redirect->error = NULL;
-		}
-		free(flags->redirect);
-		flags->redirect = NULL;
-	}
-	free(flags);
-}
 
 void free_t_mini(t_mini *mini)
 {
@@ -198,75 +121,26 @@ void free_t_mini(t_mini *mini)
 		}
 	}
 
-	if (mini->flags != NULL)
+	if (mini->flags)
 	{
-		if (mini->flags->redirect != NULL)
-		{
+		if (mini->flags->locate_red != 0 && mini->flags->redirect)
 			free(mini->flags->redirect);
-			mini->flags->redirect = NULL;
-		}
 		free(mini->flags);
-		mini->flags = NULL;
 	}
-
 	if (mini->token != NULL)
 	{
 		if (mini->token->input != NULL)
-		{
 			free(mini->token->input);
-			mini->token->input = NULL;
-		}
 		if (mini->token->tokens != NULL)
 		{
 			int i = 0;
 			while (mini->token->tokens[i])
-			{
-				free(mini->token->tokens[i]);
-				mini->token->tokens[i++] = NULL;
-			}
+				free(mini->token->tokens[i++]);
 			free(mini->token->tokens);
-			mini->token->tokens = NULL;
 		}
 		free(mini->token);
-		mini->token = NULL;
 	}
-
-	t_cmd *current_cmd;
-	t_cmd *next_cmd;
-	current_cmd = mini->cmd;
-	while (current_cmd != NULL)
-	{
-		next_cmd = current_cmd->next;
-		if (current_cmd->env != NULL)
-		{
-			free_t_env(current_cmd->env);
-			current_cmd->env = NULL;
-		}
-		if (current_cmd->flags != NULL)
-		{
-			// free_t_flags_red(current_cmd->flags);
-			current_cmd->flags = NULL;
-		}
-		if (current_cmd->cmd != NULL)
-		{
-			free(current_cmd->cmd);
-			current_cmd->cmd = NULL;
-		}
-		if (current_cmd->args != NULL)
-		{
-			int i = 0;
-			int	j = 0;
-			printf("%s\n", current_cmd->args[0]);
-			while (current_cmd->args[i])
-				i++;
-			printf("%d\n", i);
-			while (j != i)
-				free(current_cmd->args[j++]);
-			free(current_cmd->args);
-			current_cmd->args = NULL;
-		}
-		free(current_cmd);
-		current_cmd = next_cmd;
-	}
+	if (mini->env)
+		free(mini->env);
 	free(mini);
 }

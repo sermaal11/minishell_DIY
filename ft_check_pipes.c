@@ -6,13 +6,13 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/05 16:01:31 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:22:42 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix)
+char	**ft_fill_matrix_pipes(char *input, char **splited_pipes)
 {
 	int	i;
 	int	init;
@@ -27,39 +27,57 @@ char	**ft_fill_matrix_pipes(char *input, char **splited_pipes_matrix)
 			i = ft_locate_next_quote(i + 1, input, input[i]);
 		if ((input[i + 1] == '|' || input[i + 1] == '\0') && input[i] != '|')
 		{
-			splited_pipes_matrix[position] = ft_substr(input, init, i - init + 1);
-			if (splited_pipes_matrix[position] == NULL)
+			splited_pipes[position] = ft_substr(input, init, i - init + 1);
+			if (splited_pipes[position] == NULL)
 				ft_exit_error(NULL, "Malloc error", 54);
 			position++;
 		}
 		if (input[i] == '|' && (input[i + 1] != '|' || input[i + 1] != '\0'))
 			init = i + 1;
-		splited_pipes_matrix[position] = NULL;
-		return (splited_pipes_matrix);
+		splited_pipes[position] = NULL;
+		return (splited_pipes);
 	}
 	return (NULL);
+}
+
+int	ft_pipe_error(char *input, int i)
+{
+	while (input[i] != '\0')
+	{
+		while (input[i] == ' ')
+			i++;
+		if (input[i] == '|' || input[i] == '\0')
+			return (-1);
+		else
+			return (1);
+	}
+	return (-1);
 }
 
 int	ft_count_pipes(char *input)
 {
 	int	i;
 	int	amount;
+	int	character;
 
 	i = -1;
 	amount = 0;
+	character = 0;
 	while (input[++i])
 	{
 		if (input[i] == 34 || input[i] == 39)
 			i = ft_locate_next_quote(i + 1, input, input[i]);
-		if ((input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0'))
-			|| input[0] == '|')
+		if (input[i] == '|')
 		{
-			ft_put_error("bash", NULL, "syntax error near unexpected token `||'");
+			character = ft_pipe_error(input, i + 1);
+			amount++;
+		}
+		if (character == -1 || (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0' || ft_nothing(input, i + 1) == 1 || ft_nothing_r(input, i + 1) == 1)) || input[0] == '|')
+		{
+			ft_put_error("mini", NULL, "syntax error near unexpected token `|'");
 			g_exit_status = 258;
 			return (-1);
 		}
-		if (input[i] == '|')
-			amount++;
 	}
 	return (amount);
 }
@@ -71,38 +89,36 @@ int	ft_check_pipes_arg(char *input)
 
 	i = -1;
 	result = -1;
-	printf("A%s\n", input);
 	while (input[++i])
 	{
 		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
 			result = 0;
 	}
-	printf("%d\n", result);
 	if (result == -1)
-		ft_put_error("bash", NULL, "syntax error near unexpected token `|'");
+		ft_put_error("mini", NULL, "syntax error near unexpected token `||'");
 	return (result);
 }
 
 char	**ft_split_pipes(char *input)
 {
-	char	**splited_pipes_matrix;
+	char	**splited_pipes;
 	int		i;
 
 	i = -1;
-	splited_pipes_matrix = (char **)malloc(sizeof(char **) * (ft_count_pipes(input) + 2));
-	if (!splited_pipes_matrix)
+	splited_pipes = malloc(sizeof(char *) * (ft_count_pipes(input) + 2));
+	if (!splited_pipes)
 		ft_exit_error(NULL, "Malloc error", 54);
-	splited_pipes_matrix = ft_fill_matrix_pipes(input, splited_pipes_matrix);
-	while (splited_pipes_matrix[++i])
+	splited_pipes = ft_fill_matrix_pipes(input, splited_pipes);
+	while (splited_pipes[++i])
 	{
-		if (ft_check_pipes_arg(splited_pipes_matrix[i]) == -1)
+		if (ft_check_pipes_arg(splited_pipes[i]) == -1)
 		{
 			g_exit_status = 258;
 			while (i >= 0)
-				free(splited_pipes_matrix[i--]);
-			free(splited_pipes_matrix);
+				free(splited_pipes[i--]);
+			free(splited_pipes);
 			return (NULL);
 		}
 	}
-	return (splited_pipes_matrix);
+	return (splited_pipes);
 }

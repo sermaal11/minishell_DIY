@@ -2,3 +2,4 @@
 .vscode
 *.dSYM
 *.o
+./minishell_history

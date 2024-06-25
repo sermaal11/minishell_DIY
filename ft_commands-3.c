@@ -6,19 +6,28 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:07:14 by user              #+#    #+#             */
-/*   Updated: 2024/06/07 13:02:28 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:17:59 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_nothing(char *input, int i)
+int	ft_nothing_r(char *input, int i)
 {
-	while (input[i] && i > 0 && input[i] != ' ')
+	while (i >= 0 && input[i] && input[i] == ' ')
 		i--;
 	if (i == 0)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
+}
+
+int	ft_nothing(char *input, int i)
+{
+	while (input[i] && input[i] == ' ')
+		i++;
+	if (input[i] == '\0')
+		return (1);
+	return (0);
 }
 
 int	ft_process_quotes(char *input, int *i, int *first)
@@ -45,7 +54,7 @@ void	ft_process_space(char *input, int *i, int *first, int *stop)
 	if (input[*i] == ' ')
 	{
 		*first = 0;
-		if (input[*i + 1] != ' ' && ft_nothing(input, *i) == 1)
+		if (input[*i + 1] != ' ' && ft_nothing_r(input, *i) == 1)
 			(*stop)--;
 	}
 }
