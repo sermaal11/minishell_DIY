@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/25 17:16:59 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:50:52 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ft_error(char *str, int i)
 	exit(i);
 }
 
-int	ft_history()
+int	ft_history(void)
 {
 	char	*str;
 	char	*tmp;
 	int		fd;
-	
+
 	fd = open(".minishell_history", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		ft_error("Error create file", 1);
@@ -83,18 +83,16 @@ char	*ft_free_input(t_mini *mini, char *input)
 void	ft_recive_input(t_mini *mini)
 {
 	char	*input;
-	int		fd = 0;
-	
+	int		fd;
+
 	(void) mini;
+	fd = 0;
 	fd = ft_history();
 	while (1)
 	{
 		input = readline("🐚"B_GR_0" MINI(S)HELL"RESET" 🔥 -> ");
 		if (!input)
-		{
-			free(input);
 			ft_exit_error(mini, "Exit", g_exit_status);
-		}
 		if (ft_check_void_input(input) == -1 || input[0] == '\0')
 			(void)input;
 		else
@@ -127,10 +125,14 @@ void	ft_recive_input(t_mini *mini)
 			input = NULL;
 			break ;
 		}
-		
 		if (input)
 			free(input);
 		free_t_cmd(&(mini->cmd));
+		if (mini->flags->locate_red == -1 && mini->flags->redirect)
+		{
+			mini->flags->locate_red = 0;
+			free(mini->flags->redirect);
+		}
 	}
 	close(fd);
 }

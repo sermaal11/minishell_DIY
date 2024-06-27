@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:27:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/25 17:18:49 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 08:45:37 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,7 @@ void free_t_mini(t_mini *mini)
 	}
 
 	if (mini->flags)
-	{
-		if (mini->flags->locate_red != 0 && mini->flags->redirect)
-			free(mini->flags->redirect);
 		free(mini->flags);
-	}
 	if (mini->token != NULL)
 	{
 		if (mini->token->input != NULL)

@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/25 17:20:59 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:34:37 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ t_cmd	*ft_add_command(t_mini *mini, char *input)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = malloc(sizeof(t_cmd));
+	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
-		ft_exit_error(NULL, "Malloc error", 9);
+		ft_exit_error(NULL, "Calloc error", 9);
 	new_cmd->cmd = ft_get_command(mini, input);
 	new_cmd->args_amount = ft_count_args(input);
 	new_cmd->next = NULL;
@@ -83,6 +83,7 @@ t_cmd	*ft_add_command(t_mini *mini, char *input)
 	new_cmd->env = mini->env;
 	if (new_cmd->args_amount == 0)
 		return (new_cmd);
+	// printf("%s\n", input);
 	ft_get_args(input, new_cmd->args_amount, &new_cmd->args);
 	// int i = 0;
 	// while (new_cmd->args[i] != NULL && i < new_cmd->args_amount)

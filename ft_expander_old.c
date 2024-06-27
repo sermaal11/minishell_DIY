@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/09 14:03:29 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:46:32 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*ft_change_dollar_x_var_old(t_cmd *cmd, char *command, char *var_reminder)
 		return (ft_change_dollar_x_var(cmd, command, NULL));
 	if (var_reminder)
 		free(var_reminder);
-	return (command);	
+	return (command);
 }
 
 void	ft_expander_old(t_cmd *cmd)
@@ -150,4 +150,3 @@ void	ft_expander_old(t_cmd *cmd)
 			cmd->args[i] = ft_replace_home(cmd->args[i]);
 	}
 }
-

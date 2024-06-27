@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:35:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/25 17:04:45 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:57:11 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,42 +37,39 @@ char	*ft_inside_argv(char *input, int *size, int stop)
 	int		pos;
 
 	i = -1;
-	exit = (char *)malloc((size[stop] + 1) * sizeof(char *));
+	exit = (char *)malloc((size[stop]) * sizeof(char *));
 	if (exit == NULL)
 		return (NULL);
 	pos = ft_position(input, size, stop);
 	while (++i < size[stop] - 1)
 		exit[i] = input[pos++];
 	exit[i] = '\0';
+	printf(B_YE_0"EXIT --> [-%s-]\n", exit);
 	return (exit);
 }
 
 int	ft_size_argv(char *input, int stop)
 {
 	int	i;
-	int	first;
+	int	size;
 
 	i = 0;
-	first = 0;
+	size = 0;
 	while (input[i] == ' ')
 		i++;
 	while (input[i])
 	{
 		if (input[i] != 34 && input[i] != 39 && input[i] != ' ')
-			first++;
+			size++;
 		if (input[i] == 34 || input[i] == 39)
-		{
-			i = ft_process_quotes(input, &i, &first);
-			if (input[i] == '\0' || (input[i] == ' ' && stop == 0))
-				return (++first);
-		}
-		if (input[i] == '\0' || (input[i] == ' ' && stop == 0))
-			return (++first);
-		else if (input[i])
-			ft_process_space(input, &i, &first, &stop);
+			i = ft_process_quotes(input, &i, &size);
+		if (input[i] == '\0' || (input[i + 1] == ' ' && --stop == -1))
+			return (++size);
+		else if (input[i] == ' ')
+			size = 0;
 		i++;
 	}
-	return (++first);
+	return (++size);
 }
 
 int	*ft_sizes_input(char *input, int argc)
@@ -84,7 +81,7 @@ int	*ft_sizes_input(char *input, int argc)
 	sizes = (int *)malloc(argc * sizeof(int *));
 	if (sizes == NULL)
 		return (0);
-	while (++i < argc)
+	while (++i < argc - 1)
 		sizes[i] = ft_size_argv(input, i);
 	return (sizes);
 }
@@ -116,6 +113,9 @@ void	ft_get_args(char *input, int argc, char ***args)
 	if (argv == NULL)
         return (ft_free(NULL, NULL, args));
 	size = ft_sizes_input(input, argc + 1);
+	int j = -1;
+	while (++j != argc)
+		printf(B_CY_0"SIZE[%d] --> [-%d-]\n", j, size[j]);
 	if (size == NULL)
 		return (ft_free(argv, NULL, args));
 	while (++i < argc)

@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:07:14 by user              #+#    #+#             */
-/*   Updated: 2024/06/25 17:17:59 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:32:27 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,4 @@ int	ft_find_char(char *input, int i)
 	while (input[i] == ' ')
 		i++;
 	return (i);
-}
-
-void	ft_process_space(char *input, int *i, int *first, int *stop)
-{
-	if (input[*i] == ' ')
-	{
-		*first = 0;
-		if (input[*i + 1] != ' ' && ft_nothing_r(input, *i) == 1)
-			(*stop)--;
-	}
 }

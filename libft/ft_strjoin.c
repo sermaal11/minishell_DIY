@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:01:27 by sergio            #+#    #+#             */
-/*   Updated: 2024/06/19 09:48:29 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:42:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 // 	return (result);
 // }
 
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	n;
@@ -45,7 +44,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while ((char)s1[++i] != '\0')
 		ptr[i] = (char)s1[i];
-	while ((char)s2[j] != '\0') 
+	while ((char)s2[j] != '\0')
 		ptr[i++] = (char)s2[j++];
 	ptr[i] = '\0';
 	return (ptr);

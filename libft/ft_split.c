@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:27:11 by sergio            #+#    #+#             */
-/*   Updated: 2024/06/24 12:59:14 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:42:35 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char	**ft_split(const char *s, char c)
 	arr = (char **)malloc((ft_words(s, c) + 1) * sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
-	
 	while (a < ft_words(s, c))
 	{
 		len_mod = ft_strlen_mod(s, i, c);

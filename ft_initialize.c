@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:21:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/25 13:29:50 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:03:15 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // 	matrix = ft_calloc(sizeof(char **), i);
 // 	// Comprobamos si la asignacion de memoria fue exitosa
 // 	if (!matrix)
-// 		ft_exit_error(NULL, "Malloc error", 1);
+// 		ft_exit_error(NULL, "ft_calloc error", 1);
 // 	while (--i >= 0)
 // 	{
 // 		// Hacemos una copia de cada variable de entorno dentro de la aux_matrix
@@ -110,28 +110,28 @@
 // {
 // 	t_mini	*mini;
 	
-// 	mini = malloc(sizeof(t_mini));
+// 	mini = ft_calloc(sizeof(t_mini));
 // 	if (mini == NULL)
-// 		ft_exit_error(NULL, "Malloc error", 1);
+// 		ft_exit_error(NULL, "ft_calloc error", 1);
 // 	mini->shell_level = 2;
-// 	mini->env = malloc(sizeof(t_env));
+// 	mini->env = ft_calloc(sizeof(t_env));
 // 	if (!mini->env)
-// 		ft_exit_error(NULL, "Malloc error", 2);
-// 	mini->flags = malloc(sizeof(t_flags));
+// 		ft_exit_error(NULL, "ft_calloc error", 2);
+// 	mini->flags = ft_calloc(sizeof(t_flags));
 // 	if (!mini->flags)
-// 		ft_exit_error(NULL, "Malloc error", 3);
-// 	mini->token = malloc(sizeof(t_token));
+// 		ft_exit_error(NULL, "ft_calloc error", 3);
+// 	mini->token = ft_calloc(sizeof(t_token));
 // 	if (mini->token	== NULL)
-// 		ft_exit_error(NULL, "Malloc error", 4);
-// 	mini->cmd = malloc(sizeof(t_cmd));
+// 		ft_exit_error(NULL, "ft_calloc error", 4);
+// 	mini->cmd = ft_calloc(sizeof(t_cmd));
 // 	if (mini->cmd == NULL)
-// 		ft_exit_error(NULL, "Malloc error", 5);
+// 		ft_exit_error(NULL, "ft_calloc error", 5);
 		
 // 	mini->env->path = NULL;
 // 	mini->env->env = NULL;
-// 	mini->flags->redirect = malloc(sizeof(t_red));
+// 	mini->flags->redirect = ft_calloc(sizeof(t_red));
 // 	if (mini->flags->redirect == NULL)
-// 		ft_exit_error(NULL, "Malloc error", 6);
+// 		ft_exit_error(NULL, "ft_calloc error", 6);
 // 	mini->flags->redirect->error = NULL;
 // 	mini->token->input = NULL;
 // 	mini->token->tokens = NULL;
@@ -144,7 +144,7 @@
 
 t_mini	*ft_initialize()
 {
-	t_mini *mini = malloc(sizeof(t_mini));
+	t_mini *mini = ft_calloc(sizeof(t_mini), 1);
 	if (mini != NULL) 
 	{
 		mini->shell_level = 0;
@@ -156,7 +156,7 @@ t_mini	*ft_initialize()
 	else
 		return NULL;
 	mini->shell_level = 2;
-	mini->env = malloc(sizeof(t_env));
+	mini->env = ft_calloc(sizeof(t_env), 1);
 	if (mini->env == NULL)
 	{
 		free(mini);
@@ -164,7 +164,7 @@ t_mini	*ft_initialize()
 	}
 	mini->env->path = NULL;
 	mini->env->env = NULL;
-	mini->flags = malloc(sizeof(t_flags));
+	mini->flags = ft_calloc(sizeof(t_flags), 1);
 	if (mini->flags == NULL)
 	{
 		free(mini->env);
@@ -173,7 +173,7 @@ t_mini	*ft_initialize()
 	}
 	mini->flags->locate_red = 0;
 	mini->flags->expander = 0;
-	mini->token = malloc(sizeof(t_token));
+	mini->token = ft_calloc(sizeof(t_token), 1);
 	if (mini->token == NULL)
 	{
 		free(mini->flags);
@@ -196,7 +196,7 @@ t_mini	*ft_initialize()
 // 	mini = ft_calloc(sizeof(t_mini *), 1);
 // 	// Comprobamos si la asignacion de memoria fue exitosa
 // 	if (mini == NULL)
-// 		ft_exit_error("Malloc error", 1);
+// 		ft_exit_error("ft_calloc error", 1);
 // 	// Establecemos el nivel de shell en shell_level = 2. Esto es porque estamos
 // 	// iniciando la minishell dentro de la shell ya.
 // 	mini->shell_level = 2;
@@ -204,7 +204,7 @@ t_mini	*ft_initialize()
 // 	mini->env = ft_calloc(sizeof(t_env *), 1);
 // 	// Comrobamos si la asignacion de memoria fue exitosa.
 // 	if (!mini->env)
-// 		ft_exit_error("Malloc error", 2);
+// 		ft_exit_error("ft_calloc error", 2);
 // 	// Seteamos el env con la informacion deseada.
 // 	ft_set_env(mini->env, env);
 // 	//Asignamos memoria a la estructuta t_flags y lo inicializamos a 0.
@@ -212,6 +212,6 @@ t_mini	*ft_initialize()
 // 	mini->flags = ft_calloc(sizeof(t_flags *), 1);
 // 	// Comrobamos si la asignacion de memoria fue exitosa.
 // 	if (!mini->flags)
-// 		ft_exit_error("Malloc error", 4);
+// 		ft_exit_error("ft_calloc error", 4);
 // 	return (mini);
 // }

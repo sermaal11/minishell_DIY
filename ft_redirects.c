@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/25 17:18:06 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:47:20 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_red_error(t_mini *mini, char *input)
 		}
 		printf("mini: parse error near `%s'\n", mini->flags->redirect->error);
 		free(mini->flags->redirect->error);
-		mini->flags->redirect->error = NULL;
 		return ;
 	}
 	return ;
@@ -40,7 +39,7 @@ void	ft_red_error(t_mini *mini, char *input)
 
 void	ft_start_red(t_mini *mini)
 {
-	mini->flags->redirect = malloc(sizeof(t_red));
+	mini->flags->redirect = ft_calloc(sizeof(t_red), 1);
 	if (mini->flags->redirect == NULL)
 		return ;
 }
@@ -55,7 +54,6 @@ int	ft_red(char *input)
 	while (input[++i] != '\0')
 	{
 		if (input[i] == '<' || input[i] == '>')
-		
 			j++;
 	}
 	return (j);
@@ -101,7 +99,6 @@ void	ft_four_plus(t_mini *mini, char *input)
 	}
 	else
 		mini->flags->redirect->red_error = 3;
-	
 }
 
 int	ft_count_redirect(t_mini *mini, char *input)
@@ -120,23 +117,26 @@ int	ft_count_redirect(t_mini *mini, char *input)
 		{
 			size = 0;
 			mini->flags->redirect->red_error = 0;
-			while ((input[i]== '<' || input[i] == '>') && i++ >= size)
+			while ((input[i] == '<' || input[i] == '>') && i++ >= size)
 				size++;
-			if (size == 1)	
+			if (size == 1)
 				ft_one(mini, &input[i - size]);
 			else if (size == 2)
 				ft_two(mini, &input[i - size]);
 			else if (size == 3)
 				ft_three(mini, &input[i - size]);
 			else if (size >= 4)
-				ft_four_plus(mini, &input[i - size]);	
+				ft_four_plus(mini, &input[i - size]);
 			if (input[i] == '\0' || mini->flags->redirect->red_error != 0)
 				break ;
 			i++;
 		}
-		ft_red_error(mini, input);
 		if (mini->flags->redirect->red_error > 0)
+		{
+			mini->flags->locate_red = (i - size);
+			ft_red_error(mini, input);
 			return (-1);
+		}
 	}
 	return (i - size);
 }

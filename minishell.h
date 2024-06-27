@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/25 16:37:02 by descamil         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:48:45 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@
 # define R 0
 # define W 1
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 typedef struct s_red
 {
@@ -135,7 +135,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**args;
 	int				args_amount;
-}					 t_cmd;
+}					t_cmd;
 
 typedef struct s_mini
 {
@@ -171,7 +171,6 @@ char	**ft_names_var(char *input, int *k1, int **position);
 char	*ft_remove_var(char *dst, const char *src, int num, int i);
 int		ft_strnstr_mini(const char *s1, const char *s2, size_t len);
 char	*ft_remove_wrong_var(char *str, int *wrong_value, int wrong);
-
 
 // ft_expander.c
 char	*ft_expander(char **env, char *str);
@@ -232,7 +231,7 @@ int		ft_nothing(char *input, int i);
 int		ft_nothing_r(char *input, int i);
 int		ft_find_char(char *input, int i);
 int		ft_process_quotes(char *input, int *i, int *first);
-void	ft_process_space(char *input, int *i, int *first, int *stop);
+void	ft_process_space(char *input, int i, int *first, int *stop);
 
 // ft_check_dollar.c
 int		ft_isdigit_n_special_char(int n);
