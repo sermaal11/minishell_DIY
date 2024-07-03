@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:09:37 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/27 18:46:12 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:18:33 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 	ft_signal_management(1);
 	ft_recive_input(mini);
 	printf("\nSALIDA 1\n\n");
-	free_t_cmd(&(mini->cmd));
+	free_t_cmd(&mini->cmd);
 	free_t_mini(mini);
 	return (0);
 	env[0] = NULL;

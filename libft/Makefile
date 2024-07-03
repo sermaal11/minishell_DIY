@@ -113,9 +113,9 @@ all: $(NAME)
 	
 # La regla $(NAME) compila el ejecutable con los archivos objeto creados 
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
-	@echo "$(GREEN)¡Objetos de $(NAME) creados!$(RESET)"
-	@echo "$(CYAN)Compilando $(NAME)...$(RESET)"
-	ar -crs $@ $^
+	@echo "$(GREEN)¡Objetos de $(NAME) creados!\n$(RESET)"
+	@echo "$(CYAN)Compilando $(NAME)...\n$(RESET)"
+	@ar -crs $@ $^
 
 # La regla %.o compila los archivos objeto
 $(OBJDIR)/%.o : %.c | $(OBJDIR)
@@ -124,25 +124,25 @@ $(OBJDIR)/%.o : %.c | $(OBJDIR)
 
 # La regla $(OBJDIR) crea el directorio de los archivos objeto
 $(OBJDIR):
-	@echo "$(CYAN)Creando directorio de objetos de $(NAME)...$(RESET)"
-	mkdir $(OBJDIR)
-	@echo "$(GREEN)¡Directorio de objetos de $(NAME) creado!$(RESET)"
-	@echo "$(CYAN)Creando objetos de $(NAME)...$(RESET)"
+	@echo "$(CYAN)Creando directorio de objetos de $(NAME)...\n$(RESET)"
+	@mkdir $(OBJDIR)
+	@echo "$(GREEN)¡Directorio de objetos de $(NAME) creado!\n$(RESET)"
+	@echo "$(CYAN)Creando objetos de $(NAME)...\n$(RESET)"
 
 # La regla clean elimina todos los archivos objeto y el directorio
 clean:
-	@echo "$(RED)Eliminando archivos objeto de $(NAME)...$(RESET)"
-	rm -rf $(addprefix $(OBJDIR)/, $(OBJS))
-	@echo "$(GREEN)¡Todos los archivos objeto de $(NAME) han sido eliminados!$(RESET)"
-	@echo "$(RED)Eliminando directorio de objetos de $(NAME)...$(RESET)"
-	rm -rf $(OBJDIR)
-	@echo "$(GREEN)¡Directorio de objetos de $(NAME) eliminado!$(RESET)"
+	@echo "$(RED)Eliminando archivos objeto de $(NAME)...\n$(RESET)"
+	@rm -rf $(addprefix $(OBJDIR)/, $(OBJS))
+	@echo "$(GREEN)¡Todos los archivos objeto de $(NAME) han sido eliminados!\n$(RESET)"
+	@echo "$(RED)Eliminando directorio de objetos de $(NAME)...\n$(RESET)"
+	@rm -rf $(OBJDIR)
+	@echo "$(GREEN)¡Directorio de objetos de $(NAME) eliminado!\n$(RESET)"
 
 # La regla fclean elimina todos los archivos objeto y el ejecutable
 fclean: clean
-	@echo "$(RED)Eliminando $(NAME)...$(RESET)"
-	rm -rf $(NAME)
-	@echo "$(GREEN)¡$(NAME) ha sido eliminado!$(RESET)"
+	@echo "$(RED)Eliminando $(NAME)...\n$(RESET)"
+	@rm -rf $(NAME)
+	@echo "$(GREEN)¡$(NAME) ha sido eliminado!\n$(RESET)"
 
 # La regla re elimina todo y compila nuevamente
 re: fclean all

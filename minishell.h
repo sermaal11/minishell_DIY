@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/27 18:48:45 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/03 09:35:04 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@
 # define B_OR_0 "\033[1;38;5;214m" 	// Naranja normal en negrita
 # define B_OR_1 "\033[1;38;5;208m" 	// Naranja claro en negrita
 # define B_OR_2 "\033[1;38;5;220m" 	// Naranja oscuro en negrita
-# define B_YE_0 "\033[1;38;5;229m" 	// Amarillo normal en negrita
-# define B_YE_1 "\033[1;38;5;226m" 	// Amarillo claro en negrita
-# define B_YE_2 "\033[1;38;5;227m" 	// Amarillo oscuro en negrita
+# define B_YE_0 "\033[1;38;5;226m" 	// Amarillo normal en negrita
+# define B_YE_1 "\033[1;38;5;227m" 	// Amarillo claro en negrita
+# define B_YE_2 "\033[1;38;5;229m" 	// Amarillo oscuro en negrita
 # define B_BL_0 "\033[1;34m"    		// Azul normal en negrita
 # define B_BL_1 "\033[1;38;5;12m" 	// Azul claro en negrita
 # define B_BL_2 "\033[1;38;5;19m" 	// Azul oscuro en negrita
@@ -93,6 +93,12 @@
 
 extern int	g_exit_status;
 
+typedef struct s_argv
+{
+	char		**argv;
+	int			*fds;
+}				t_argv;
+
 typedef struct s_red
 {
 	int			si_ri;
@@ -130,8 +136,6 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	struct s_cmd	*next;
-	t_env			*env;
-	t_flags			*flags;
 	char			*cmd;
 	char			**args;
 	int				args_amount;
@@ -148,6 +152,10 @@ typedef struct s_mini
 
 // ft_utils.c
 void	ft_mini_header(void);
+int		ft_strstr_len(char **str);
+void	ft_strstr_printf(char **str);
+char	**ft_strstr_join(char **str, char **str1);
+
 
 // ft_initialize.c
 t_mini	*ft_initialize(void);
@@ -161,16 +169,19 @@ void	ft_recive_input(t_mini *mini);
 // ft_parser.c
 int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
 
-// ft_expander.c
-int		ft_var(char *input);
-int		ft_size(char **names);
-int		ft_size_int(int *test);
-int		ft_var_mod(char **env, char **names);
-int		ft_final_var(int *k, char *input, int i);
-char	**ft_names_var(char *input, int *k1, int **position);
-char	*ft_remove_var(char *dst, const char *src, int num, int i);
-int		ft_strnstr_mini(const char *s1, const char *s2, size_t len);
-char	*ft_remove_wrong_var(char *str, int *wrong_value, int wrong);
+// // ft_expander.c
+// int		ft_var(char *input);
+// int		ft_size(char **names);
+// int		ft_size_int(int *test);
+// int		ft_var_mod(char **env, char **names);
+// int		ft_final_var(int *k, char *input, int i);
+// char	**ft_names_var(char *input, int *k1, int **position);
+// char	*ft_remove_var(char *dst, const char *src, int num, int i);
+// int		ft_strnstr_mini(const char *s1, const char *s2, size_t len);
+// char	*ft_remove_wrong_var(char *str, int *wrong_value, int wrong);
+
+// ft_split_red.c
+char	**ft_split_red(const char *s);
 
 // ft_expander.c
 char	*ft_expander(char **env, char *str);
@@ -185,6 +196,9 @@ char	*ft_expander(char **env, char *str);
 // char	*ft_change_line_value(char *line, char *value);
 // char	*ft_compare_var_name(t_cmd *cmd, char *line, char *name_var);
 // char	*ft_strjoin_custom(char *str1, char *str2, size_t i, size_t c);
+
+// ft_printf_cmd.c
+void	print_cmd(t_cmd *cmd);
 
 // ft_check_input.c
 char	**ft_check_input(t_mini *mini, char *input);
@@ -215,9 +229,8 @@ int		ft_search_next_char(char *str, char c, int j);
 // ft_commands.c
 int		ft_count_args(char *input);
 t_cmd	*ft_last_command(t_cmd **cmd);
-t_cmd	*ft_add_command(t_mini *mini, char *input);
-char	*ft_get_command(t_mini *mini, char *input);
-char	*ft_split_var(char *line, int i, t_cmd *cmd);
+t_cmd	*ft_add_command(char *input);
+char	*ft_get_command(char *input);
 
 // ft_commands-2.c
 int		ft_size_argv(char *input, int stop);
@@ -252,5 +265,10 @@ void	ft_put_error(char *bash, char *file, char *error_msg);
 // ft_free.c
 void	free_t_mini(t_mini *mini);
 void	free_t_cmd(t_cmd **cmd);
+
+void	ft_strstr_free(char **str);
+
+// ft_split_red.c
+int		is_redirection(char c, char c1);
 
 #endif

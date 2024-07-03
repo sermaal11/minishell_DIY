@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:35:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/27 12:57:11 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/02 10:54:47 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*ft_inside_argv(char *input, int *size, int stop)
 	while (++i < size[stop] - 1)
 		exit[i] = input[pos++];
 	exit[i] = '\0';
-	printf(B_YE_0"EXIT --> [-%s-]\n", exit);
 	return (exit);
 }
 
@@ -113,9 +112,6 @@ void	ft_get_args(char *input, int argc, char ***args)
 	if (argv == NULL)
         return (ft_free(NULL, NULL, args));
 	size = ft_sizes_input(input, argc + 1);
-	int j = -1;
-	while (++j != argc)
-		printf(B_CY_0"SIZE[%d] --> [-%d-]\n", j, size[j]);
 	if (size == NULL)
 		return (ft_free(argv, NULL, args));
 	while (++i < argc)

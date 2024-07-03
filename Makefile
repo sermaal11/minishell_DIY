@@ -34,9 +34,11 @@ SRCS =	ft_main.c \
 		ft_signals.c \
 		ft_expander.c \
 		ft_commands.c \
+		ft_split_red.c \
 		ft_redirects.c \
 		ft_commands-2.c \
 		ft_commands-3.c \
+		ft_printf_cmd.c \
 		ft_initialize.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
@@ -47,9 +49,8 @@ SRCS =	ft_main.c \
 		ft_check_home_dir.c \
 		ft_check_operators.c \
 		ft_error_management.c \
-		get_next_line.c\
+		get_next_line.c \
 		get_next_line_utils.c \
-
 #------------------------------------------------------------------------------#
 
 # Archivos objeto (no tocar)
@@ -107,13 +108,15 @@ all: libft $(NAME)
 		echo "╔══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╝ ╚══════════╗"; \
 		echo "║ $(B_C)(┌ಠ_ಠ)\t¡$(NAME) compilado con éxito!!\t(ಠ_ಠ┐)$(RESET) ║"; \
 		echo "╚══════════════════════════════════════════════════════════════╝"; \
+		sleep 1; \
+		clear; \
 	fi
 	@$(eval LAST_MAKE_HAD_COMPILATION := 1)
 
 # La regla $(NAME) compila el ejecutable con los archivos objeto creados
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJS))
-	@echo "$(BOLD_GREEN)¡Objetos creados!$(RESET)"
-	@echo "$(CYAN)Compilando $(NAME)...$(RESET)"
+	@echo "$(BOLD_GREEN)¡Objetos creados!\n$(RESET)"
+	@echo "$(CYAN)Compilando $(NAME)...\n$(RESET)"
 	$(CC) $(CFLAGS) -o $@ $^ -lreadline $(LIBFT)
 	
 # La regla %.o compila los archivos objeto
@@ -123,52 +126,51 @@ $(OBJDIR)/%.o : %.c | $(OBJDIR)
 
 # La regla $(OBJDIR) crea el directorio de los archivos objeto
 $(OBJDIR):
-	@echo "$(CYAN)Creando directorio de objetos...$(RESET)"
+	@echo "$(CYAN)Creando directorio de objetos...\n$(RESET)"
 	mkdir $(OBJDIR)
-	@echo "$(BOLD_GREEN)¡Directorio de objetos creado!$(RESET)"
-	@echo "$(CYAN)Creando objetos...$(RESET)"
+	@echo "$(BOLD_GREEN)¡Directorio de objetos creado!\n$(RESET)"
+	@echo "$(CYAN)Creando objetos...\n$(RESET)"
 
 # La regla libft compila la libft. Si se usa, descomentar las siguientes
 # dos lineas
 libft:
-	@make -C $(LIBFT_DIR) --no-print-directory
+	@make -sC $(LIBFT_DIR) --no-print-directory
 
 # La regla libft_clean elimina los archivos objeto de la libft. Si se usa,
 # descomentar las siguientes dos lineas
 libft_clean:
-	@make -C $(LIBFT_DIR) clean
+	@make -sC $(LIBFT_DIR) clean
 
 # La regla libft_clean elimina los archivos objeto de la libft y el ejecutable.
 # Si se usa, descomentar las siguientes dos lineas
 libft_fclean:
-	@make -C $(LIBFT_DIR) fclean
+	@make -sC $(LIBFT_DIR) fclean
 
 # La regla clean elimina todos los archivos objeto y su directorio. Si se usa la
 # libft, descomentar la linea libft_clean
 clean: libft_clean
-	@echo "$(RED)Eliminando archivos objeto...$(RESET)"
-	rm -rf $(addprefix $(OBJDIR)/, $(OBJS))
-	@echo "$(BOLD_RED)¡Todos los archivos objeto han sido eliminados!$(RESET)"
-	@echo "$(RED)Eliminando directorio de objetos...$(RESET)"
-	rm -rf $(OBJDIR)
-	@echo "$(BOLD_RED)¡Directorio de objetos eliminado!$(RESET)"
+	@echo "$(RED)Eliminando archivos objeto...\n$(RESET)"
+	@rm -rf $(addprefix $(OBJDIR)/, $(OBJS))
+	@echo "$(BOLD_RED)¡Todos los archivos objeto han sido eliminados!\n$(RESET)"
+	@echo "$(RED)Eliminando directorio de objetos...\n$(RESET)"
+	@rm -rf $(OBJDIR)
+	@echo "$(BOLD_RED)¡Directorio de objetos eliminado!\n$(RESET)"
 
 # La regla fclean elimina todos los archivos objeto y el ejecutable. Si se usa
 # la libft, descomentar la linea libft_fclean
 fclean: clean libft_fclean
-	@echo "$(RED)Eliminando ejecutable...$(RESET)"
-	rm -rf $(NAME)
-	@echo "$(BOLD_RED)¡El ejecutable ha sido eliminado!$(RESET)"
+	@echo "$(RED)Eliminando ejecutable...\n$(RESET)"
+	@rm -rf $(NAME)
+	@echo "$(BOLD_RED)¡El ejecutable ha sido eliminado!\n$(RESET)"
 
 # La regla re elimina todo y compila nuevamente
 re: fclean all
 
 # La regla init inicializa el proyecto
 init:
-	@echo "$(CYAN)Creando archivo .gitignore...$(RESET)"
-	@echo "$(CYAN)Añadiendo .DS_Store, .vscode, .dSYM y .o al archivo .gitignore...$(RESET)"
+	@echo "$(CYAN)Creando archivo .gitignore...\n$(RESET)"
+	@echo "$(CYAN)Añadiendo .DS_Store, .vscode, .dSYM y .o al archivo .gitignore...\n$(RESET)"
 	@echo "\n"
-	@echo ".DS_Store" > .gitignore
 	@echo ".vscode" >> .gitignore
 	@echo "*.dSYM" >> .gitignore
 	@echo "*.o" >> .gitignore

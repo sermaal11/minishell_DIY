@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:27:49 by user              #+#    #+#             */
-/*   Updated: 2024/06/27 08:45:37 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:37:42 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,19 @@ void	free_t_env(t_env **env)
 
 void	free_t_cmd(t_cmd **cmd)
 {
-	t_cmd	*temp;
-	int		i;
+	t_cmd	*current;
+	t_cmd	*next;
 	
-	while (cmd && *cmd)
+	current = *cmd;
+	while (current)
 	{
-		i = 0;
-		temp = (*cmd)->next;
-		if ((*cmd)->cmd)
-			free((*cmd)->cmd);
-		if ((*cmd)->args)
-		{
-			while ((*cmd)->args[i])
-				free((*cmd)->args[i++]);
-			free((*cmd)->args);
-		}
-		free(*cmd);
-		*cmd = temp;
+		next = current->next;
+		ft_strstr_free(current->args);
+		free(current->cmd);
+		free(current);
+		current = next;
 	}
+	*cmd = NULL;
 }
 
 // void	free_t_mini(t_mini **mini)
@@ -109,16 +104,7 @@ void free_t_mini(t_mini *mini)
 			mini->env->path = NULL;
 		}
 		if (mini->env->env != NULL)
-		{
-			int i = 0;
-			while (mini->env->env[i])
-			{
-				free(mini->env->env[i]);
-				mini->env->env[i++] = NULL;
-			}
-			free(mini->env->env);
-			mini->env->env = NULL;
-		}
+			ft_strstr_free(mini->env->env);
 	}
 
 	if (mini->flags)
@@ -128,12 +114,7 @@ void free_t_mini(t_mini *mini)
 		if (mini->token->input != NULL)
 			free(mini->token->input);
 		if (mini->token->tokens != NULL)
-		{
-			int i = 0;
-			while (mini->token->tokens[i])
-				free(mini->token->tokens[i++]);
-			free(mini->token->tokens);
-		}
+			ft_strstr_free(mini->token->tokens);
 		free(mini->token);
 	}
 	if (mini->env)

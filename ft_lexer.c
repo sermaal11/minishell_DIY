@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/27 18:50:52 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:20:35 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,27 @@ char	*ft_free_input(t_mini *mini, char *input)
 	return (NULL);
 }
 
+int	ft_find_exit(char *input)
+{
+	char	*exit_position;
+
+	exit_position = ft_strnstr(input, "exit", ft_strlen(input));
+	if (exit_position != NULL)
+	{
+		exit_position += 4;
+		while (*exit_position == ' ')
+			exit_position++;
+		if (*exit_position == '\0')
+			return (1);
+	}
+	return (0);
+}
+
 void	ft_recive_input(t_mini *mini)
 {
 	char	*input;
 	int		fd;
 
-	(void) mini;
 	fd = 0;
 	fd = ft_history();
 	while (1)
@@ -115,24 +130,16 @@ void	ft_recive_input(t_mini *mini)
 				printf("Llega al final! 🚀\n");
 			}
 		}
-		// todo: Proto built-ins: exit (Irá en ft_builtins.c y sera llamada desde el ejecutor)
-		if (ft_strncmp(input, "exit", ft_strlen("exit")) == 0)
-		{
-			//g_exit_status = 0;
-			//ft_exit_error("Exit", g_exit_status);
-			// ! Las dos lineas de arriba son las que valen, estas son para debuguear.
-			free(input);
-			input = NULL;
-			break ;
-		}
-		if (input)
-			free(input);
-		free_t_cmd(&(mini->cmd));
-		if (mini->flags->locate_red == -1 && mini->flags->redirect)
+		if (mini->flags->redirect && input != NULL)
 		{
 			mini->flags->locate_red = 0;
 			free(mini->flags->redirect);
+			mini->flags->redirect = NULL;
 		}
+		if (input)
+			free(input);
+		print_cmd(mini->cmd);
+		free_t_cmd(&(mini->cmd));
 	}
 	close(fd);
 }
