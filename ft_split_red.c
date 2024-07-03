@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 09:48:18 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/02 10:11:21 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:30:18 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,19 @@ char **ft_split_red(const char *input)
 	int		len;
 	int		i;
 
-	tokens = (char **)ft_calloc(sizeof(char *), (strlen(input) * 2 + 1));
+	tokens = (char **)ft_calloc(sizeof(char *), (ft_strlen(input) * 2 + 1));
 	if (!tokens)
 	{
 		perror("Error en la asignación de memoria");
 		exit(EXIT_FAILURE);
 	}
 	token_count = 0;
-	len = strlen(input);
+	len = ft_strlen(input);
 	i = 0;
 	while (i < len)
 	{
 		token = extract_token(input, &i);
-		if (strlen(token) > 0)
+		if (ft_strlen(token) > 0)
 			add_token(tokens, &token_count, token);
 		free(token);
 		if (i < len && is_redirection(input[i], input[i + 1]))
