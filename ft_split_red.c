@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 09:48:18 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/03 12:30:18 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:16:25 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char	*extract_token(const char *input, int *i)
 	char	*token;
 
 	len = ft_strlen(input);
-	while (*i < len && isspace(input[*i]))
+	while (*i < len && ft_isspace(input[*i]))
 		(*i)++;
 	token_start = *i;
-	while (*i < len && !isspace(input[*i]) && !is_redirection(input[*i], input[*i + 1]))
+	while (*i < len && !ft_isspace(input[*i]) && !is_redirection(input[*i], input[*i + 1]))
 		(*i)++;
 	token_len = *i - token_start + 1;
 	token = (char *)ft_calloc((token_len + 1), sizeof(char));

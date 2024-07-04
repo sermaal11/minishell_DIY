@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:35:49 by user              #+#    #+#             */
-/*   Updated: 2024/07/02 10:54:47 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:15:46 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_inside_argv(char *input, int *size, int stop)
 	int		pos;
 
 	i = -1;
+	// printf("%d\n", size[stop]);
 	exit = (char *)malloc((size[stop]) * sizeof(char *));
 	if (exit == NULL)
 		return (NULL);
@@ -47,28 +48,42 @@ char	*ft_inside_argv(char *input, int *size, int stop)
 	return (exit);
 }
 
-int	ft_size_argv(char *input, int stop)
+int ft_size_argv(char *input, int stop)
 {
-	int	i;
-	int	size;
+	int i;
+	int size;
+	int start;
 
 	i = 0;
 	size = 0;
-	while (input[i] == ' ')
-		i++;
-	while (input[i])
+	while (stop != -1 && input[i])
 	{
-		if (input[i] != 34 && input[i] != 39 && input[i] != ' ')
+		while (input[i] == ' ')
+			i++;
+		while (input[i] != ' ' && input[i] != '\0')
+		{
+			if (input[i] == '\'' || input[i] == '\"')
+			{
+				start = i;
+				i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
+				size += i - start;
+			}
+			else
+			{
+				size++;
+				i++;
+			}
+		}
+		while (input[i] != '\0' && input[i] != ' ')
+		{
 			size++;
-		if (input[i] == 34 || input[i] == 39)
-			i = ft_process_quotes(input, &i, &size);
-		if (input[i] == '\0' || (input[i + 1] == ' ' && --stop == -1))
-			return (++size);
-		else if (input[i] == ' ')
+			i++;
+		}
+		stop--;
+		if (stop != -1)
 			size = 0;
-		i++;
 	}
-	return (++size);
+	return ++size;
 }
 
 int	*ft_sizes_input(char *input, int argc)

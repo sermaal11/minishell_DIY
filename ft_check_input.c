@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:52:46 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/03 11:46:17 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/04 10:57:03 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ char	**ft_check_input(t_mini *mini, char *input)
 	char	**lines;
 
 	mini->flags->locate_red = ft_count_redirect(mini, input);
+	if (mini->flags->locate_red == -1)
+		return (NULL);
 	mini->flags->quote = ft_check_quote(input, 2, 2, mini);
+	if (mini->flags->quote == -1)
+		return (NULL);
 	mini->flags->pipe = ft_count_pipes(input);
-	if (mini->flags->quote < 1 && mini->flags->pipe < 1 && mini->flags->locate_red < 1)
+	if (mini->flags->pipe == -1)
 		return (NULL);
 	if (mini->flags->pipe > 0)
 	{

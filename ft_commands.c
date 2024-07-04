@@ -6,34 +6,35 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/03 12:25:37 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:15:54 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_count_args(char *input)
+int ft_count_args(char *input)
 {
-	int	i;
-	int	args_amount;
+	int i;
+	int size;
 
 	i = 0;
-	args_amount = 0;
-	while (input[i] == ' ')
-		i++;
-	while (input[i])
+	size = 0;
+	while (input[i] != '\0')
 	{
-		if ((input[i] != 32 && input[i] != 34 && input[i] != 39) && (input[i + 1] == 32 || input[i + 1] == '\0' || input[i +1] == 34 || input[i + 1] == 39))
-			args_amount++;
-		if (input[i] == 34 || input[i] == 39)
+		while (input[i] == ' ' && input[i] != '\0')
+			i++;
+		if (input[i] == '\0')
+			return (size);
+		while (input[i] != ' ' && input[i] != '\0')
 		{
-			i = ft_locate_next_quote(i + 1, input, input[i]);
-			if (input[i] == 34 || input[i] == 39)
-				args_amount++;
+			if (input[i] == '\'' || input[i] == '\"')
+				i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
+			else
+				i++;
 		}
-		i++;
+		size++;
 	}
-	return (args_amount);
+	return (size);
 }
 
 char	*ft_get_command(char *input)
@@ -67,6 +68,8 @@ int	is_red(char *argv)
 	int red;
 	while (argv[++j] != '\0')
 	{
+		if (argv[j] == '\'')
+			j = ft_locate_next_quote(j + 1, argv, argv[j]) + 1;
 		red = is_redirection(argv[j], argv[j + 1]);
 		if (red != 0)
 			return (red);

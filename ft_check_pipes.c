@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/25 17:22:42 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:15:16 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	ft_count_pipes(char *input)
 	int	amount;
 	int	character;
 
-	i = -1;
+	i = 0;
 	amount = 0;
 	character = 0;
-	while (input[++i])
+	while (input[i])
 	{
 		if (input[i] == 34 || input[i] == 39)
 			i = ft_locate_next_quote(i + 1, input, input[i]);
@@ -78,6 +78,7 @@ int	ft_count_pipes(char *input)
 			g_exit_status = 258;
 			return (-1);
 		}
+		i++;
 	}
 	return (amount);
 }
