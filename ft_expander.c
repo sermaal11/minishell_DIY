@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/05 12:28:27 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:57:37 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,19 @@
 char	*ft_strchr_mod(const char *str, int value, int stop)
 {
 	char	quote;
-	int		d = 0;
 	
 	quote = 0;
 	while (*str)
 	{
 		if (*str == '\"')
 		{
-			if (d++ % 2 == 5)
-				d = 0;
+			if (quote++ % 2 == 5)
+				quote = 0;
 		}
 		if (*str == '\'')
 		{
 			str++;
-			while (*str != '\'' && d == 0)
+			while (*str != '\'' && quote == 0)
 				str++;
 		}
 		if (*str == (char)value && stop-- == 0)
@@ -187,7 +186,7 @@ char	*ft_expander(char **env, char *str)
 	char	*tmp = NULL; 
 	char	*div_tmp = NULL;
 	char	*cpy;
-	int		iter = -2;
+	int		iter = -1;
 	int		stop = 0;
 	char	*res;
 	int		value;
@@ -205,7 +204,7 @@ char	*ft_expander(char **env, char *str)
 				div_tmp = ft_strdup(str);
 			return (div_tmp);
 		}
-		if (iter == -2)
+		if (iter == -1)
 			iter = 0;
 		if (div_tmp && ft_strchr_mod(div_tmp, '$', stop) == NULL)
 			break ;
