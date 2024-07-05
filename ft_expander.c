@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/22 12:27:10 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:19:38 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,23 @@
 
 char	*ft_strchr_mod(const char *str, int value, int stop)
 {
+	char	quote;
+	int		d = 0;
+	
+	quote = 0;
 	while (*str)
 	{
+		if (*str == '\"')
+		{
+			if (d++ % 2 == 5)
+				d = 0;
+		}
+		if (*str == '\'')
+		{
+			str++;
+			while (*str != '\'' && d == 0)
+				str++;
+		}
 		if (*str == (char)value && stop-- == 0)
 			return ((char *)str);
 		str++;
@@ -73,7 +88,7 @@ char *ft_change_var(char *div, char **env)
 	if (div && ft_strlen(div) == 2 && ft_strncmp(div, "?=", 2) == 0)
 	{
 		glob = ft_itoa(127);
-		// g_exit_status // GESTIONAR LA VRIABLE SUSTITUYENDO 127 POR LA GLOBAL
+		// g_exit_status // GESTIONAR LA VRIABLE SUSTITUYENDO 127 POR LA DE LA LISTA
 		str = malloc(sizeof(char) * ft_strlen(glob) + 1);
 		ft_memcpy(str, glob, ft_strlen(glob) + 1);
 		free(glob);
@@ -149,14 +164,6 @@ int	ft_size_var(char *str)
 		return (-1);
 	while (ft_isalnum(str[i]) == 1)
 		i++;
-	// if (ft_isdigit(str[i]) == 1)
-	// {
-	// 	while (str[i] != ' ' && str[i] != '$' && str[i] != '\0')
-	// 		i++;
-	// 	return (i);
-	// }
-	// while (ft_isalnum(str[i]) == 1 && str[i] != '\0')
-	// 	i++;
 	return(i);
 }
 
@@ -179,13 +186,26 @@ char	*ft_expander(char **env, char *str)
 	char	**div = NULL;
 	char	*tmp = NULL; 
 	char	*div_tmp = NULL;
-	int		iter = -1;
+	char	*cpy;
+	int		iter = -2;
 	int		stop = 0;
 	char	*res;
-	
-	while (ft_strchr_mod(str, '$', stop) - str >= 0)
+	int		value;
+
+	if (str == NULL)
+		return (NULL);
+	cpy = ft_strdup(str);
+	while (1)
 	{
-		if (iter == -1)
+		value = ft_strchr_mod(str, '$', stop) - str;
+		if (value < 0)
+		{
+			free(cpy);
+			if (!div_tmp)
+				div_tmp = ft_strdup(str);
+			return (div_tmp);
+		}
+		if (iter == -2)
 			iter = 0;
 		if (div_tmp && ft_strchr_mod(div_tmp, '$', stop) == NULL)
 			break ;
@@ -210,22 +230,27 @@ char	*ft_expander(char **env, char *str)
 		ft_ex_free(div, tmp);
 		iter++;
 	}
-	if (str && iter != 1)
+	if (str && iter != 1 && (int)ft_strlen(str) != 0 && ft_strncmp(str, cpy, ft_strlen(cpy)) != 0)
 		free(str);
+	free(cpy);
 	return (div_tmp);
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	char	*str = "$asd";
-// 	char	*result;
+int main(int argc, char **argv, char **env)
+{
+	char	*str = "\'$USER\"$USER\'$USER\'$USER\"$USER$USER\'\'$U\'\'\'$U\"\"\"$U\""; // ['$USER"$USER'descamil'$USER"$USER$USER''$U'''""""] BASH --> $USER"$USERdescamil$USER"$USER$USER$U: command not found
+	// char	*str = "    \'$?\'  \'$USER\'  ";
+	char	*result;
 
-// 	if (argc != 1)
-// 		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
-// 	result = ft_expander(env, str);
-// 	printf(B_WH_0"\nCADENA RESULTANTE -->\t\"%s\"\n\n"RESET, result);
+	printf(B_CY_0"\nCADENA INICIAL -->\t[%s]\n"RESET, str);
+	if (argc != 1)
+		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
+	result = ft_expander(env, str);
+	printf(B_WH_0"\nCADENA RESULTANTE -->\t[%s]\n\n"RESET, result);
+	if (result)
+		free(result);
 
-// 	free(result);
-
-// 	return (0);
-// }
+	// result = ft_strchr_mod(str, '$', 0);
+	// printf("%s\n", result);
+	return (0);
+}
