@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/05 12:19:38 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:28:27 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,21 +236,21 @@ char	*ft_expander(char **env, char *str)
 	return (div_tmp);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	char	*str = "\'$USER\"$USER\'$USER\'$USER\"$USER$USER\'\'$U\'\'\'$U\"\"\"$U\""; // ['$USER"$USER'descamil'$USER"$USER$USER''$U'''""""] BASH --> $USER"$USERdescamil$USER"$USER$USER$U: command not found
-	// char	*str = "    \'$?\'  \'$USER\'  ";
-	char	*result;
+// int main(int argc, char **argv, char **env)
+// {
+// 	char	*str = "\'$USER\"$USER\'$USER\'$USER\"$USER$USER\'\'$U\'\'\'$U\"\"\"$U\""; // ['$USER"$USER'descamil'$USER"$USER$USER''$U'''""""] BASH --> $USER"$USERdescamil$USER"$USER$USER$U: command not found
+// 	// char	*str = "    \'$?\'  \'$USER\'  ";
+// 	char	*result;
 
-	printf(B_CY_0"\nCADENA INICIAL -->\t[%s]\n"RESET, str);
-	if (argc != 1)
-		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
-	result = ft_expander(env, str);
-	printf(B_WH_0"\nCADENA RESULTANTE -->\t[%s]\n\n"RESET, result);
-	if (result)
-		free(result);
+// 	printf(B_CY_0"\nCADENA INICIAL -->\t[%s]\n"RESET, str);
+// 	if (argc != 1)
+// 		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
+// 	result = ft_expander(env, str);
+// 	printf(B_WH_0"\nCADENA RESULTANTE -->\t[%s]\n\n"RESET, result);
+// 	if (result)
+// 		free(result);
 
-	// result = ft_strchr_mod(str, '$', 0);
-	// printf("%s\n", result);
-	return (0);
-}
+// 	// result = ft_strchr_mod(str, '$', 0);
+// 	// printf("%s\n", result);
+// 	return (0);
+// }
