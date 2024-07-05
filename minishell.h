@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/03 09:35:04 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:53:40 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ t_cmd	*ft_add_command(char *input);
 char	*ft_get_command(char *input);
 
 // ft_commands-2.c
-int		ft_size_argv(char *input, int stop);
+int		ft_size_argv(char *input, int stop, int size, int index);
 void	ft_get_args(char *input, int argc, char ***args);
 int		*ft_sizes_input(char *input, int argc);
 int		ft_position(char *input, int *size, int stop);

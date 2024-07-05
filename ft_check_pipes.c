@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/04 16:15:16 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:19:48 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**ft_split_pipes(char *input)
 	int		i;
 
 	i = -1;
-	splited_pipes = malloc(sizeof(char *) * (ft_count_pipes(input) + 2));
+	splited_pipes = ft_calloc(sizeof(char *) * (ft_count_pipes(input) + 2));
 	if (!splited_pipes)
 		ft_exit_error(NULL, "Malloc error", 54);
 	splited_pipes = ft_fill_matrix_pipes(input, splited_pipes);
@@ -116,7 +116,7 @@ char	**ft_split_pipes(char *input)
 		{
 			g_exit_status = 258;
 			while (i >= 0)
-				free(splited_pipes[i--]);
+				free(splited_pipes[i--]); // Utilizar free_strstr
 			free(splited_pipes);
 			return (NULL);
 		}

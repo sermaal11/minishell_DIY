@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 13:20:46 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/05 13:57:37 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:18:21 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	*ft_strchr_mod(const char *str, int value, int stop)
 	return (NULL);
 }
 
-char    **ft_tript(char *str, int size, int start)
+char	**ft_tript(char *str, int size, int start)
 {
-	int     i = -1;
-	int     j = 0;
-	char    **div;
+	int		i = -1;
+	int		j = 0;
+	char	**div;
 
 	if (size == -1)
 		size = 1;
@@ -73,38 +73,42 @@ char    **ft_tript(char *str, int size, int start)
 
 char *ft_change_var(char *div, char **env)
 {
-    int     i = 0;
-    char    *str;
+	int		i = -1;
+	char	*str;
 	char	*glob;
-    
+	
 	if (div && ft_strlen(div) == 1 && ft_strncmp(div, "$", 1) == 0)
 	{
-		str = malloc(sizeof(char) * 2);
+		str = ft_calloc(sizeof(char), 2);
+		if (str == NULL)
+			return (NULL);
 		ft_memset(str, '$', 1);
-		str[1] = '\0';
 		return (str);
 	}
 	if (div && ft_strlen(div) == 2 && ft_strncmp(div, "?=", 2) == 0)
 	{
 		glob = ft_itoa(127);
-		// g_exit_status // GESTIONAR LA VRIABLE SUSTITUYENDO 127 POR LA DE LA LISTA
-		str = malloc(sizeof(char) * ft_strlen(glob) + 1);
+		// GESTIONAR LA VRIABLE SUSTITUYENDO 127 POR LA SALIDA DE LA LISTA //
+		str = ft_calloc(sizeof(char), ft_strlen(glob) + 1);
+		if (str == NULL)
+			return (NULL);
 		ft_memcpy(str, glob, ft_strlen(glob) + 1);
 		free(glob);
 		return (str);
 	}
-    while (env[i] != NULL)
-    {
-        if (ft_strnstr(env[i], div, ft_strlen(div)) != NULL)
-        {
-			str = malloc(sizeof(char) * ft_strlen(env[i]) - ft_strlen(div) + 1);
-            ft_memcpy(str, env[i] + ft_strlen(div),ft_strlen(env[i]) - ft_strlen(div) + 1);
-            if (str != NULL)
-                return (str);
-        }
-        i++;
-    }
-    return ("");
+	while (env[++i] != NULL)
+	{
+		if (ft_strnstr(env[i], div, ft_strlen(div)) != NULL)
+		{
+			str = ft_calloc(sizeof(char), ft_strlen(env[i]) - ft_strlen(div) + 1);
+			if (str == NULL)	
+				return (NULL);
+			ft_memcpy(str, env[i] + ft_strlen(div), ft_strlen(env[i]) - ft_strlen(div) + 1);
+			if (str != NULL)
+				return (str);
+		}
+	}
+	return ("");
 }
 
 char	*ft_dolar_to_iqual(char *div)
@@ -235,21 +239,21 @@ char	*ft_expander(char **env, char *str)
 	return (div_tmp);
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	char	*str = "\'$USER\"$USER\'$USER\'$USER\"$USER$USER\'\'$U\'\'\'$U\"\"\"$U\""; // ['$USER"$USER'descamil'$USER"$USER$USER''$U'''""""] BASH --> $USER"$USERdescamil$USER"$USER$USER$U: command not found
-// 	// char	*str = "    \'$?\'  \'$USER\'  ";
-// 	char	*result;
+int main(int argc, char **argv, char **env)
+{
+	char	*str = "\'$USER\"$USER\'$USER\'$USER\"$USER$USER\'\'$U\'\'\'$U\"\"\"$U\""; // ['$USER"$USER'descamil'$USER"$USER$USER''$U'''""""] BASH --> $USER"$USERdescamil$USER"$USER$USER$U: command not found
+	// char	*str = "    \'$?\'  \'$USER\'  ";
+	char	*result;
 
-// 	printf(B_CY_0"\nCADENA INICIAL -->\t[%s]\n"RESET, str);
-// 	if (argc != 1)
-// 		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
-// 	result = ft_expander(env, str);
-// 	printf(B_WH_0"\nCADENA RESULTANTE -->\t[%s]\n\n"RESET, result);
-// 	if (result)
-// 		free(result);
+	printf(B_CY_0"\nCADENA INICIAL -->\t[%s]\n"RESET, str);
+	if (argc != 1)
+		printf(B_RD_2"ERROR --> [%s]\n"RESET, argv[1]);
+	result = ft_expander(env, str);
+	printf(B_WH_0"\nCADENA RESULTANTE -->\t[%s]\n\n"RESET, result);
+	if (result)
+		free(result);
 
-// 	// result = ft_strchr_mod(str, '$', 0);
-// 	// printf("%s\n", result);
-// 	return (0);
-// }
+	// result = ft_strchr_mod(str, '$', 0);
+	// printf("%s\n", result);
+	return (0);
+}

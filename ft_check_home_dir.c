@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:23:43 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/06/05 16:01:14 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:11:21 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_replace_value_of_var_bis(char *str, int i, int j)
 	char	*tmp[3];
 
 	tmp[0] = ft_itoa(g_exit_status);
-	res = malloc(sizeof(char) * ((ft_strlen(str) - 1) + ft_strlen(tmp[0])));
+	res = ft_calloc(sizeof(char), ((ft_strlen(str) - 1) + ft_strlen(tmp[0])));
 	if (!res)
 		ft_exit_error(NULL, "Error malloc", 55);
 	tmp[1] = ft_substr(str, 0, i);
@@ -64,7 +64,6 @@ char	*ft_replace_value_of_var_bis(char *str, int i, int j)
 		res[j] = tmp[0][j];
 	while (str[++i] && str[i + 1])
 		res[j++] = str[i + 1];
-	res[j] = '\0';
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);

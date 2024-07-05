@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:28:59 by sergio            #+#    #+#             */
-/*   Updated: 2024/06/22 13:07:49 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:16:01 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*buffer_remainder(char *buff)
 		i++;
 	if (buff[i] == '\n')
 		i++;
-	buff_rema = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff_rema = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (buff_rema == NULL)
 	{
 		free(buff);
@@ -33,7 +33,6 @@ static char	*buffer_remainder(char *buff)
 	j = 0;
 	while (buff[i] != '\0')
 		buff_rema[j++] = buff[i++];
-	buff_rema[j] = '\0';
 	free(buff);
 	buff = NULL;
 	return (buff_rema);
@@ -49,7 +48,7 @@ static char	*take_line(char *buff)
 		i++;
 	if (buff[i] == '\n')
 		i++;
-	line = (char *)malloc((i + 1) * sizeof(char));
+	line = (char *)ft_calloc((i + 1), sizeof(char));
 	if (line == NULL)
 		return (NULL);
 	i = 0;
@@ -63,7 +62,6 @@ static char	*take_line(char *buff)
 		line[i] = '\n';
 		i++;
 	}
-	line[i] = '\0';
 	return (line);
 }
 

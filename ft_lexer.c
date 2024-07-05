@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/05 14:10:05 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:24:37 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*ft_free_input(t_mini *mini, char *input)
 			{
 				j = 0;
 				while (mini->cmd->args[j] && mini->cmd->args[j] != NULL)
-					free(mini->cmd->args[j++]);
+					free(mini->cmd->args[j++]);			// utilziar free_strstr
 				free(mini->cmd->args);
 			}
 		}
@@ -136,7 +136,7 @@ void	ft_recive_input(t_mini *mini)
 		{
 			mini->flags->locate_red = 0;
 			free(mini->flags->redirect);
-			mini->flags->redirect = NULL;
+			mini->flags->redirect = NULL;  //Utilzar funcion nueva
 		}
 		if (input)
 			free(input);
