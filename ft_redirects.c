@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/06/29 15:31:19 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:41:05 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_one(t_mini *mini, char *input)
 {
 	if (input[0] == '<')
 		mini->flags->redirect->si_le += 1;
-	if (input[0] == '>')
+	else
 		mini->flags->redirect->si_ri += 1;
 }
 
@@ -99,6 +99,17 @@ void	ft_four_plus(t_mini *mini, char *input)
 	}
 	else
 		mini->flags->redirect->red_error = 3;
+}
+
+int	ft_red_count(t_mini *mini)
+{
+	int i;
+
+	i = mini->flags->redirect->do_le;
+	i += mini->flags->redirect->do_ri;
+	i += mini->flags->redirect->si_le;
+	i += mini->flags->redirect->si_ri;
+	return (i);
 }
 
 int	ft_count_redirect(t_mini *mini, char *input)
@@ -138,5 +149,7 @@ int	ft_count_redirect(t_mini *mini, char *input)
 			return (-1);
 		}
 	}
+	mini->flags->redirect->number = ft_red_count(mini);
+	// printf("%d\n", mini->flags->redirect->number);
 	return (i - size);
 }

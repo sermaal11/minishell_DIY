@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/05 14:36:47 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:34:16 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,11 @@ char	**ft_new_args(char **args, int pos, int	i, int j)
 	return (args2);
 }
 
-t_cmd	*ft_add_command(char *input)
+t_cmd	*ft_add_command(char *input, int i)
 {
 	t_cmd	*new_cmd;
 	char	**args;
-	int		i;
-
-	i = -1;
+	
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
 		ft_exit_error(NULL, "Calloc error", 9);
@@ -127,15 +125,18 @@ t_cmd	*ft_add_command(char *input)
 	if (new_cmd->args_amount == 0)
 		return (new_cmd);
 	ft_get_args(input, new_cmd->args_amount, &new_cmd->args);
-	while (new_cmd->args[++i] != NULL && is_red(new_cmd->args[i]) != 0)
+	while (new_cmd->args[++i] != NULL)
 	{
-		args = ft_new_args(new_cmd->args, i, 0 ,0);
-		if (ft_strstr_len(args) - ft_strstr_len(new_cmd->args) != 0)
-			i = ft_strstr_len(args) - ft_strstr_len(new_cmd->args) - 1;
-		if (new_cmd->args)
-			ft_strstr_free(new_cmd->args);
-		new_cmd->args = ft_strstr_join(args, NULL);
-		ft_strstr_free(args);
+		if (is_red(new_cmd->args[i]) != 0)
+		{
+			args = ft_new_args(new_cmd->args, i, 0 ,0);
+			if (ft_strstr_len(args) - ft_strstr_len(new_cmd->args) != 0)
+				i = ft_strstr_len(args) - ft_strstr_len(new_cmd->args) - 1;
+			if (new_cmd->args)
+				ft_strstr_free(new_cmd->args);
+			new_cmd->args = ft_strstr_join(args, NULL);
+			ft_strstr_free(args);
+		}
 	}
 	new_cmd->next = NULL;
 	return (new_cmd);

@@ -40,16 +40,17 @@ SRCS =	ft_main.c \
 		ft_commands-3.c \
 		ft_printf_cmd.c \
 		ft_initialize.c \
+		get_next_line.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
 		ft_check_redir.c \
 		ft_check_dollar.c \
+		ft_final_values.c \
 		ft_check_quotes.c \
 		ft_expander_utils.c \
 		ft_check_home_dir.c \
 		ft_check_operators.c \
 		ft_error_management.c \
-		get_next_line.c \
 		get_next_line_utils.c \
 #------------------------------------------------------------------------------#
 

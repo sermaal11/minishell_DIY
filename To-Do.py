@@ -3,6 +3,10 @@
 
 	· Utilizar la expansion de variables
 
+	· Gestion de comillas simples en las redirecciones \'<>\'
+
+	· Gestion de comillas simples en las pipes \|'\|'\|
+
 	· Quitar comillas dobles y simples.
 
 	· Sacar el comando de la varaible args

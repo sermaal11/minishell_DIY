@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/05 14:53:40 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:34:33 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,16 @@
 
 extern int	g_exit_status;
 
-typedef struct s_argv
+typedef struct s_files
 {
-	char		**argv;
-	int			*fds;
-}				t_argv;
+	char		**infiles;
+	char		**outfiles;
+	char		**here_doc;
+	char		**append;
+	char		**order;
+	int			error;
+}				t_files;
+
 
 typedef struct s_red
 {
@@ -105,7 +110,7 @@ typedef struct s_red
 	int			si_le;
 	int			do_ri;
 	int			do_le;
-	int			locate;
+	int			number;
 	int			red_error;
 	char		*error;
 }				t_red;
@@ -138,6 +143,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	char			*cmd;
 	char			**args;
+	t_files			*files;
 	int				args_amount;
 }					t_cmd;
 
@@ -156,6 +162,8 @@ int		ft_strstr_len(char **str);
 void	ft_strstr_printf(char **str);
 char	**ft_strstr_join(char **str, char **str1);
 
+// ft_final_values.c
+void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files);
 
 // ft_initialize.c
 t_mini	*ft_initialize(void);
@@ -229,7 +237,7 @@ int		ft_search_next_char(char *str, char c, int j);
 // ft_commands.c
 int		ft_count_args(char *input);
 t_cmd	*ft_last_command(t_cmd **cmd);
-t_cmd	*ft_add_command(char *input);
+t_cmd	*ft_add_command(char *input, int i);
 char	*ft_get_command(char *input);
 
 // ft_commands-2.c
