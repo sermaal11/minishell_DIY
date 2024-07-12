@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/12 12:27:38 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:52:13 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ extern int	g_exit_status;
 
 typedef struct s_files
 {
-	char		***exp;
+	char		**exp;
 	char		**f_order;
 	char		**order;
 	int			error;
@@ -164,7 +164,7 @@ char	**ft_strstr_join(char **str, char **str1);
 // ft_final_values.c
 int		ft_type(char *argv);
 int		ft_strlen_dup(char *argv);
-void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files);
+void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files, int pos);
 
 // ft_initialize.c
 t_mini	*ft_initialize(void);

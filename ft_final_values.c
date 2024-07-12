@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 17:24:29 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/12 11:36:07 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:51:18 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,17 @@ int	ft_mem_files(t_mini *mini, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_pos_files(t_cmd *cmd, int i)
+int	ft_pos_files(t_cmd *cmd, int i, int pos)
 {
 	int	files;
 
 	files = 0;
+	ft_strstr_printf(cmd->args);
 	while (cmd->args[i])
 	{
 		if (ft_type(cmd->args[i]) > 0)
 		{
-			printf("%s\n", cmd->args[i]);
-			printf("%d\n", cmd->files->error);
-			if (ft_type(cmd->args[i]) == 2 && cmd->files->error == -2)
+			if (ft_type(cmd->args[i]) == 2 && pos == 1)
 				cmd->files->f_order[files++] = ft_strdup("|");
 			else
 			{
@@ -127,12 +126,13 @@ int	ft_pos_files(t_cmd *cmd, int i)
 	return (0);
 }
 
-void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files)
+void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files, int pos)
 {
 	if (mini->flags->redirect && mini->flags->redirect->number > 0)
 		files->order = ft_order(cmd, mini);
 	if (files->error == -1)
 		return ;
+	ft_strstr_printf(cmd->files->exp);
 	printf(B_OR_0"%d\n"RESET, files->error);
 	if (cmd->args)
 	{
@@ -142,7 +142,7 @@ void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files)
 			files->error = -1;
 			return ; // MALLOC ERROR;
 		}
-		if (ft_pos_files(cmd, 0) == -1)
+		if (ft_pos_files(cmd, 0, pos) == -1)
 		{
 			files->error = -1;
 			return ;
