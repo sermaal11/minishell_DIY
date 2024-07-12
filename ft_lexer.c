@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:50:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/08 17:53:02 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:53:46 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	ft_recive_input(t_mini *mini)
 			(void)input;
 		else
 		{
+			mini->input = ft_strdup(input);
 			add_history(input);
 			if (fd != -1)
 			{
@@ -138,9 +139,10 @@ void	ft_recive_input(t_mini *mini)
 			free(mini->flags->redirect);
 			mini->flags->redirect = NULL;  //Utilzar funcion nueva
 		}
-		if (input)
-			free(input);
+		free(input);
+		free(mini->input);
 		// print_cmd(mini->cmd);
+
 		free_t_cmd(&(mini->cmd));
 	}
 	close(fd);

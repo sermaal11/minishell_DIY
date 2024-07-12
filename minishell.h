@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/08 10:34:33 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:27:38 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,11 @@ extern int	g_exit_status;
 
 typedef struct s_files
 {
-	char		**infiles;
-	char		**outfiles;
-	char		**here_doc;
-	char		**append;
+	char		***exp;
+	char		**f_order;
 	char		**order;
 	int			error;
 }				t_files;
-
 
 typedef struct s_red
 {
@@ -150,6 +147,7 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	int			shell_level;
+	char		*input;
 	t_env		*env;
 	t_cmd		*cmd;
 	t_flags		*flags;
@@ -160,9 +158,12 @@ typedef struct s_mini
 void	ft_mini_header(void);
 int		ft_strstr_len(char **str);
 void	ft_strstr_printf(char **str);
+int		ft_strnstrstr(char **str, char *locate);
 char	**ft_strstr_join(char **str, char **str1);
 
 // ft_final_values.c
+int		ft_type(char *argv);
+int		ft_strlen_dup(char *argv);
 void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files);
 
 // ft_initialize.c
@@ -176,6 +177,9 @@ void	ft_recive_input(t_mini *mini);
 
 // ft_parser.c
 int		ft_strtok(t_mini *mini, t_cmd **cmd, char *input);
+
+// ft_split_pipe.c
+char	**ft_split_pipe(const char *s, char c);
 
 // // ft_expander.c
 // int		ft_var(char *input);
@@ -236,16 +240,17 @@ int		ft_search_next_char(char *str, char c, int j);
 
 // ft_commands.c
 int		ft_count_args(char *input);
+char	*ft_get_command(char *input);
 t_cmd	*ft_last_command(t_cmd **cmd);
 t_cmd	*ft_add_command(char *input, int i);
-char	*ft_get_command(char *input);
 
 // ft_commands-2.c
-int		ft_size_argv(char *input, int stop, int size, int index);
-void	ft_get_args(char *input, int argc, char ***args);
+void	ft_plus_one(int value1, int value2);
 int		*ft_sizes_input(char *input, int argc);
 int		ft_position(char *input, int *size, int stop);
+void	ft_get_args(char *input, int argc, char ***args);
 char	*ft_inside_argv(char *input, int *size, int stop);
+int		ft_size_argv(char *input, int stop, int size, int index);
 
 // ft_commands-3.c
 int		ft_nothing(char *input, int i);
@@ -267,12 +272,12 @@ char	*ft_replace_value_bis(char *str, int i, int j);
 
 // ft_error_management.c
 void	ft_many_args_error(char **argv);
-void	ft_exit_error(t_mini *mini, char *error_msg, int exit_status);
 void	ft_put_error(char *bash, char *file, char *error_msg);
+void	ft_exit_error(t_mini *mini, char *error_msg, int exit_status);
 
 // ft_free.c
-void	free_t_mini(t_mini *mini);
 void	free_t_cmd(t_cmd **cmd);
+void	free_t_mini(t_mini *mini);
 
 void	ft_strstr_free(char **str);
 

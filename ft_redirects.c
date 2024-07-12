@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/08 10:41:05 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:54:53 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	ft_start_red(t_mini *mini)
 	mini->flags->redirect = ft_calloc(sizeof(t_red), 1);
 	if (mini->flags->redirect == NULL)
 		return ;
+	mini->flags->redirect->do_le = 0;
+	mini->flags->redirect->do_ri = 0;
+	mini->flags->redirect->si_le = 0;
+	mini->flags->redirect->si_ri = 0;
+	mini->flags->redirect->number = 0;
 }
 
 int	ft_red(char *input)
@@ -105,7 +110,8 @@ int	ft_red_count(t_mini *mini)
 {
 	int i;
 
-	i = mini->flags->redirect->do_le;
+	i = 0;
+	i += mini->flags->redirect->do_le;
 	i += mini->flags->redirect->do_ri;
 	i += mini->flags->redirect->si_le;
 	i += mini->flags->redirect->si_ri;
@@ -126,6 +132,8 @@ int	ft_count_redirect(t_mini *mini, char *input)
 			return (0);
 		while (input[i] != '\0')
 		{
+			if (input[i] == '\'' || input[i] == '\"')
+				i = ft_locate_next_quote(i + 1, input, input[i]);
 			size = 0;
 			mini->flags->redirect->red_error = 0;
 			while ((input[i] == '<' || input[i] == '>') && i++ >= size)
@@ -148,8 +156,7 @@ int	ft_count_redirect(t_mini *mini, char *input)
 			ft_red_error(mini, input);
 			return (-1);
 		}
+		mini->flags->redirect->number = ft_red_count(mini);
 	}
-	mini->flags->redirect->number = ft_red_count(mini);
-	// printf("%d\n", mini->flags->redirect->number);
 	return (i - size);
 }

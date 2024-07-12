@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/05 17:14:17 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:39:13 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**ft_fill_matrix_pipes(char *input, char **splited_pipes)
 	while (input[++i])
 	{
 		if (input[i] == 34 || input[i] == 39)
-			i = ft_locate_next_quote(i + 1, input, input[i]);
+			i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
 		if ((input[i + 1] == '|' || input[i + 1] == '\0') && input[i] != '|')
 		{
 			splited_pipes[position] = ft_substr(input, init, i - init + 1);
@@ -65,19 +65,21 @@ int	ft_count_pipes(char *input)
 	character = 0;
 	while (input[i])
 	{
-		if (input[i] == 34 || input[i] == 39)
-			i = ft_locate_next_quote(i + 1, input, input[i]);
+		if (input[i] == '\'' || input[i] == '\"')
+			i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
 		if (input[i] == '|')
 		{
 			character = ft_pipe_error(input, i + 1);
 			amount++;
 		}
-		if (character == -1 || (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0' || ft_nothing(input, i + 1) == 1 || ft_nothing_r(input, i + 1) == 1)) || input[0] == '|')
+		if ((character == -1 || (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0' || ft_nothing(input, i + 1) == 1 || ft_nothing_r(input, i + 1) == 1)) || input[0] == '|'))
 		{
 			ft_put_error("mini", NULL, "syntax error near unexpected token `|'");
 			g_exit_status = 258;
 			return (-1);
 		}
+		if (input[i] == '\0')
+			return (amount);
 		i++;
 	}
 	return (amount);

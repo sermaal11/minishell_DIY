@@ -33,3 +33,7 @@
 	COMM1 |			= Error pipe
 	| COMM2			= Error pipe
 }
+
+
+Con las redirecciones si hay comillas dentro, se tienen que saltar, ya van a ser consideradas argumentos
+Con las pipes si hay comillas dentro, se tienen que saltar, ya van a ser consideradas argumentos

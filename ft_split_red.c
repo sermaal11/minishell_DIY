@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 09:48:18 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/04 16:16:25 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:48:16 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,12 @@ char **ft_split_red(const char *input)
 	int		len;
 	int		i;
 
-	tokens = (char **)ft_calloc(sizeof(char *), (ft_strlen(input) * 2 + 1));
-	if (!tokens)
-	{
-		perror("Error en la asignación de memoria");
-		exit(EXIT_FAILURE);
-	}
+	i = 0;
 	token_count = 0;
 	len = ft_strlen(input);
-	i = 0;
+	tokens = (char **)ft_calloc(sizeof(char *), (ft_strlen(input) * 2 + 1));
+	if (!tokens)
+		return (NULL);
 	while (i < len)
 	{
 		token = extract_token(input, &i);
@@ -98,7 +95,6 @@ char **ft_split_red(const char *input)
 			free(redirection);
 		}
 	}
-	tokens[token_count] = NULL;
 	return (tokens);
 }
 

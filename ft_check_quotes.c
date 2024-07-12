@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:55:56 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/04 11:36:38 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:59:31 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_locate_next_quote(int i, char *input, char quote)
 {
 	while (input[i] && input[i] != quote)
 		i++;
-	// printf("%d\n", i);
 	return (i);
 }
 

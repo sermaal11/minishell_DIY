@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarin-a <smarin-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:37:59 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/05/02 13:31:29 by smarin-a         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:41:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_redir_type(char *splited_arg)
 	while (splited_arg[i])
 	{
 		if (splited_arg[i] == 34 || splited_arg[i] == 39)
-			i = ft_locate_next_quote(i + 1, splited_arg, splited_arg[i]);
+			i = ft_locate_next_quote(i + 1, splited_arg, splited_arg[i]) + 1;
 		if (splited_arg[i] == '>' && !ft_is_not_mayor_n_minor_char(splited_arg[i + 1]))
 			return (1);
 		if (splited_arg[i] == '>' && splited_arg[i + 1] == '>' && !ft_is_not_mayor_n_minor_char(splited_arg[i + 2]))

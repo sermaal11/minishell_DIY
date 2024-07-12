@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:24:41 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/04 16:17:30 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:53:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ void	ft_mini_header(void)
 	printf(B_WH_0"_||_|\u0305 |_||___||____||____| \n\n"RESET);
 	printf(B_RD_0"\n            By Descamil && Smarin-a\n"RESET);
 	printf("\n\n");
+}
+
+int	ft_strnstrstr(char **str, char *locate)
+{
+	int	i;
+	int	total;
+
+	i = 0;
+	total = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			if (ft_strncmp(str[i], locate, ft_strlen(locate)) == 0)
+				total++;
+			i++;
+		}
+	}
+	return (total);
 }
 
 int	ft_strstr_len(char **str)
@@ -92,8 +111,8 @@ void	ft_strstr_printf(char **str)
 	i = -1;
 	if (str)
 	{
-		while (str[i++])
-			printf(B_CY_0"str[%d] --> %s\n"RESET, i, str[i]);
+		while (str[++i])
+			printf(B_GR_0"str[%d] --> %s\n"RESET, i, str[i]);
 	}
 }
 

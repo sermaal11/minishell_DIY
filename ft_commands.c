@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:31:25 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/05 18:34:16 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:40:14 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int ft_count_args(char *input)
 		while (input[i] != ' ' && input[i] != '\0')
 		{
 			if (input[i] == '\'' || input[i] == '\"')
-				i = ft_locate_next_quote(i + 1, input, input[i]) + 1;
-			else
-				i++;
+				i = ft_locate_next_quote(i + 1, input, input[i]);
+			i++;
 		}
 		size++;
 	}
@@ -64,15 +63,17 @@ char	*ft_get_command(char *input)
 
 int	is_red(char *argv)
 {
-	int j = -1;
-	int red;
-	while (argv[++j] != '\0')
+	int j = 0;
+	int red = 0;
+	
+	while (argv[j] != '\0')
 	{
-		if (argv[j] == '\'')
-			j = ft_locate_next_quote(j + 1, argv, argv[j]) + 1;
+		if (argv[j] == '\'' || argv[j] == '\"')
+			j = ft_locate_next_quote(j + 1, argv, argv[j]);
 		red = is_redirection(argv[j], argv[j + 1]);
 		if (red != 0)
 			return (red);
+		j++;
 	}
 	return (0);
 }
@@ -97,6 +98,7 @@ char	**ft_new_args(char **args, int pos, int	i, int j)
 		args1[j++] = ft_strdup(args[i++]);
 	if (i == pos)
 		args2 = ft_split_red(args[pos]);
+	// ft_strstr_printf(args2);
 	if (args1 != NULL)
 		tmp = ft_strstr_join(args1, args2);
 	else

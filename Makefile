@@ -41,6 +41,7 @@ SRCS =	ft_main.c \
 		ft_printf_cmd.c \
 		ft_initialize.c \
 		get_next_line.c \
+		ft_split_pipe.c \
 		ft_check_pipes.c \
 		ft_check_input.c \
 		ft_check_redir.c \
