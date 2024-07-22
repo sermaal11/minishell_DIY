@@ -200,7 +200,9 @@ git: fclean
 	git status
 	@read -p "Quieres continuar? [y/n]: " answer; \
 	if [ "$$answer" = "y" ]; then \
-		read -p "Mensaje para el commit: " message; \
+		while [ -z "$$message" ]; do \
+			read -p "Mensaje para el commit: " message; \
+		done; \
 		git commit -m "$$message"; \
 		git push; \
 		clear; \
