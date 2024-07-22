@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:37:59 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/20 13:21:34 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:41:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_check_redir_arg(char **splited_pipes_matrix, int i)
 	j = 0;
 	if (ft_redir_type(splited_pipes_matrix[i]) == -1)
 	{
-		ft_put_error("bash", NULL, "syntax error near unexpected token `>'"); // BORRAR FUNC
+		ft_put_error("bash", NULL, "syntax error near unexpected token `>'");
 		return (-1);
 	}
 	temp = ft_strchr(splited_pipes_matrix[i], ft_type_of_operator_char(ft_redir_type(splited_pipes_matrix[i])));
@@ -58,7 +58,7 @@ int	ft_check_redir_arg(char **splited_pipes_matrix, int i)
 			j++;
 		if ((ft_redir_type(splited_pipes_matrix[i]) && !temp[j]) || ft_is_not_mayor_n_minor_char(temp[ft_strlen(temp) - 1]))
 		{
-			ft_put_error("bash", NULL, "syntax error near unexpected token `>'"); // BORRAR FUNC
+			ft_put_error("bash", NULL, "syntax error near unexpected token `>'");
 			return (-1);
 		}
 		temp = ft_strchr(temp + j, ft_type_of_operator_char(ft_redir_type(temp + j)));

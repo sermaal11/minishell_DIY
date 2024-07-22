@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_final_values.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 17:24:29 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/20 15:18:26 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:21:19 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_check_dups(t_cmd *cmd)
 	{
 		if (ft_type(cmd->args[i]) != 0 && ft_type(cmd->args[i + 1]) != 0)
 		{
-			printf("mini: syntax error near unexpected token `%s'\n", cmd->args[i + 1]); // ERROR --> 2
+			printf("mini: syntax error near unexpected token `%s'\n", cmd->args[i + 1]);
 			return (-1);
 		}
 		i++;
@@ -68,22 +68,21 @@ char	**ft_order(t_cmd *cmd, t_mini *mini)
 	int		i;
 	int		j;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	order = ft_calloc(sizeof(char *), mini->flags->redirect->number + 1);
-	if (order == NULL)
-		return (NULL);
 	if (ft_check_dups(cmd) == -1)
 	{
-		mini->cmd->files->error = -1;
+		cmd->files->error = -1;
 		return (NULL);
 	}
 	if (cmd->args)
 	{
-		while (cmd->args[++i])
+		while (cmd->args[i])
 		{
 			if (ft_type(cmd->args[i]) != 0)
 				order[j++] = ft_itoa(ft_type(cmd->args[i]));
+			i++;
 		}
 	}
 	return (order);
@@ -105,13 +104,14 @@ int	ft_pos_files(t_cmd *cmd, int i)
 	int	files;
 
 	files = 0;
+	ft_strstr_printf(cmd->args);
 	while (cmd->args[i])
 	{
 		if (ft_type(cmd->args[i]) > 0)
 		{
 			if (cmd->args[i + 1] == NULL)
 			{
-				printf("mini: syntax error near unexpected token `newline'\n"); // ERROR --> 2
+				printf("mini: syntax error near unexpected token `newline'\n");
 				return (-1);
 			}
 			cmd->files->f_order[files++] = ft_strdup(cmd->args[i + 1]);
@@ -125,18 +125,18 @@ void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files)
 {
 	if (mini->flags->redirect && mini->flags->redirect->number > 0)
 		files->order = ft_order(cmd, mini);
-	if (mini->cmd->files->error == -1)
+	if (files->error == -1)
 		return ;
 	if (cmd->args)
 	{
 		if (ft_mem_files(mini, cmd) == -1)
 		{
-			mini->cmd->files->error = -1;
+			files->error = -1;
 			return ; // MALLOC ERROR;
 		}
 		if (ft_pos_files(cmd, 0) == -1)
 		{
-			mini->cmd->files->error = -1;
+			files->error = -1;
 			return ;
 		}
 	}

@@ -6,11 +6,12 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:24:41 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/20 16:44:47 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:53:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 void	ft_mini_header(void)
 {
@@ -19,7 +20,7 @@ void	ft_mini_header(void)
 	printf(B_OR_1"(  `   )\\ )  ( /(  )\\ ) ( /(       )\\ )  )\\ )  \n"RESET);
 	printf(B_YE_2")\\))( (()/(  )\\())(()/( )\\()) (   (()/( (()/(  \n"RESET);
 	printf(B_OR_2"((_)()\\ /(_))((_)\\  /(_))(_)\\  )\\   /(_)) /(_) \n"RESET);
-	printf(B_OR_1"( ()(( ) ( ))  (( ) ( ))   (( )(( ) ( ))  ( ))   \n"RESET);
+	printf(B_OR_1"( ()(( )( ))   (( ) ( ))   (( )(( ) ( ))  ( ))   \n"RESET);
 	printf(B_WH_0"|¯¯\\/¯¯||\u0305_¯\u0305_||¯\\|¯||\u0305_¯\u0305_||");
 	printf(B_WH_0"¯|_|¯||¯\u0305_\u0305_||¯|   |¯|    \n"RESET);
 	printf(B_WH_0"| |\\/| | | | | .` | | | |     || _| | |__ | |__  \n"RESET);
@@ -101,19 +102,6 @@ void	ft_strstr_free(char **str)
 			free(str[i++]);
 		free(str);
 	}
-}
-
-char	**ft_strstr_dup(char **str)
-{
-	char	**result;
-	int		i;
-
-	i = -1;
-	result = ft_calloc(sizeof(char *), ft_strstr_len(str) + 1);
-	while (str[++i])
-		result[i] = ft_strdup(str[i]);
-	result[i] = NULL;
-	return (result);
 }
 
 void	ft_strstr_printf(char **str)

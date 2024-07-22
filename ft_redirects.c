@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:31:41 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/20 13:20:16 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:54:53 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_red_error(t_mini *mini, char *input)
 			else if ((mini->flags->redirect->red_error == 4))
 				mini->flags->redirect->error = ft_substr(input, 1 + mini->flags->locate_red, 2);
 		}
-		printf("mini: parse error near `%s'\n", mini->flags->redirect->error); // ERROR --> 2
+		printf("mini: parse error near `%s'\n", mini->flags->redirect->error);
 		free(mini->flags->redirect->error);
 		return ;
 	}

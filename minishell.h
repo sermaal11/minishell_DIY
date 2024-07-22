@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/20 16:29:24 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:37:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ extern int	g_exit_status;
 
 typedef struct s_files
 {
+	char		**exp;
 	char		**f_order;
 	char		**order;
 	int			error;
@@ -146,6 +147,7 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	int			shell_level;
+	char		*input;
 	t_env		*env;
 	t_cmd		*cmd;
 	t_flags		*flags;
@@ -156,7 +158,6 @@ typedef struct s_mini
 void	ft_mini_header(void);
 int		ft_strstr_len(char **str);
 void	ft_strstr_printf(char **str);
-char	**ft_strstr_dup(char **str);
 int		ft_strnstrstr(char **str, char *locate);
 char	**ft_strstr_join(char **str, char **str1);
 
@@ -164,8 +165,7 @@ char	**ft_strstr_join(char **str, char **str1);
 int		ft_type(char *argv);
 int		ft_strlen_dup(char *argv);
 void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files);
-int		ft_pos_files(t_cmd *cmd, int i);
-
+char	**ft_strstr_dup(char **str);
 
 // ft_initialize.c
 t_mini	*ft_initialize(char **env);

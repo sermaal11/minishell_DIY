@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:27:49 by user              #+#    #+#             */
-/*   Updated: 2024/07/20 16:43:20 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:16:37 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,14 @@ void	free_t_env(t_env **env)
 	{
 		if ((*env)->path)
 			free((*env)->path);
-		if (&(*env)->env)
+		if ((*env)->env)
 		{
-			while (&(*env)->env[i])
+			while ((*env)->env[i])
 				free((*env)->env[i++]);
 		}
 	}
 	free(*env);
 }
-
-// void	free_t_token(t_token **token)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (token && *token)
-// 	{
-// 		free((*token)->input);
-// 		(*token)->input = NULL;
-// 		if ((*token)->tokens)
-// 		{
-// 			while ((*token)->tokens[i])
-// 			{
-// 				free((*token)->tokens[i]);
-// 				(*token)->tokens[i++] = NULL;
-// 			}
-// 			free((*token)->tokens);
-// 			(*token)->tokens = NULL;
-// 		}
-// 		free(*token);
-// 		*token = NULL;
-// 	}
-// }
 
 void	free_t_cmd(t_cmd **cmd)
 {
@@ -63,8 +39,7 @@ void	free_t_cmd(t_cmd **cmd)
 	while (current)
 	{
 		next = current->next;
-		if (current->args)
-			ft_strstr_free(current->args);
+		ft_strstr_free(current->args);
 		if (current->files)
 		{
 			if (current->files->f_order)
@@ -80,27 +55,6 @@ void	free_t_cmd(t_cmd **cmd)
 	*cmd = NULL;
 }
 
-// void	free_t_mini(t_mini **mini)
-// {
-// 	if (mini && *mini)
-// 	{
-// 		if ((*mini)->env)
-// 			free_t_env(&(*mini)->env);
-// 		// if ((*mini)->flags)
-// 		// 	free_t_flags_red(&(*mini)->flags);
-// 		if ((*mini)->token)
-// 			free_t_token(&(*mini)->token);
-// 		if ((*mini)->cmd)
-// 			free_t_cmd(&((*mini)->cmd));
-// 		if ((*mini)->flags)
-// 			free((*mini)->flags);
-// 		free(*mini);
-// 		*mini = NULL;
-// 	}
-// }
-
-
-
 void free_t_mini(t_mini *mini)
 {
 	if (mini == NULL)
@@ -115,7 +69,6 @@ void free_t_mini(t_mini *mini)
 		if (mini->env->env != NULL)
 			ft_strstr_free(mini->env->env);
 	}
-
 	if (mini->flags)
 		free(mini->flags);
 	if (mini->token != NULL)
