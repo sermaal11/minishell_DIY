@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 17:04:59 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/12 10:20:50 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:00:14 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ char	**ft_split_pipe(const char *s, char c)
 			return (free_memory_pipe(a, arr));
 		arr[a++] = cpy_mod;
 	}
-	// ft_strstr_printf(arr);
 	return (arr);
 }

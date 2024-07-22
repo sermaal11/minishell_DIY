@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:22:30 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/11 09:39:13 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:24:23 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_count_pipes(char *input)
 		}
 		if ((character == -1 || (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0' || ft_nothing(input, i + 1) == 1 || ft_nothing_r(input, i + 1) == 1)) || input[0] == '|'))
 		{
-			ft_put_error("mini", NULL, "syntax error near unexpected token `|'");
+			printf("mini: syntax error near unexpected token `|'\n"); // ERROR --> 2
 			g_exit_status = 258;
 			return (-1);
 		}
@@ -98,7 +98,7 @@ int	ft_check_pipes_arg(char *input)
 			result = 0;
 	}
 	if (result == -1)
-		ft_put_error("mini", NULL, "syntax error near unexpected token `||'");
+		printf("syntax error near unexpected token `||'\n"); // ERROR --> 2
 	return (result);
 }
 
@@ -117,9 +117,7 @@ char	**ft_split_pipes(char *input)
 		if (ft_check_pipes_arg(splited_pipes[i]) == -1)
 		{
 			g_exit_status = 258;
-			while (i >= 0)
-				free(splited_pipes[i--]); // Utilizar free_strstr
-			free(splited_pipes);
+			ft_strstr_free(splited_pipes);
 			return (NULL);
 		}
 	}

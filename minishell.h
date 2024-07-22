@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:18:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/12 16:52:13 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:29:24 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ extern int	g_exit_status;
 
 typedef struct s_files
 {
-	char		**exp;
 	char		**f_order;
 	char		**order;
 	int			error;
@@ -147,7 +146,6 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	int			shell_level;
-	char		*input;
 	t_env		*env;
 	t_cmd		*cmd;
 	t_flags		*flags;
@@ -158,16 +156,19 @@ typedef struct s_mini
 void	ft_mini_header(void);
 int		ft_strstr_len(char **str);
 void	ft_strstr_printf(char **str);
+char	**ft_strstr_dup(char **str);
 int		ft_strnstrstr(char **str, char *locate);
 char	**ft_strstr_join(char **str, char **str1);
 
 // ft_final_values.c
 int		ft_type(char *argv);
 int		ft_strlen_dup(char *argv);
-void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files, int pos);
+void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files);
+int		ft_pos_files(t_cmd *cmd, int i);
+
 
 // ft_initialize.c
-t_mini	*ft_initialize(void);
+t_mini	*ft_initialize(char **env);
 
 // ft_signals.c
 void	ft_signal_management(int n);

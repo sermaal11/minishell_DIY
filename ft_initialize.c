@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:21:54 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/08 18:04:15 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:29:05 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@
 // 	ft_set_env(mini->env, env);
 // }
 
-t_mini	*ft_initialize()
+t_mini	*ft_initialize(char **env)
 {
 	t_mini *mini = ft_calloc(sizeof(t_mini), 1);
 	if (mini != NULL) 
@@ -163,7 +163,7 @@ t_mini	*ft_initialize()
 		return NULL;
 	}
 	mini->env->path = NULL;
-	mini->env->env = NULL;
+	mini->env->env = ft_strstr_dup(env);
 	mini->flags = ft_calloc(sizeof(t_flags), 1);
 	if (mini->flags == NULL)
 	{

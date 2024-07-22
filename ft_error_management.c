@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 17:37:57 by smarin-a          #+#    #+#             */
-/*   Updated: 2024/07/08 10:29:30 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:21:44 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_put_error(char *bash, char *file, char *error_msg)
 {
 	ft_putstr_fd(bash, 2);
 	ft_putstr_fd(": ", 2);
-	if (file)
+	if (file) // BORRAR FUNC
 	{
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(": ", 2);

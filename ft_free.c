@@ -6,7 +6,7 @@
 /*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:27:49 by user              #+#    #+#             */
-/*   Updated: 2024/07/09 16:12:35 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:43:20 by descamil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	free_t_cmd(t_cmd **cmd)
 	while (current)
 	{
 		next = current->next;
-		ft_strstr_free(current->args);
+		if (current->args)
+			ft_strstr_free(current->args);
 		if (current->files)
 		{
 			if (current->files->f_order)
