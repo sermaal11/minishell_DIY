@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_final_values.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: descamil <descamil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 17:24:29 by descamil          #+#    #+#             */
-/*   Updated: 2024/07/12 16:51:18 by descamil         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:21:19 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	ft_check_dups(t_cmd *cmd)
 
 char	**ft_order(t_cmd *cmd, t_mini *mini)
 {
+	char	**order;
 	int		i;
 	int		j;
-	char	**order;
 
 	i = 0;
 	j = 0;
@@ -99,7 +99,7 @@ int	ft_mem_files(t_mini *mini, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_pos_files(t_cmd *cmd, int i, int pos)
+int	ft_pos_files(t_cmd *cmd, int i)
 {
 	int	files;
 
@@ -109,40 +109,32 @@ int	ft_pos_files(t_cmd *cmd, int i, int pos)
 	{
 		if (ft_type(cmd->args[i]) > 0)
 		{
-			if (ft_type(cmd->args[i]) == 2 && pos == 1)
-				cmd->files->f_order[files++] = ft_strdup("|");
-			else
+			if (cmd->args[i + 1] == NULL)
 			{
-				if (cmd->args[i + 1] == NULL)
-				{
-					printf("mini: syntax error near unexpected token `newline'\n");
-					return (-1);
-				}
-				cmd->files->f_order[files++] = ft_strdup(cmd->args[i + 1]);
+				printf("mini: syntax error near unexpected token `newline'\n");
+				return (-1);
 			}
+			cmd->files->f_order[files++] = ft_strdup(cmd->args[i + 1]);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files, int pos)
+void	ft_files(t_cmd *cmd, t_mini *mini, t_files *files)
 {
 	if (mini->flags->redirect && mini->flags->redirect->number > 0)
 		files->order = ft_order(cmd, mini);
 	if (files->error == -1)
 		return ;
-	ft_strstr_printf(cmd->files->exp);
-	printf(B_OR_0"%d\n"RESET, files->error);
 	if (cmd->args)
 	{
-		// printf("Aqui\n");
 		if (ft_mem_files(mini, cmd) == -1)
 		{
 			files->error = -1;
 			return ; // MALLOC ERROR;
 		}
-		if (ft_pos_files(cmd, 0, pos) == -1)
+		if (ft_pos_files(cmd, 0) == -1)
 		{
 			files->error = -1;
 			return ;
